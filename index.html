@@ -1,107 +1,114 @@
+
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LIFS – Earn & Withdraw</title>
-  <style>
-    body { font-family: Arial, sans-serif; background:#f7f7f7; margin:0; padding:0; }
-    header { background:#2c3e50; color:#fff; padding:15px; text-align:center; }
-    .container { padding:20px; }
-    .balance-box { background:#fff; padding:15px; border-radius:10px; box-shadow:0 2px 5px rgba(0,0,0,0.1); margin-bottom:15px; }
-    .btn { display:inline-block; background:#27ae60; color:#fff; padding:10px 20px; border-radius:8px; text-decoration:none; cursor:pointer; }
-    .btn:disabled { background:#95a5a6; cursor:not-allowed; }
-    .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; }
-    .modal-content { background:#fff; padding:20px; border-radius:12px; width:90%; max-width:400px; }
-    .form-group { margin-bottom:12px; }
-    .form-group label { display:block; margin-bottom:5px; font-size:14px; }
-    .form-group input, .form-group select { width:100%; padding:8px; border:1px solid #ccc; border-radius:6px; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FBG Panel</title>
+<style>
+body{font-family:sans-serif;margin:0;padding:0;background:#f1f1f1;}
+header{background:#0088cc;color:white;padding:15px;text-align:center;font-size:20px;}
+section{padding:20px;}
+.card{background:white;padding:15px;margin:10px 0;border-radius:8px;box-shadow:0 2px 5px rgba(0,0,0,0.1);}
+button{padding:10px 20px;border:none;border-radius:5px;background:#0088cc;color:white;font-size:16px;cursor:pointer;}
+button:disabled{background:#aaa;cursor:not-allowed;}
+#withdrawModal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);justify-content:center;align-items:center;}
+#withdrawModal .modal-content{background:white;padding:20px;border-radius:10px;width:90%;max-width:400px;}
+.ok{color:green;}
+.bad{color:red;}
+</style>
 </head>
 <body>
-  <header>
-    <h2>LIFS – Earn & Withdraw</h2>
-  </header>
 
-  <div class="container">
-    <div class="balance-box">
-      <p>👤 Telegram Chat ID: <span id="chatId">Loading...</span></p>
-      <p>💰 Balance: ৳<span id="balance">120</span></p>
-      <button class="btn" id="withdrawBtn">Withdraw</button>
-    </div>
+<header>🔐 FBG Panel</header>
+
+<section>
+  <div class="card">User ID: <span id="uid">—</span></div>
+  <div class="card">Total Balance: ৳<span id="totalBal">0.00</span></div>
+  <div class="card">Today Earned: ৳<span id="today">0.00</span></div>
+  <div class="card">Points: <span id="points">0</span> (~৳<span id="pointsTk">0.00</span>)</div>
+  <button id="watchAdBtn">▶️ EARN (Ad)</button>
+</section>
+
+<section>
+  <button id="withdrawBtn">💳 Withdraw</button>
+</section>
+
+<div id="withdrawModal">
+  <div class="modal-content">
+    <h3>Withdraw</h3>
+    <label>Method:</label>
+    <select id="wdMethod">
+      <option>নগদ</option>
+      <option>বিকাশ</option>
+      <option>Binance PAY ID</option>
+    </select><br><br>
+    <label>Amount ৳:</label>
+    <input type="number" id="wdAmount" placeholder="৳50+" min="50" style="width:100%;padding:8px;"><br><br>
+    <label>Account/Wallet:</label>
+    <input type="text" id="wdAccount" placeholder="Account Number" style="width:100%;padding:8px;"><br><br>
+    <label>Name:</label>
+    <input type="text" id="wdName" placeholder="Your Name" style="width:100%;padding:8px;"><br><br>
+    <div id="calcBox"></div><br>
+    <button id="withdrawConfirm" disabled>Submit Withdraw</button>
   </div>
+</div>
 
-  <!-- Withdraw Modal -->
-  <div class="modal" id="wModal">
-    <div class="modal-content">
-      <h3>Withdraw Request</h3>
-      <div class="form-group">
-        <label>Method</label>
-        <select id="wdMethod">
-          <option>বিকাশ</option>
-          <option>নগদ</option>
-          <option>Binance Pay</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Amount (Min ৳50)</label>
-        <input type="number" id="wdAmount" placeholder="৳ লিখুন">
-      </div>
-      <div class="form-group">
-        <label>Account/Wallet</label>
-        <input type="text" id="wdAccount" placeholder="একাউন্ট নাম্বার দিন">
-      </div>
-      <button class="btn" id="withdrawConfirm">Confirm</button>
-    </div>
-  </div>
+<script>
+const els={totalBal:document.getElementById('totalBal'),today:document.getElementById('today'),points:document.getElementById('points'),pointsTk:document.getElementById('pointsTk'),watchBtn:document.getElementById('watchAdBtn')};
+const RATE=100, REWARD=10, MIN_WITHDRAW=50;
+let saved=JSON.parse(localStorage.getItem('fbg_data')||'{}');
+let points=saved.points||0, balance=saved.balance||0, today=saved.today||0;
+function fmt(x){return (Math.round(x*100)/100).toFixed(2);} 
+function sync(){els.points.textContent=points;els.pointsTk.textContent=fmt(points/RATE);els.totalBal.textContent=fmt(balance);els.today.textContent=fmt(today);localStorage.setItem('fbg_data',JSON.stringify({points,balance,today}));}
+sync();
+function rewardUser(){points+=REWARD;balance+=REWARD/RATE;today+=REWARD/RATE;sync();alert(`অভিনন্দন! +${REWARD} পয়েন্ট (৳${fmt(REWARD/RATE)})`);}
+els.watchBtn.addEventListener('click',()=>{els.watchBtn.disabled = true;els.watchBtn.textContent = "⏳ Ad Running...";setTimeout(()=>{rewardUser();els.watchBtn.disabled = false;els.watchBtn.textContent = "▶️ EARN (Ad)";}, 16000);});
 
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <script>
-    const tg = window.Telegram.WebApp;
-    const user = tg.initDataUnsafe.user;
+const wModal=document.getElementById('withdrawModal'),withdrawBtn=document.getElementById('withdrawBtn'),withdrawConfirm=document.getElementById('withdrawConfirm'),wdMethod=document.getElementById('wdMethod'),wdAmount=document.getElementById('wdAmount'),wdAccount=document.getElementById('wdAccount'),wdName=document.getElementById('wdName'),calcBox=document.getElementById('calcBox');
+withdrawBtn.addEventListener('click', ()=>{wModal.style.display='flex'; updateCalculation();});
+function updateCalculation(){const amount = parseFloat(wdAmount.value)||0;const needPoints = Math.ceil(amount*RATE);let msg = `🧮 হিসাব: ৳${fmt(amount)} (≈ ${needPoints} পয়েন্ট)\n💳 আপনার ব্যালেন্স: ৳${fmt(balance)} (পয়েন্ট ${points})`;const okMin = amount >= MIN_WITHDRAW, okBal = amount <= balance, okAcc = (wdAccount.value||'').trim().length >= 5;if(!okMin) msg += `\n❌ ন্যূনতম উত্তোলন ৳${MIN_WITHDRAW}`;if(!okBal) msg += `\n❌ পর্যাপ্ত ব্যালেন্স নেই`;if(!okAcc) msg += `\n❌ সঠিক একাউন্ট/ওয়ালেট নম্বর দিন`;if(okMin && okBal && okAcc){msg += `\n✅ উত্তোলন করতে পারবেন`;withdrawConfirm.disabled=false;calcBox.classList.remove('bad');calcBox.classList.add('ok');} else {withdrawConfirm.disabled=true;calcBox.classList.remove('ok');calcBox.classList.add('bad');}calcBox.innerText = msg;}
+wdMethod.addEventListener('change', updateCalculation);wdAmount.addEventListener('input', updateCalculation);wdAccount.addEventListener('input', updateCalculation);
 
-    let CHAT_ID = null;
-    if (user && user.id) {
-      CHAT_ID = user.id;
-      document.getElementById("chatId").textContent = CHAT_ID;
-    } else {
-      document.getElementById("chatId").textContent = "❌ Telegram এ খুলুন";
-    }
+let CHAT_ID = null;
+let USER_ID = null;
 
-    let balance = 120;
-    const MIN_WITHDRAW = 50;
-    const BOT_TOKEN = "7950127896:AAEeHiNM-T-XC0zI6x5FDc6PfsZmy0Y3egM";
-    const TELEGRAM_URL = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+// Telegram WebApp integration
+if(window.Telegram?.WebApp){
+  const tg = window.Telegram.WebApp;
+  tg.ready();
+  if(tg.initDataUnsafe?.user){
+    USER_ID = tg.initDataUnsafe.user.id;
+    CHAT_ID = tg.initDataUnsafe.user.id;
+    document.getElementById('uid').textContent = USER_ID;
+  } else {
+    document.body.innerHTML = "<div style='padding:20px;text-align:center;font-size:18px;color:red;'>❌ Telegram থেকে ওপেন করুন</div>";
+  }
+} else {
+  document.body.innerHTML = "<div style='padding:20px;text-align:center;font-size:18px;color:red;'>❌ Telegram থেকে ওপেন করুন</div>";
+}
 
-    const wModal = document.getElementById('wModal');
-    document.getElementById('withdrawBtn').onclick = ()=> wModal.style.display='flex';
+const BOT_TOKEN = "YOUR_BOT_TOKEN"; 
+const TELEGRAM_URL = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
 
-    document.getElementById('withdrawConfirm').onclick = ()=>{
-      const method = document.getElementById('wdMethod').value;
-      const amount = parseFloat(document.getElementById('wdAmount').value)||0;
-      const account = document.getElementById('wdAccount').value.trim();
+withdrawConfirm.addEventListener('click', ()=>{
+  const method = wdMethod.options[wdMethod.selectedIndex].text;
+  const amount = parseFloat(wdAmount.value)||0;
+  const account = (wdAccount.value||'').trim();
+  const name = (wdName.value||'').trim();
+  if(amount < MIN_WITHDRAW){alert(`ন্যূনতম উত্তোলন ৳${MIN_WITHDRAW}`); return;}
+  if(amount > balance){alert("❌ পর্যাপ্ত ব্যালেন্স নেই"); return;}
+  if(account.length < 5){alert("সঠিক একাউন্ট/ওয়ালেট নম্বর দিন"); return;}
+  balance -= amount;const deductPoints = Math.min(points, Math.ceil(amount*RATE));points -= deductPoints;sync();
+  const msg = `📤 Withdraw Request\n👤 User ID: ${USER_ID}\n💳 Method: ${method}\n💰 Amount: ৳${fmt(amount)}\n📱 Account: ${account}\n👤 Name: ${name}\n🔗 Chat ID: ${CHAT_ID}`;
+  fetch(TELEGRAM_URL, {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chat_id:CHAT_ID,text:msg,parse_mode:"HTML"})})
+  .then(r=>r.json()).then(d=>{alert(`✅ Withdraw Submitted!\n৳${fmt(amount)} via ${method}`);wModal.style.display='none';})
+  .catch(err=>{console.error(err);alert("❌ Telegram এ সমস্যা হয়েছে");});
+});
 
-      if(amount < MIN_WITHDRAW){alert(`ন্যূনতম উত্তোলন ৳${MIN_WITHDRAW}`); return;}
-      if(amount > balance){alert("❌ পর্যাপ্ত ব্যালেন্স নেই"); return;}
-      if(!CHAT_ID){alert("❌ Telegram এ খুলুন"); return;}
+const modal = document.getElementById('withdrawModal');
+modal.addEventListener('click',e=>{if(e.target===modal)modal.style.display='none';});
+</script>
 
-      balance -= amount;
-      document.getElementById("balance").textContent = balance;
-
-      const msg = `📤 Withdraw Request\n👤 Chat ID: ${CHAT_ID}\n💳 Method: ${method}\n💰 Amount: ৳${amount}\n📱 Account: ${account}`;
-
-      fetch(TELEGRAM_URL, {
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({chat_id:CHAT_ID,text:msg})
-      }).then(r=>r.json()).then(d=>{
-        alert("✅ Withdraw Submitted!");
-        wModal.style.display='none';
-      }).catch(err=>{
-        console.error(err);
-        alert("❌ Telegram এ সমস্যা হয়েছে");
-      });
-    };
-  </script>
 </body>
 </html>

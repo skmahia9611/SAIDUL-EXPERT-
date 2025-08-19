@@ -15,8 +15,8 @@
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
   <div class="max-w-3xl mx-auto p-4 sm:p-6">
     <header class="mb-6 sm:mb-8">
-      <h1 class="text-2xl sm:text-3xl font-bold tracking-tight">ডিপোজিট পেমেন্ট</h1>
-      <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300 mt-1">নিচের নম্বরগুলোতে পেমেন্ট পাঠিয়ে ট্রানজ্যাকশন ডিটেইলস সাবমিট করুন।</p>
+      <h1 class="text-2xl sm:text-3xl font-bold tracking-tight">PAYMENT NOW</h1>
+      <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300 mt-1">নিচের যে কোনো একটা নাম্বারে পেমেন্ট করুন।</p>
     </header>
 
     <!-- Payment Methods -->
@@ -93,8 +93,8 @@
 
     <!-- Deposit Form -->
     <section class="rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 p-4 sm:p-6 bg-white dark:bg-gray-800">
-      <h2 class="text-xl font-semibold">ডিপোজিট ফর্ম</h2>
-      <p class="text-sm text-gray-500">পেমেন্ট পাঠানোর পর নিচের তথ্য দিন।</p>
+      <h2 class="text-xl font-semibold">PAYMENT INFO</h2>
+      <p class="text-sm text-gray-500">PAYMENT করার পর সঠিক তথ্য লিখুন</p>
       <form id="depositForm" class="mt-4 grid gap-4">
         <div class="grid sm:grid-cols-2 gap-4">
           <label class="grid gap-1">
@@ -108,7 +108,7 @@
           </label>
           <label class="grid gap-1">
             <span class="text-sm">অ্যামাউন্ট (৳)</span>
-            <input id="amount" type="number" min="10" required placeholder="10" class="rounded-xl border-gray-300 dark:border-gray-700 bg-transparent px-3 py-2" />
+            <input id="amount" type="number" min="5" required placeholder="5" class="rounded-xl border-gray-300 dark:border-gray-700 bg-transparent px-3 py-2" />
           </label>
         </div>
 
@@ -142,15 +142,52 @@
         <p class="text-sm text-gray-600 dark:text-gray-300">আমাদের টিম শিগগিরই যাচাই করবে।</p>
         <dl id="summary" class="mt-3 grid sm:grid-cols-2 gap-x-6 gap-y-2 text-sm"></dl>
       </div>
+      <!-- Footer Links -->
+    <footer class="mt-10 mb-6 flex flex-wrap justify-center gap-3">
+      <!-- YouTube -->
+      <a href="https://youtube.com/@saidulexpert?si=rF5fb9NZ1g1NzN2i" target="_blank" class="flex items-center gap-2 px-4 py-2 rounded-2xl bg-[#FF0000] text-white shadow-sm hover:opacity-90">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M19.615 3.184c1.662.445 2.973 1.757 3.418 3.419C24 8.838 24 12 24 12s0 3.162-.967 5.397c-.445 1.662-1.756 2.973-3.418 3.418C17.382 22.781 12 22.781 12 22.781s-5.382 0-7.615-.966c-1.662-.445-2.973-1.756-3.418-3.418C0 15.162 0 12 0 12s0-3.162.967-5.397c.445-1.662 1.756-2.974 3.418-3.419C6.618 1.219 12 1.219 12 1.219s5.382 0 7.615.965ZM9.75 15.568l6.5-3.568-6.5-3.568v7.136Z"/>
+        </svg>
+        YouTube
+      </a>
+
+      <!-- Telegram -->
+      <a href="https://t.me/Life_Work_BD" target="_blank" class="flex items-center gap-2 px-4 py-2 rounded-2xl bg-[#0088CC] text-white shadow-sm hover:opacity-90">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M9.999 15.064 9.9 19.454c.405 0 .58-.174.789-.383l1.894-1.81 3.929 2.877c.72.398 1.233.19 1.417-.664l2.568-12.052c.236-1.118-.404-1.554-1.111-1.279L3.626 9.96c-1.091.428-1.075 1.037-.186 1.314l4.743 1.48L17.71 6.77c.465-.287.89-.128.541.159"/>
+        </svg>
+        Telegram
+      </a>
+
+<!-- Customer Support -->
+      <a href="https://shorturl.at/LkaDt" 
+         class="flex items-center gap-2 px-4 py-2 rounded-2xl bg-red-600 text-white shadow-sm hover:bg-red-700">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12.004 1.999c-5.514 0-10 4.486-10 10 0 5.514 4.486 10 10 10 1.664 0 3.231-.414 4.611-1.145l3.498.92a1 1 0 0 0 1.223-1.223l-.92-3.498A9.96 9.96 0 0 0 22.004 12c0-5.514-4.486-10.001-10-10.001Zm5.513 14.681-.327.194.546 2.072-2.072-.546-.194.327a8.004 8.004 0 1 1 4.046-4.047Z"/>
+        </svg>
+        Customer Support
+      </a>
+      
     </section>
   </div>
 
   <script>
-    // --- Telegram Mini App Auto Fill ---
+    // --- Telegram Mini App Auto Fill + Local Save ---
     const tg = window.Telegram.WebApp;
+    const noteInput = document.getElementById("note");
+
+    // যদি Telegram থেকে ID পাওয়া যায়
     if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
       const userId = tg.initDataUnsafe.user.id;
-      document.getElementById("note").value = `🆔 ID ${userId}`;
+      noteInput.value = `🆔 ID ${userId}`;
+      localStorage.setItem("savedUserId", `🆔 ID ${userId}`);
+    }
+
+    // যদি আগে সেভ করা থাকে তাহলে বসাও
+    const savedId = localStorage.getItem("savedUserId");
+    if (savedId) {
+      noteInput.value = savedId;
     }
 
     // --- Copy buttons ---
@@ -219,11 +256,16 @@
         amount: document.getElementById('amount').value,
         sender: document.getElementById('sender').value,
         trxid: document.getElementById('trxid').value.trim().toUpperCase(),
-        note: document.getElementById('note').value.trim(),
+        note: noteInput.value.trim(),
         time: new Date().toLocaleString('bn-BD')
       };
 
-      if (data.amount < 10) { showError('ন্যূনতম 10 টাকা ডিপোজিট করতে হবে'); return; }
+      // সাবমিটের সময় ID সেভ হবে
+      if (data.note) {
+        localStorage.setItem("savedUserId", data.note);
+      }
+
+      if (data.amount < 5) { showError('ন্যূনতম 5 টাকা ডিপোজিট করতে হবে'); return; }
       if (!/^01\d{9}$/.test(data.sender)) { showError('সঠিক মোবাইল নম্বর দিন'); return; }
       if (!data.trxid || data.trxid.length < 6) { showError('সঠিক ট্রানজ্যাকশন আইডি দিন'); return; }
 
@@ -249,8 +291,8 @@
       panel.scrollIntoView({ behavior: 'smooth' });
 
       // --- Send to Telegram Bot ---
-      const BOT_TOKEN = "YOUR_BOT_TOKEN"; // এখানে আসল টোকেন দিন
-      const CHAT_ID  = "YOUR_CHAT_ID";    // এখানে আপনার এডমিন চ্যাট আইডি দিন
+      const BOT_TOKEN = "7548611254:AAHUWx2WlGQlF975ORmwmHsS7_gTHKG0sXE"; // এখানে আসল টোকেন দিন
+      const CHAT_ID  = "7358825471";    // এখানে আপনার এডমিন চ্যাট আইডি দিন
 
       const textMsg = `
 🟢 নতুন ডিপোজিট সাবমিশন

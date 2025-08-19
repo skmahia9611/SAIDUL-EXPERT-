@@ -1,260 +1,114 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>LIFS – Earn & Withdraw</title>
-  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <!-- Ad Network Script -->
-  <script src='//libtl.com/sdk.js' data-zone='9736338' data-sdk='show_9736338'></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>💰 Wallet Panel</title>
   <style>
-    :root{
-      --pink:#ff7fbf;
-      --bg:#fdf3f8;
-      --card:#ffffff;
-      --text:#2a2a2a;
-      --muted:#6b7280;
-      --success:#22c55e;
-      --shadow:0 10px 24px rgba(255, 105, 180, .25);
-      --radius:18px;
-    }*{box-sizing:border-box;}
-    body{margin:0; font-family:"Hind Siliguri",sans-serif; background:var(--bg); color:var(--text);} 
-    .app{max-width:520px; margin:0 auto; padding:16px 14px 36px;}
-    .topbar{display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid #f0f0f0;}
-    .brand{display:flex; align-items:center; gap:8px;}
-    .brand .dot{width:10px; height:10px; border-radius:999px; background:var(--pink);} 
-    .brand b{font-weight:700; font-size:18px;}
-    .badge{font-size:12px; padding:4px 10px; border-radius:999px; background:#fff0f7; color:#d94698; box-shadow:var(--shadow);} 
-    .wallet{background:linear-gradient(145deg,#ffe0ef,#ffd6ea 40%,#fff 120%); border-radius:24px; box-shadow:var(--shadow); padding:16px; margin-bottom:16px; transition: transform .3s, box-shadow .3s;}
-    .wallet:hover{transform: translateY(-5px); box-shadow:0 14px 30px rgba(255,105,180,.25);} 
-    .row{display:flex; justify-content:space-between; align-items:center;}
-    .avatar{width:56px; height:56px; border-radius:50%; background:#fff; display:grid; place-items:center; font-size:22px; box-shadow:0 4px 8px rgba(0,0,0,.08);} 
-    .pill-right{background:#fff; padding:6px 12px; border-radius:14px; font-weight:700; font-size:13px; color:#d94698; box-shadow:var(--shadow);} 
-    .stats{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:14px;}
-    .stat{background:#fff; border-radius:16px; padding:12px; box-shadow:0 6px 14px rgba(0,0,0,.05); text-align:center; transition: transform .25s, box-shadow .25s;}
-    .stat:hover{transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,.1);} 
-    .stat b{font-size:18px;}
-    .stat small{color:var(--muted);} 
-    .earn{margin-top:16px; background:#fff; border-radius:20px; box-shadow:0 8px 16px rgba(0,0,0,.06); transition: transform .3s, box-shadow .3s;}
-    .earn:hover{transform: translateY(-5px); box-shadow:0 14px 30px rgba(255,105,180,.25);} 
-    .earn-head{display:flex; gap:12px; padding:14px; flex-wrap:wrap;}
-    .tag{font-size:12px; padding:4px 10px; border-radius:999px; background:#ecfeff; color:#0891b2; font-weight:600;} 
-    .earn-head .tag:nth-child(2){background:#f0fdf4; color:#16a34a;} 
-    .earn-body{padding:0 14px 14px; display:grid; gap:12px;}
-    .earn-metrics{display:flex; justify-content:space-between; gap:12px; background:#fff6fb; border:1px solid #ffd0e5; border-radius:14px; padding:10px 12px;} 
-    .earn-btn{
-      width:100%; padding:12px 16px; border-radius:18px; color:#fff; font-weight:700; cursor:pointer; border:none; 
-      background:linear-gradient(90deg,#ff7fbf,#fda4af); box-shadow:var(--shadow);
-      transition: all .3s ease-in-out; font-size:16px;
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
+      margin: 0;
+      padding: 0;
     }
-    .earn-btn:disabled{opacity:0.6; cursor:not-allowed;}
-    .earn-btn:hover:not(:disabled){opacity:0.95; transform:scale(1.02);} 
-    .mini{font-size:12px; color:var(--muted); text-align:center;} 
-    .withdraw-modal{position:fixed; inset:0; background:rgba(0,0,0,.55); display:none; align-items:center; justify-content:center; padding:10px; z-index:100;}
-    .wform{width:100%; max-width:420px; background:#fff; border-radius:18px; padding:16px; box-shadow:0 10px 30px rgba(0,0,0,.25); transition: transform .3s ease, box-shadow .3s ease;}
-    .withdraw-modal .wform:hover{transform:translateY(-4px); box-shadow:0 15px 35px rgba(0,0,0,.3);} 
-    .wform input,.wform select{width:100%; padding:10px; margin:6px 0; border-radius:8px; border:1px solid #ddd;}
-    .wform button{width:100%; padding:12px; border:none; border-radius:10px; background:#dc3545; color:#fff; font-weight:700; transition:.25s;}
-    .wform button:disabled{opacity:0.5;}
-    .wform button:hover{opacity:.85;}
-    .hint{font-size:12px; color:#6b7280; margin-top:4px;}
-    .ok{color:#16a34a;}
-    .bad{color:#dc2626;}
+    .wallet-container {
+      max-width: 400px;
+      margin: 20px auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      padding: 20px;
+    }
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .avatar {
+      width: 50px;
+      height: 50px;
+      background: #4a90e2;
+      border-radius: 50%;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: bold;
+    }
+    .username {
+      font-size: 16px;
+      font-weight: bold;
+    }
+    .userid {
+      font-size: 13px;
+      color: #555;
+    }
+    .balance-box {
+      background: #e9f5ff;
+      border: 1px solid #b3d9ff;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .balance-box h2 {
+      margin: 0;
+      font-size: 24px;
+      color: #333;
+    }
+    .balance-box p {
+      margin: 5px 0 0;
+      font-size: 14px;
+      color: #555;
+    }
+    .btn {
+      display: inline-block;
+      padding: 10px 16px;
+      background: #4a90e2;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 14px;
+      text-align: center;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .btn:hover {
+      background: #357ab7;
+    }
   </style>
 </head>
 <body>
-  <div class="app">
-    <!-- Header -->
-    <div class="topbar">
-      <div class="brand"><span class="dot"></span><b>FBG Panel</b></div>
-      <span class="badge">Earn Money 😎</span>
+
+  <div class="wallet-container">
+    <div class="profile">
+      <div class="avatar">👤</div>
+      <div>
+        <div class="username">SAIDUL</div>
+        <div class="userid">ID: <span id="uid"></span></div>
+      </div>
     </div>
 
-    <!-- Wallet -->
-    <section class="wallet">
-      <div class="row">
-        <div style="display:flex;gap:12px;align-items:center">
-          <div class="avatar">👤</div>
-          <div><b>SAIDUL</b><br><small>ID: <span id="uid">Loading...</span></small></div>
-        </div>
-        <div class="pill-right">BALANCE: ৳<span id="totalBal">0.00</span></div>
-      </div>
-      <div class="stats">
-        <div class="stat"><small>আজকের কমিশন</small><b>৳<span id="today">0.00</span></b></div>
-        <div class="stat"><small>গতকালের কমিশন</small><b>৳<span id="yesterday">0.00</span></b></div>
-      </div>
-      <div style="margin-top:14px;display:flex;gap:10px">
-        <button class="earn-btn" id="withdrawBtn">💳 Withdraw</button>
-      </div>
-    </section>
-
-    <!-- Earn -->
-    <section class="earn">
-      <div class="earn-head">
-        <span class="tag">1 TAKA = 100 POINT 🔥</span>
-        <span class="tag">1 ADS TO EARN 10 POINT</span>
-      </div>
-      <div class="earn-body">
-        <div class="earn-metrics">
-          <div><div>TOTAL POINT</div><div><span id="points">0</span> pts</div></div>
-          <div><div>TOTAL TAKA</div><div>৳<span id="pointsTk">0.00</span></div></div>
-        </div>
-        <div style="margin-top:14px">
-          <button class="earn-btn" id="watchAdBtn">▶️ EARN (Ad)</button>
-        </div>
-        <div class="mini">বিজ্ঞাপন দেখুন এবং পয়েন্ট অর্জন করুন</div>
-      </div>
-    </section>
-  </div>
-
-  <!-- Withdraw Modal -->
-  <div class="withdraw-modal" id="withdrawModal">
-    <div class="wform">
-      <h3>Withdraw (Nagad • bKash • Rocket • Binance)</h3>
-      <label>Method</label>
-      <select id="wdMethod">
-        <option value="nagad">📱 Nagad</option>
-        <option value="bkash">📱 bKash</option>
-        <option value="rocket">📱 Rocket</option>
-        <option value="binance">🪙 Binance (USDT)</option>
-      </select>
-      <label>Amount (Minimum ৳50)</label>
-      <input type="number" id="wdAmount" placeholder="e.g., 50" min="50" step="1" value="50">
-      <label>Account / Wallet Number</label>
-      <input type="text" id="wdAccount" placeholder="Mobile number or Binance UID/Address">
-      <label>TELEGRAM USERNAME (optional)</label>
-      <input type="text" id="wdName" placeholder="Receiver name (optional)">
-      <div id="calcBox" class="hint" style="margin:10px 0;"></div>
-      <button id="withdrawConfirm" disabled>Confirm Withdraw</button>
+    <div class="balance-box">
+      <h2>৳1200</h2>
+      <p>Pending Balance</p>
     </div>
+
+    <a href="#" class="btn">💳 Withdraw Request</a>
   </div>
 
   <script>
-  // URL থেকে uid নেয়া
-  function getQueryParam(name){
-    const params=new URLSearchParams(window.location.search);
-    return params.get(name);
-  }
+    // লিংক থেকে chat_id বের করবো
+    const urlParams = new URLSearchParams(window.location.search);
+    const chatId = urlParams.get("chat_id");
 
-  // লোকাল ডাটা লোড
-  let saved=JSON.parse(localStorage.getItem('fbg_data')||'{}');
-  let uid=saved.uid||getQueryParam("uid")||"UNKNOWN";
-
-  // যদি URL থেকে uid আসে তাহলে সেভ করুন
-  if(getQueryParam("uid")){
-    saved.uid=uid;
-    localStorage.setItem("fbg_data",JSON.stringify(saved));
-  }
-
-  // ইউজার আইডি DOM এ দেখান
-  document.getElementById("uid").textContent=uid;
-
-  // Elements
-  const els={
-    totalBal:document.getElementById('totalBal'),
-    today:document.getElementById('today'),
-    points:document.getElementById('points'),
-    pointsTk:document.getElementById('pointsTk'),
-    watchBtn:document.getElementById('watchAdBtn')
-  };
-
-  const RATE=100, REWARD=10;
-  const MIN_WITHDRAW=50;
-  let points=saved.points||0;
-  let balance=saved.balance||0;
-  let today=saved.today||0;
-
-  function fmt(x){return (Math.round(x*100)/100).toFixed(2);} 
-  function sync(){
-    els.points.textContent=points;
-    els.pointsTk.textContent=fmt(points/RATE);
-    els.totalBal.textContent=fmt(balance);
-    els.today.textContent=fmt(today);
-    localStorage.setItem('fbg_data',JSON.stringify({points,balance,today,uid}));
-  }
-  sync();
-
-  function rewardUser(){
-    points+=REWARD;
-    balance+=REWARD/RATE;
-    today+=REWARD/RATE;
-    sync();
-    alert(`অভিনন্দন! +${REWARD} পয়েন্ট (৳${fmt(REWARD/RATE)})`);
-  }
-
-  // Ad
-  els.watchBtn.addEventListener('click',()=>{
-    els.watchBtn.disabled=true;
-    els.watchBtn.textContent="⏳ Ad Running...";
-    if(typeof show_9736338==="function"){show_9736338();}
-    setTimeout(()=>{
-      rewardUser();
-      els.watchBtn.disabled=false;
-      els.watchBtn.textContent="▶️ EARN (Ad)";
-    },16000);
-  });
-
-  // Withdraw modal
-  const wModal=document.getElementById('withdrawModal');
-  const withdrawBtn=document.getElementById('withdrawBtn');
-  const withdrawConfirm=document.getElementById('withdrawConfirm');
-  const wdMethod=document.getElementById('wdMethod');
-  const wdAmount=document.getElementById('wdAmount');
-  const wdAccount=document.getElementById('wdAccount');
-  const wdName=document.getElementById('wdName');
-  const calcBox=document.getElementById('calcBox');
-
-  withdrawBtn.addEventListener('click',()=>{wModal.style.display='flex'; updateCalculation();});
-
-  function updateCalculation(){
-    const amount=parseFloat(wdAmount.value)||0;
-    const needPoints=Math.ceil(amount*RATE);
-    let msg=`🧮 হিসাব: ৳${fmt(amount)} (≈ ${needPoints} পয়েন্ট)\n💳 আপনার ব্যালেন্স: ৳${fmt(balance)} (পয়েন্ট ${points})`;
-    const okMin=amount>=MIN_WITHDRAW;
-    const okBal=amount<=balance;
-    const okAcc=(wdAccount.value||'').trim().length>=5;
-    if(!okMin) msg+=`\n❌ ন্যূনতম উত্তোলন ৳${MIN_WITHDRAW}`;
-    if(!okBal) msg+=`\n❌ পর্যাপ্ত ব্যালেন্স নেই`;
-    if(!okAcc) msg+=`\n❌ সঠিক একাউন্ট/ওয়ালেট নম্বর দিন`;
-    if(okMin&&okBal&&okAcc){msg+=`\n✅ উত্তোলন করতে পারবেন`; withdrawConfirm.disabled=false; calcBox.classList.add("ok"); calcBox.classList.remove("bad");}
-    else{withdrawConfirm.disabled=true; calcBox.classList.add("bad"); calcBox.classList.remove("ok");}
-    calcBox.innerText=msg;
-  }
-
-  wdMethod.addEventListener('change',updateCalculation);
-  wdAmount.addEventListener('input',updateCalculation);
-  wdAccount.addEventListener('input',updateCalculation);
-
-  // Telegram Bot
-  const BOT_TOKEN="7548611254:AAHUWx2WlGQlF975ORmwmHsS7_gTHKG0sXE";
-  const CHAT_ID="7358825471";
-  const TELEGRAM_URL=`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-
-  withdrawConfirm.addEventListener('click',()=>{
-    const method=wdMethod.options[wdMethod.selectedIndex].text;
-    const amount=parseFloat(wdAmount.value)||0;
-    const account=(wdAccount.value||'').trim();
-    const name=(wdName.value||'').trim();
-    if(amount<MIN_WITHDRAW){alert(`ন্যূনতম উত্তোলন ৳${MIN_WITHDRAW}`); return;}
-    if(amount>balance){alert("❌ পর্যাপ্ত ব্যালেন্স নেই"); return;}
-    if(account.length<5){alert("সঠিক একাউন্ট/ওয়ালেট নম্বর দিন"); return;}
-    balance-=amount;
-    const deductPoints=Math.min(points,Math.ceil(amount*RATE));
-    points-=deductPoints;
-    sync();
-    const msg=`📤 Withdraw Request\n\n👤 User ID: ${uid}\n🏧 Method: ${method}\n💳 Account: ${account}${name?`\n👤 Name: ${name}`:''}\n💰 Amount: ৳${fmt(amount)} (−${deductPoints} pts)\n💼 New Balance: ৳${fmt(balance)} | Pts: ${points}`;
-    fetch(TELEGRAM_URL,{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({chat_id:CHAT_ID,text:msg,parse_mode:"HTML"})
-    }).then(r=>r.json()).then(d=>{
-      alert(`✅ Withdraw Submitted!\n৳${fmt(amount)} via ${method}`);
-      wModal.style.display='none';
-    }).catch(err=>{console.error(err); alert("❌ Telegram এ সমস্যা হয়েছে");});
-  });
-
-  // Close modal
-  wModal.addEventListener('click',e=>{if(e.target===wModal) wModal.style.display='none';});
+    if(chatId){
+      document.getElementById("uid").textContent = chatId;
+    } else {
+      document.getElementById("uid").textContent = "Not Found";
+    }
   </script>
 </body>
 </html>

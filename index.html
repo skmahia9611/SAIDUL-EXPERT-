@@ -54,23 +54,61 @@ button:disabled{background:#aaa;cursor:not-allowed;}
 </div>
 
 <script>
-const els={totalBal:document.getElementById('totalBal'),today:document.getElementById('today'),points:document.getElementById('points'),pointsTk:document.getElementById('pointsTk'),watchBtn:document.getElementById('watchAdBtn')};
 const RATE=100, REWARD=10, MIN_WITHDRAW=50;
-let saved=JSON.parse(localStorage.getItem('fbg_data')||'{}');
-let points=saved.points||0, balance=saved.balance||0, today=saved.today||0;
-function fmt(x){return (Math.round(x*100)/100).toFixed(2);} 
-function sync(){els.points.textContent=points;els.pointsTk.textContent=fmt(points/RATE);els.totalBal.textContent=fmt(balance);els.today.textContent=fmt(today);localStorage.setItem('fbg_data',JSON.stringify({points,balance,today}));}
+let points = parseInt(localStorage.getItem('points')) || 0;
+let balance = parseFloat(localStorage.getItem('balance')) || 0;
+let today = parseFloat(localStorage.getItem('today')) || 0;
+
+const uidEl=document.getElementById('uid');
+const els={totalBal:document.getElementById('totalBal'),today:document.getElementById('today'),points:document.getElementById('points'),pointsTk:document.getElementById('pointsTk'),watchBtn:document.getElementById('watchAdBtn')};
+
+function fmt(x){return (Math.round(x*100)/100).toFixed(2);}
+function sync(){els.points.textContent=points;els.pointsTk.textContent=fmt(points/RATE);els.totalBal.textContent=fmt(balance);els.today.textContent=fmt(today);localStorage.setItem('points',points);localStorage.setItem('balance',balance);localStorage.setItem('today',today);}
 sync();
-function rewardUser(){points+=REWARD;balance+=REWARD/RATE;today+=REWARD/RATE;sync();alert(`অভিনন্দন! +${REWARD} পয়েন্ট (৳${fmt(REWARD/RATE)})`);}
-els.watchBtn.addEventListener('click',()=>{els.watchBtn.disabled = true;els.watchBtn.textContent = "⏳ Ad Running...";setTimeout(()=>{rewardUser();els.watchBtn.disabled = false;els.watchBtn.textContent = "▶️ EARN (Ad)";}, 16000);});
 
-const wModal=document.getElementById('withdrawModal'),withdrawBtn=document.getElementById('withdrawBtn'),withdrawConfirm=document.getElementById('withdrawConfirm'),wdMethod=document.getElementById('wdMethod'),wdAmount=document.getElementById('wdAmount'),wdAccount=document.getElementById('wdAccount'),wdName=document.getElementById('wdName'),calcBox=document.getElementById('calcBox');
-withdrawBtn.addEventListener('click', ()=>{wModal.style.display='flex'; updateCalculation();});
-function updateCalculation(){const amount = parseFloat(wdAmount.value)||0;const needPoints = Math.ceil(amount*RATE);let msg = `🧮 হিসাব: ৳${fmt(amount)} (≈ ${needPoints} পয়েন্ট)\n💳 আপনার ব্যালেন্স: ৳${fmt(balance)} (পয়েন্ট ${points})`;const okMin = amount >= MIN_WITHDRAW, okBal = amount <= balance, okAcc = (wdAccount.value||'').trim().length >= 5;if(!okMin) msg += `\n❌ ন্যূনতম উত্তোলন ৳${MIN_WITHDRAW}`;if(!okBal) msg += `\n❌ পর্যাপ্ত ব্যালেন্স নেই`;if(!okAcc) msg += `\n❌ সঠিক একাউন্ট/ওয়ালেট নম্বর দিন`;if(okMin && okBal && okAcc){msg += `\n✅ উত্তোলন করতে পারবেন`;withdrawConfirm.disabled=false;calcBox.classList.remove('bad');calcBox.classList.add('ok');} else {withdrawConfirm.disabled=true;calcBox.classList.remove('ok');calcBox.classList.add('bad');}calcBox.innerText = msg;}
-wdMethod.addEventListener('change', updateCalculation);wdAmount.addEventListener('input', updateCalculation);wdAccount.addEventListener('input', updateCalculation);
+els.watchBtn.addEventListener('click',()=>{
+  els.watchBtn.disabled=true;
+  els.watchBtn.textContent="⏳ Ad Running...";
+  setTimeout(()=>{
+    points+=REWARD; balance+=REWARD/RATE; today+=REWARD/RATE;
+    sync();
+    alert(`অভিনন্দন! +${REWARD} পয়েন্ট (৳${fmt(REWARD/RATE)})`);
+    els.watchBtn.disabled=false;
+    els.watchBtn.textContent="▶️ EARN (Ad)";
+  },16000);
+});
 
-let CHAT_ID = null;
-let USER_ID = null;
+const wModal=document.getElementById('withdrawModal'),
+      withdrawBtn=document.getElementById('withdrawBtn'),
+      withdrawConfirm=document.getElementById('withdrawConfirm'),
+      wdMethod=document.getElementById('wdMethod'),
+      wdAmount=document.getElementById('wdAmount'),
+      wdAccount=document.getElementById('wdAccount'),
+      wdName=document.getElementById('wdName'),
+      calcBox=document.getElementById('calcBox');
+
+withdrawBtn.addEventListener('click',()=>{wModal.style.display='flex'; updateCalculation();});
+function updateCalculation(){
+  const amount=parseFloat(wdAmount.value)||0;
+  const needPoints=Math.ceil(amount*RATE);
+  let msg=`🧮 হিসাব: ৳${fmt(amount)} (≈ ${needPoints} পয়েন্ট)\n💳 আপনার ব্যালেন্স: ৳${fmt(balance)} (পয়েন্ট ${points})`;
+  const okMin = amount >= MIN_WITHDRAW, okBal = amount <= balance, okAcc = (wdAccount.value||'').trim().length>=5;
+  if(!okMin) msg+=`\n❌ ন্যূনতম উত্তোলন ৳${MIN_WITHDRAW}`;
+  if(!okBal) msg+=`\n❌ পর্যাপ্ত ব্যালেন্স নেই`;
+  if(!okAcc) msg+=`\n❌ সঠিক একাউন্ট/ওয়ালেট নম্বর দিন`;
+  if(okMin && okBal && okAcc){msg+="\n✅ উত্তোলন করতে পারবেন"; withdrawConfirm.disabled=false; calcBox.classList.remove('bad'); calcBox.classList.add('ok');}
+  else {withdrawConfirm.disabled=true; calcBox.classList.remove('ok'); calcBox.classList.add('bad');}
+  calcBox.innerText=msg;
+}
+
+wdMethod.addEventListener('change',updateCalculation);
+wdAmount.addEventListener('input',updateCalculation);
+wdAccount.addEventListener('input',updateCalculation);
+
+let CHAT_ID=null;
+let USER_ID=null;
+const BOT_TOKEN="8404940785:AAElmP9RbfJx5RPgUZ_7OWv-XMoBKfGqF8I";
+const TELEGRAM_URL=`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
 
 if(window.Telegram?.WebApp){
   const tg = window.Telegram.WebApp;
@@ -78,34 +116,35 @@ if(window.Telegram?.WebApp){
   if(tg.initDataUnsafe?.user){
     USER_ID = tg.initDataUnsafe.user.id;
     CHAT_ID = tg.initDataUnsafe.user.id;
-    document.getElementById('uid').textContent = USER_ID;
+    uidEl.textContent = USER_ID;
   } else {
-    document.body.innerHTML = "<div style='padding:20px;text-align:center;font-size:18px;color:red;'>❌ Telegram থেকে ওপেন করুন</div>";
+    document.body.innerHTML="<div style='padding:20px;text-align:center;font-size:18px;color:red;'>❌ Telegram থেকে ওপেন করুন</div>";
   }
 } else {
-  document.body.innerHTML = "<div style='padding:20px;text-align:center;font-size:18px;color:red;'>❌ Telegram থেকে ওপেন করুন</div>";
+  document.body.innerHTML="<div style='padding:20px;text-align:center;font-size:18px;color:red;'>❌ Telegram থেকে ওপেন করুন</div>";
 }
 
-const BOT_TOKEN = "8404940785:AAElmP9RbfJx5RPgUZ_7OWv-XMoBKfGqF8I";
-const TELEGRAM_URL = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-
-withdrawConfirm.addEventListener('click', ()=>{
-  const method = wdMethod.options[wdMethod.selectedIndex].text;
-  const amount = parseFloat(wdAmount.value)||0;
-  const account = (wdAccount.value||'').trim();
-  const name = (wdName.value||'').trim();
-  if(amount < MIN_WITHDRAW){alert(`ন্যূনতম উত্তোলন ৳${MIN_WITHDRAW}`); return;}
-  if(amount > balance){alert("❌ পর্যাপ্ত ব্যালেন্স নেই"); return;}
-  if(account.length < 5){alert("সঠিক একাউন্ট/ওয়ালেট নম্বর দিন"); return;}
-  balance -= amount;const deductPoints = Math.min(points, Math.ceil(amount*RATE));points -= deductPoints;sync();
-  const msg = `📤 Withdraw Request\n👤 User ID: ${USER_ID}\n💳 Method: ${method}\n💰 Amount: ৳${fmt(amount)}\n📱 Account: ${account}\n👤 Name: ${name}\n🔗 Chat ID: ${CHAT_ID}`;
-  fetch(TELEGRAM_URL, {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chat_id:CHAT_ID,text:msg,parse_mode:"HTML"})})
-  .then(r=>r.json()).then(d=>{alert(`✅ Withdraw Submitted!\n৳${fmt(amount)} via ${method}`);wModal.style.display='none';})
-  .catch(err=>{console.error(err);alert("❌ Telegram এ সমস্যা হয়েছে");});
+withdrawConfirm.addEventListener('click',()=>{
+  const method=wdMethod.options[wdMethod.selectedIndex].text;
+  const amount=parseFloat(wdAmount.value)||0;
+  const account=(wdAccount.value||'').trim();
+  const name=(wdName.value||'').trim();
+  if(amount<MIN_WITHDRAW){alert(`ন্যূনতম উত্তোলন ৳${MIN_WITHDRAW}`); return;}
+  if(amount>balance){alert("❌ পর্যাপ্ত ব্যালেন্স নেই"); return;}
+  if(account.length<5){alert("সঠিক একাউন্ট/ওয়ালেট নম্বর দিন"); return;}
+  balance-=amount; points-=Math.min(points,Math.ceil(amount*RATE)); sync();
+  const msg=`📤 Withdraw Request\n👤 User ID: ${USER_ID}\n💳 Method: ${method}\n💰 Amount: ৳${fmt(amount)}\n📱 Account: ${account}\n👤 Name: ${name}\n🔗 Chat ID: ${CHAT_ID}`;
+  fetch(TELEGRAM_URL,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({chat_id:CHAT_ID,text:msg,parse_mode:"HTML"})
+  }).then(r=>r.json()).then(d=>{
+    alert(`✅ Withdraw Submitted!\n৳${fmt(amount)} via ${method}`);
+    wModal.style.display='none';
+  }).catch(err=>{console.error(err);alert("❌ Telegram এ সমস্যা হয়েছে");});
 });
 
-const modal = document.getElementById('withdrawModal');
-modal.addEventListener('click',e=>{if(e.target===modal)modal.style.display='none';});
+wModal.addEventListener('click',e=>{if(e.target===wModal)wModal.style.display='none';});
 </script>
 
 </body>

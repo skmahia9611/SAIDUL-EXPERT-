@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <title>Task System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .task-item {
+            margin: 10px 0;
+            padding: 10px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .task-button-small {
+            padding: 5px 10px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .task-button-small:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .progress-box {
+            display: none;
+            background: #fff;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+        .success-message {
+            display: none;
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border: 1px solid #c3e6cb;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h2>💰 Balance: <span id="balance">0.00</span> BDT</h2>
+
+    <div id="tasks"></div>
+
+    <!-- Password Box -->
+    <div id="passwordBox" class="progress-box">
+        সাইট থেকে পাওয়া কোডটি বসিয়ে Submit করুন।  
+        ❌ সাবধান প্রতারণা করার চেষ্টা করবেন না ⚠️  
+        <input type="password" id="taskPassword" placeholder="Enter Code">
+        <button onclick="verifyPassword()">Submit</button>
+    </div>
+
+    <!-- Success Message -->
+    <div id="successMessage" class="success-message">
+        🎉 Task Completed Successfully!
+    </div>
+
+    <script>
+        let taskNames = {
+            1: "YOUTUBE",
+            2: "🔍 Visit Shortlink",
+            3: "📢 Watch Advertisement",
+            4: "🎥 Watch Video",
+            5: "📩 Subscribe to Channel"
+        };
+
+        let passwords = {
+            1: "A9C15FM", 2: "99", 3: "126", 4: "4665", 5: "16"
+        };
+
+        let links = {
+            1: "https://t.me/JEEPC_TAKS/52", 
+            2: "https://za.gl/BfVO35I",
+            3: "https://poawooptugroo.com/4/8785105", 
+            4: "https://za.gl/BfVO35I",
+            5: "https://poawooptugroo.com/4/8785107"
+        };
+
+        let taskRewards = {
+            1: 10,  
+            2: 5,   
+            3: 8,   
+            4: 6,   
+            5: 7    
+        };
+
+        let completedTasks = JSON.parse(localStorage.getItem("completedTasks")) || {};
+        let balance = parseFloat(localStorage.getItem("balance")) || 0;
+        document.getElementById("balance").textContent = balance.toFixed(2);
+
+        function resetTasksAtMidnight() {
+            let lastReset = localStorage.getItem("lastReset");
+            let today = new Date().toDateString(); 
+            if (lastReset !== today) {
+                localStorage.setItem("completedTasks", JSON.stringify({})); 
+                localStorage.setItem("lastReset", today);
+                location.reload(); 
+            }
+        }
+        resetTasksAtMidnight();
+
+        const tasksContainer = document.getElementById("tasks");
+        for (let i = 1; i <= 5; i++) {
+            const taskDiv = document.createElement("div");
+            taskDiv.className = "task-item";
+            taskDiv.innerHTML = `
+                ${taskNames[i]}
+                <button id="task${i}" class="task-button-small" onclick="startTask(${i}, '${links[i]}')">Start Task</button>
+            `;
+            tasksContainer.appendChild(taskDiv);
+            if (completedTasks[i]) document.getElementById(`task${i}`).disabled = true;
+        }
+
+        let activeTask = null;
+        let activeTaskPassword = null;
+
+        function startTask(taskId, url) {
+            if (completedTasks[taskId]) {
+                alert("This task is already completed.");
+                return;
+            }
+            if (activeTask !== null) {
+                alert("Please finish the current task first.");
+                return;
+            }
+
+            activeTask = taskId;
+            activeTaskPassword = passwords[taskId];
+            window.open(url, "_blank");
+
+            // ৫ সেকেন্ড পর পাসওয়ার্ড বক্স দেখাবে
+            setTimeout(() => {
+                document.getElementById("passwordBox").style.display = "block";
+                document.getElementById("successMessage").style.display = "none";
+            }, 5000);
+        }
+
+        function verifyPassword() {
+            if (document.getElementById("taskPassword").value === activeTaskPassword) {
+                balance += taskRewards[activeTask];
+                document.getElementById("balance").textContent = balance.toFixed(2);
+                localStorage.setItem("balance", balance.toFixed(2));
+                completedTasks[activeTask] = true;
+                localStorage.setItem("completedTasks", JSON.stringify(completedTasks));
+                document.getElementById(`task${activeTask}`).disabled = true;
+                document.getElementById("successMessage").style.display = "block";
+                document.getElementById("passwordBox").style.display = "none";
+                activeTask = null;
+                document.getElementById("taskPassword").value = "";
+            } else {
+                alert("❌ Incorrect password! Try again.");
+            }
+        }
+    </script>
+</body>
+</html>

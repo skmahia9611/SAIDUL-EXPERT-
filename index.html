@@ -1,333 +1,1812 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Deposit – bKash / Nagad / Rocket / Binance Pay</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <meta name="color-scheme" content="light dark" />
-  <style>
-    :root { color-scheme: light dark; }
-  </style>
-  <!-- Telegram Mini App API -->
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-</head>
-<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-  <div class="max-w-3xl mx-auto p-4 sm:p-6">
-    <header class="mb-6 sm:mb-8">
-      <h1 class="text-2xl sm:text-3xl font-bold tracking-tight">PAYMENT NOW</h1>
-      <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300 mt-1">নিচের যে কোনো একটা নাম্বারে পেমেন্ট করুন।</p>
-    </header>
+  <head>
+  <script src='//libtl.com/sdk.js' data-zone='9757947' data-sdk='show_9757947'></script>    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="monetag" content="3432a1b605874943e4ed38ea3d7306ac">
+    <title>𝗔𝗗𝗦 𝗧𝗢 𝗘𝗔𝗥𝗡𝗜𝗡𝗚 𝗠𝗢𝗡𝗘𝗬</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        :root {
+            /* Muted Modern Theme Colors */
+            --primary-color: #4A90E2; /* Blue */
+            --primary-dark: #357ABD;
+            --secondary-color: #50E3C2; /* Teal */
+            --accent-color: #F5A623; /* Orange */
+            --bg-light: #F7F7F7;
+            --bg-dark: #2C3E50; /* Dark Slate Blue */
+            --card-bg-light: #FFFFFF;
+            --card-bg-dark: #34495E;
+            --text-dark: #333333;
+            --text-light: #F7F7F7;
+            --border-color-light: #E0E0E0;
+            --border-color-dark: #4A657D;
 
-    <!-- Payment Methods -->
-    <section class="grid sm:grid-cols-4 gap-4">
-      <article class="method card rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 p-4 bg-white dark:bg-gray-800" data-name="bKash" data-number="01827750260">
-        <div class="flex items-center justify-between">
-          <span class="px-2 py-1 rounded-full text-xs bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-300">bKash</span>
-          <button class="copyBtn px-3 py-1.5 text-sm rounded-xl bg-gray-900 text-white dark:bg-white dark:text-gray-900">Copy</button>
-        </div>
-        <p class="number font-mono text-lg mt-3 select-all">01827750260</p>
-        <p class="text-xs text-gray-500 mt-1">Personal / Send Money</p>
-      </article>
-
-      <article class="method card rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 p-4 bg-white dark:bg-gray-800" data-name="Nagad" data-number="01864260513">
-        <div class="flex items-center justify-between">
-          <span class="px-2 py-1 rounded-full text-xs bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300">Nagad</span>
-          <button class="copyBtn px-3 py-1.5 text-sm rounded-xl bg-gray-900 text-white dark:bg-white dark:text-gray-900">Copy</button>
-        </div>
-        <p class="number font-mono text-lg mt-3 select-all">01864260513</p>
-        <p class="text-xs text-gray-500 mt-1">Personal / Send Money</p>
-      </article>
-
-      <article class="method card rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 p-4 bg-white dark:bg-gray-800" data-name="Rocket" data-number="018277502604">
-        <div class="flex items-center justify-between">
-          <span class="px-2 py-1 rounded-full text-xs bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300">Rocket</span>
-          <button class="copyBtn px-3 py-1.5 text-sm rounded-xl bg-gray-900 text-white dark:bg-white dark:text-gray-900">Copy</button>
-        </div>
-        <p class="number font-mono text-lg mt-3 select-all">018277502604</p>
-        <p class="text-xs text-gray-500 mt-1">Personal / Send Money</p>
-      </article>
-
-      <article class="method card rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 p-4 bg-white dark:bg-gray-800" data-name="Binance Pay" data-number="1085460262">
-        <div class="flex items-center justify-between">
-          <span class="px-2 py-1 rounded-full text-xs bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300">Binance Pay</span>
-          <button class="copyBtn px-3 py-1.5 text-sm rounded-xl bg-gray-900 text-white dark:bg-white dark:text-gray-900">Copy</button>
-        </div>
-        <p class="number font-mono text-lg mt-3 select-all">1085460262</p>
-        <p class="text-xs text-gray-500 mt-1">Pay ID</p>
-      </article>
-    </section>
-
-    <!-- Divider -->
-    <div class="h-px bg-gray-200 dark:bg-gray-800 my-6"></div>
-
-    <!-- Service Selection -->
-    <section class="rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 p-4 sm:p-6 bg-white dark:bg-gray-800 mb-6">
-      <h2 class="text-xl font-semibold">SELECT MAIL</h2>
-      <p class="text-sm text-gray-500">কত পিস এবং কোন ধরনের অ্যাকাউন্ট নিবেন লিখুন</p>
-
-      <div class="mt-4 grid sm:grid-cols-2 gap-4">
-        <label class="grid gap-1">
-          <span class="text-sm">MAIL LIST</span>
-          <select id="service" class="rounded-xl border-gray-300 dark:border-gray-700 bg-transparent px-3 py-2">
-            <option value="HOTMAIL" data-price="2">HOT MAIL – 2৳</option>
-            <option value="OUTLOOK" data-price="2">OUTLOOK – 2৳</option>
-            <option value="GMAIL LOGIN" data-price="3">GMAIL LOGIN – 3৳</option>
-            <option value="GMAIL OTP" data-price="4">GMAIL OTP – 4৳</option>
-          </select>
-        </label>
-        <label class="grid gap-1">
-          <span class="text-sm">পরিমাণ (পিস)</span>
-          <input id="qty" type="number" min="1" value="1" class="rounded-xl border-gray-300 dark:border-gray-700 bg-transparent px-3 py-2" />
-        </label>
-      </div>
-
-      <div class="mt-4 flex items-center justify-between">
-        <p id="calcPrice" class="text-sm font-medium text-gray-800 dark:text-gray-200">মোট: 2.5৳</p>
-        <div class="flex gap-2">
-          <button id="copyAmount" class="px-3 py-1.5 text-sm rounded-xl bg-gray-900 text-white dark:bg-white dark:text-gray-900">অ্যামাউন্ট কপি</button>
-          <button id="fillAmount" class="px-3 py-1.5 text-sm rounded-xl bg-green-600 text-white dark:bg-green-500 dark:text-white">ফর্মে বসান</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Deposit Form -->
-    <section class="rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 p-4 sm:p-6 bg-white dark:bg-gray-800">
-      <h2 class="text-xl font-semibold">PAYMENT INFO</h2>
-      <p class="text-sm text-gray-500">PAYMENT করার পর সঠিক তথ্য লিখুন</p>
-      <form id="depositForm" class="mt-4 grid gap-4">
-        <div class="grid sm:grid-cols-2 gap-4">
-          <label class="grid gap-1">
-            <span class="text-sm">পেমেন্ট মেথড</span>
-            <select id="method" class="rounded-xl border-gray-300 dark:border-gray-700 bg-transparent px-3 py-2">
-              <option>bKash</option>
-              <option>Nagad</option>
-              <option>Rocket</option>
-              <option>Binance Pay</option>
-            </select>
-          </label>
-          <label class="grid gap-1">
-            <span class="text-sm">অ্যামাউন্ট (৳)</span>
-            <input id="amount" type="number" min="5" required placeholder="5" class="rounded-xl border-gray-300 dark:border-gray-700 bg-transparent px-3 py-2" />
-          </label>
-        </div>
-
-        <div class="grid sm:grid-cols-2 gap-4">
-          <label class="grid gap-1">
-            <span class="text-sm">আপনার নাম্বার লিখুন </span>
-            <input id="sender" type="tel" required placeholder="01XXXXXXXXX" class="rounded-xl border-gray-300 dark:border-gray-700 bg-transparent px-3 py-2" />
-          </label>
-          <label class="grid gap-1">
-            <span class="text-sm">ট্রানজ্যাকশন আইডি</span>
-            <input id="trxid" type="text" required placeholder="e.g., B8XY9ZAB" class="rounded-xl border-gray-300 dark:border-gray-700 bg-transparent px-3 py-2" />
-          </label>
-        </div>
-
-        <label class="grid gap-1">
-          <span class="text-sm">🆔 ID</span>
-          <input id="note" type="text" placeholder="🆔 ID 7358825471" class="rounded-xl border-gray-300 dark:border-gray-700 bg-transparent px-3 py-2" />
-        </label>
-
-        <div id="errorBox" class="hidden text-red-600 text-sm"></div>
-
-        <div class="flex items-center justify-between gap-3">
-          <p class="text-xs text-gray-500">ফর্ম পূরণ সাবমিট ক্লিক করুন ✅</p>
-          <button class="px-4 py-2 rounded-2xl bg-gray-900 text-white dark:bg-white dark:text-gray-900" type="submit">সাবমিট</button>
-        </div>
-      </form>
-
-      <!-- Success Panel -->
-      <div id="successPanel" class="hidden mt-6 border border-green-200 dark:border-green-900 rounded-2xl p-4 bg-green-50 dark:bg-green-900/20">
-        <h3 class="text-lg font-semibold">ডিপোজিট সফল হয়েছে</h3>
-        <p class="text-sm text-gray-600 dark:text-gray-300">আমাদের টিম শিগগিরই যাচাই করবে।</p>
-        <dl id="summary" class="mt-3 grid sm:grid-cols-2 gap-x-6 gap-y-2 text-sm"></dl>
-      </div>
-      <!-- Footer Links -->
-    <footer class="mt-10 mb-6 flex flex-wrap justify-center gap-3">
-      <!-- YouTube -->
-      <a href="https://youtube.com/@saidulexpert?si=rF5fb9NZ1g1NzN2i" target="_blank" class="flex items-center gap-2 px-4 py-2 rounded-2xl bg-[#FF0000] text-white shadow-sm hover:opacity-90">
-        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M19.615 3.184c1.662.445 2.973 1.757 3.418 3.419C24 8.838 24 12 24 12s0 3.162-.967 5.397c-.445 1.662-1.756 2.973-3.418 3.418C17.382 22.781 12 22.781 12 22.781s-5.382 0-7.615-.966c-1.662-.445-2.973-1.756-3.418-3.418C0 15.162 0 12 0 12s0-3.162.967-5.397c.445-1.662 1.756-2.974 3.418-3.419C6.618 1.219 12 1.219 12 1.219s5.382 0 7.615.965ZM9.75 15.568l6.5-3.568-6.5-3.568v7.136Z"/>
-        </svg>
-        YouTube
-      </a>
-
-      <!-- Telegram -->
-      <a href="https://t.me/Life_Work_BD" target="_blank" class="flex items-center gap-2 px-4 py-2 rounded-2xl bg-[#0088CC] text-white shadow-sm hover:opacity-90">
-        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M9.999 15.064 9.9 19.454c.405 0 .58-.174.789-.383l1.894-1.81 3.929 2.877c.72.398 1.233.19 1.417-.664l2.568-12.052c.236-1.118-.404-1.554-1.111-1.279L3.626 9.96c-1.091.428-1.075 1.037-.186 1.314l4.743 1.48L17.71 6.77c.465-.287.89-.128.541.159"/>
-        </svg>
-        Telegram
-      </a>
-
-<!-- Customer Support -->
-      <a href="https://shorturl.at/LkaDt" 
-         class="flex items-center gap-2 px-4 py-2 rounded-2xl bg-red-600 text-white shadow-sm hover:bg-red-700">
-        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M12.004 1.999c-5.514 0-10 4.486-10 10 0 5.514 4.486 10 10 10 1.664 0 3.231-.414 4.611-1.145l3.498.92a1 1 0 0 0 1.223-1.223l-.92-3.498A9.96 9.96 0 0 0 22.004 12c0-5.514-4.486-10.001-10-10.001Zm5.513 14.681-.327.194.546 2.072-2.072-.546-.194.327a8.004 8.004 0 1 1 4.046-4.047Z"/>
-        </svg>
-        Customer Support
-      </a>
-      
-    </section>
-  </div>
-
-  <script>
-    // --- Telegram Mini App Auto Fill + Local Save ---
-    const tg = window.Telegram.WebApp;
-    const noteInput = document.getElementById("note");
-
-    // যদি Telegram থেকে ID পাওয়া যায়
-    if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-      const userId = tg.initDataUnsafe.user.id;
-      noteInput.value = `🆔 ID ${userId}`;
-      localStorage.setItem("savedUserId", `🆔 ID ${userId}`);
-    }
-
-    // যদি আগে সেভ করা থাকে তাহলে বসাও
-    const savedId = localStorage.getItem("savedUserId");
-    if (savedId) {
-      noteInput.value = savedId;
-    }
-
-    // --- Copy buttons ---
-    document.querySelectorAll('.method').forEach(card => {
-      const btn = card.querySelector('.copyBtn');
-      const numberEl = card.querySelector('.number');
-      btn.addEventListener('click', async () => {
-        try {
-          await navigator.clipboard.writeText((card.dataset.number || numberEl.textContent).trim());
-          const old = btn.textContent;
-          btn.textContent = 'Copied!';
-          btn.disabled = true;
-          setTimeout(() => { btn.textContent = old; btn.disabled = false; }, 1200);
-        } catch {
-          console.log('Copy failed');
+            /* Sizes */
+            --border-radius: 12px;
+            --border-radius-sm: 8px;
+            --transition: all 0.3s ease-in-out;
         }
-      });
-    });
 
-    // --- Service price calculation ---
-    const service = document.getElementById('service');
-    const qty = document.getElementById('qty');
-    const calcPrice = document.getElementById('calcPrice');
-    const copyAmount = document.getElementById('copyAmount');
-    const fillAmount = document.getElementById('fillAmount');
-    const amountInput = document.getElementById('amount');
+        /* Dark Mode Specific Variables */
+        body.dark-mode {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            --header-bg: linear-gradient(135deg, var(--bg-dark), #1A2530);
+            --card-bg: var(--card-bg-dark);
+            --text-primary: var(--text-light);
+            --text-secondary: #B0B0B0;
+            --border-color: var(--border-color-dark);
+            --input-bg: #4A657D;
+            --input-border: #5A7E9C;
+            --button-bg-secondary: #4A657D;
+            --button-text-secondary: var(--secondary-color);
+            --toggle-bg: #4A657D;
+        }
 
-    function updatePrice() {
-      const price = parseFloat(service.selectedOptions[0].dataset.price);
-      const total = price * (qty.value || 1);
-      calcPrice.textContent = `মোট: ${total}৳`;
-      return total;
-    }
+        /* Light Mode Specific Variables */
+        body:not(.dark-mode) {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            --header-bg: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            --card-bg: var(--card-bg-light);
+            --text-primary: var(--text-dark);
+            --text-secondary: #666666;
+            --border-color: var(--border-color-light);
+            --input-bg: #F0F0F0;
+            --input-border: #E0E0E0;
+            --button-bg-secondary: #E9ECEF;
+            --button-text-secondary: var(--primary-color);
+            --toggle-bg: #E0E0E0;
+        }
 
-    service.addEventListener('change', updatePrice);
-    qty.addEventListener('input', updatePrice);
-    updatePrice();
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    copyAmount.addEventListener('click', () => {
-      const total = updatePrice();
-      navigator.clipboard.writeText(total);
-    });
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            transition: background-color var(--transition), color var(--transition);
+        }
 
-    fillAmount.addEventListener('click', () => {
-      const total = updatePrice();
-      amountInput.value = total;
-    });
+        .app-container {
+            max-width: 480px;
+            margin: 0 auto;
+            position: relative;
+            background-color: var(--bg-light); /* Fallback for content area */
+        }
 
-    // --- Deposit form handling ---
-    const form = document.getElementById('depositForm');
-    const panel = document.getElementById('successPanel');
-    const summary = document.getElementById('summary');
-    const errorBox = document.getElementById('errorBox');
+        /* Header Section */
+        .header {
+            height: 180px;
+            background: var(--header-bg);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: var(--text-light);
+            border-bottom-left-radius: var(--border-radius);
+            border-bottom-right-radius: var(--border-radius);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
 
-    function fmtBDT(n) { return new Intl.NumberFormat('bn-BD', { style: 'currency', currency: 'BDT', maximumFractionDigits: 0 }).format(Number(n||0)); }
+        .header-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            z-index: 2;
+            letter-spacing: 0.5px;
+        }
 
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      errorBox.classList.add('hidden');
-      errorBox.textContent = '';
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            font-size: 1rem;
+            cursor: pointer;
+            z-index: 10;
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+        }
 
-      const data = {
-        service: service.value,
-        qty: qty.value,
-        method: document.getElementById('method').value,
-        amount: document.getElementById('amount').value,
-        sender: document.getElementById('sender').value,
-        trxid: document.getElementById('trxid').value.trim().toUpperCase(),
-        note: noteInput.value.trim(),
-        time: new Date().toLocaleString('bn-BD')
-      };
+        .theme-toggle:hover {
+            opacity: 0.8;
+            transform: scale(1.05);
+        }
 
-      // সাবমিটের সময় ID সেভ হবে
-      if (data.note) {
-        localStorage.setItem("savedUserId", data.note);
-      }
+        /* Profile Section */
+        .profile-section {
+            margin-top: -50px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
 
-      if (data.amount < 5) { showError('ন্যূনতম 5 টাকা ডিপোজিট করতে হবে'); return; }
-      if (!/^01\d{9}$/.test(data.sender)) { showError('সঠিক মোবাইল নম্বর দিন'); return; }
-      if (!data.trxid || data.trxid.length < 6) { showError('সঠিক ট্রানজ্যাকশন আইডি দিন'); return; }
+        .profile-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 70px 20px 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            position: relative;
+            text-align: center;
+            transition: var(--transition);
+        }
 
-      // Render success summary
-      summary.innerHTML = '';
-      const entries = [
-        ['সার্ভিস', data.service + ` (${data.qty} পিস)`],
-        ['পেমেন্ট মেথড', data.method],
-        ['অ্যামাউন্ট', fmtBDT(data.amount)],
-        ['প্রেরকের নম্বর', data.sender],
-        ['ট্রানজ্যাকশন আইডি', data.trxid],
-        ['সময়', data.time],
-        data.note ? ['নোট', data.note] : null,
-      ].filter(Boolean);
+        .profile-pic {
+            position: absolute;
+            top: -45px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 3px solid var(--card-bg);
+            object-fit: cover;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            background: var(--primary-color); /* Placeholder background */
+        }
 
-      for (const [k, v] of entries) {
-        const dt = document.createElement('div'); dt.className = 'font-medium'; dt.textContent = k;
-        const dd = document.createElement('div'); dd.className = 'text-gray-700 dark:text-gray-300'; dd.textContent = v;
-        summary.append(dt, dd);
-      }
+        .profile-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+        }
 
-      panel.classList.remove('hidden');
-      panel.scrollIntoView({ behavior: 'smooth' });
+        .verified-badge {
+            color: var(--secondary-color);
+            margin-left: 5px;
+            font-size: 0.8rem;
+        }
 
-      // --- Send to Telegram Bot ---
-      const BOT_TOKEN = "7548611254:AAHUWx2WlGQlF975ORmwmHsS7_gTHKG0sXE"; // এখানে আসল টোকেন দিন
-      const CHAT_ID  = "7358825471";    // এখানে আপনার এডমিন চ্যাট আইডি দিন
+        .edit-name-btn {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            margin-left: 8px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: var(--transition);
+            opacity: 0.8;
+        }
 
-      const textMsg = `
-🟢 নতুন ডিপোজিট সাবমিশন
-━━━━━━━━━━━━━━━
-📌 সার্ভিস: ${data.service} (${data.qty} পিস)
-📌 মেথড: ${data.method}
-💰 এমাউন্ট: ${data.amount}৳
-👤 প্রেরক: ${data.sender}
-🔑 ট্রানজ্যাকশন আইডি: ${data.trxid}
-🕒 সময়: ${data.time}
-${data.note ? "📝 নোট: " + data.note : ""}
-`;
+        .edit-name-btn:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
 
-      fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ chat_id: CHAT_ID, text: textMsg })
-      })
-      .then(r => r.json())
-      .then(res => console.log("Telegram response:", res))
-      .catch(err => console.error("Telegram error:", err));
-    });
+        .points-display {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(74, 144, 226, 0.1);
+            padding: 6px 15px;
+            border-radius: 50px;
+            margin-top: 8px;
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+        }
 
-    function showError(msg) {
-      errorBox.textContent = msg;
-      errorBox.classList.remove('hidden');
-    }
+        .points-display i {
+            margin-right: 6px;
+            color: var(--primary-color);
+        }
 
-    // Card click auto-select
-    document.querySelectorAll('.method').forEach(card => {
-      card.addEventListener('click', (e) => {
-        if (e.target.closest('button')) return;
-        document.getElementById('method').value = card.dataset.name;
-      });
-    });
-  </script>
+        .stats-display {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .stat-item {
+            background: var(--bg-light);
+            padding: 8px 12px;
+            border-radius: var(--border-radius-sm);
+            border: 1px solid var(--border-color);
+            min-width: 70px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+        }
+        body.dark-mode .stat-item {
+            background: var(--input-bg);
+        }
+
+        .stat-value {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+            font-size: 1rem;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            opacity: 0.8;
+            color: var(--text-secondary);
+        }
+
+        /* Content Section */
+        .content-section {
+            padding: 20px;
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 18px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .section-title i {
+            margin-right: 10px;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+
+        /* Task Cards */
+        .task-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .task-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .task-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .task-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(74, 144, 226, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            color: var(--primary-color);
+            font-size: 1rem;
+        }
+
+        .task-title {
+            font-weight: 600;
+            flex: 1;
+            color: var(--text-primary);
+        }
+
+        .reward-badge {
+            background: rgba(245, 166, 35, 0.1);
+            color: var(--accent-color);
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .task-description {
+            color: var(--text-secondary);
+            margin-bottom: 18px;
+            line-height: 1.5;
+            font-size: 0.9rem;
+        }
+
+        .progress-container {
+            margin-bottom: 18px;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: var(--border-color);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: var(--primary-color);
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        /* Buttons */
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            border-radius: var(--border-radius-sm);
+            border: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(74, 144, 226, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--button-bg-secondary);
+            color: var(--button-text-secondary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+        body.dark-mode .btn-secondary:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+
+        .btn-disabled {
+            background: var(--border-color);
+            color: var(--text-secondary);
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .btn-disabled:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Channel List */
+        .channel-list {
+            list-style: none;
+        }
+
+        .channel-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .channel-item:last-child {
+            border-bottom: none;
+        }
+
+        .channel-info {
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+
+        .channel-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(74, 144, 226, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+        }
+
+        .channel-name {
+            font-weight: 500;
+            flex: 1;
+            color: var(--text-primary);
+        }
+
+        .channel-reward {
+            font-size: 0.8rem;
+            color: var(--accent-color);
+            margin-right: 12px;
+        }
+
+        .join-btn {
+            padding: 7px 14px;
+            border-radius: var(--border-radius-sm);
+            background: var(--primary-color);
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+
+        .join-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .join-btn.claimed {
+            background: var(--secondary-color);
+            cursor: default;
+            opacity: 0.9;
+        }
+
+        /* Input Groups */
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: var(--border-radius-sm);
+            border: 1px solid var(--input-border);
+            background: var(--input-bg);
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+        }
+
+        .select-field {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: var(--border-radius-sm);
+            border: 1px solid var(--input-border);
+            background: var(--input-bg);
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 15px;
+        }
+        body.dark-mode .select-field {
+             background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+        }
+
+        /* Status Messages */
+        .status-message {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.85rem;
+            min-height: 20px;
+            padding: 8px;
+            border-radius: var(--border-radius-sm);
+        }
+
+        .success-message {
+            background: rgba(80, 227, 194, 0.1);
+            color: #50E3C2;
+            border: 1px solid #50E3C2;
+        }
+
+        .error-message {
+            background: rgba(230, 74, 74, 0.1);
+            color: #E64A4A;
+            border: 1px solid #E64A4A;
+        }
+
+        /* Referral Section */
+        .referral-container {
+            background: var(--input-bg);
+            border-radius: var(--border-radius-sm);
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px dashed var(--border-color);
+        }
+
+        .referral-input-group {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .referral-input {
+            flex: 1;
+            padding: 9px 12px;
+            border-radius: var(--border-radius-sm) 0 0 var(--border-radius-sm);
+            border: 1px solid var(--input-border);
+            background: var(--bg-light);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+        body.dark-mode .referral-input {
+            background: var(--card-bg-dark);
+        }
+
+        .copy-btn {
+            padding: 0 14px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .copy-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .referral-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .stat-card {
+            text-align: center;
+            flex: 1;
+        }
+
+        .stat-number {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 3px;
+        }
+
+        .stat-title {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        /* Referred Users */
+        .referred-users {
+            margin-top: 15px;
+        }
+
+        .user-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(74, 144, 226, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+        }
+
+        .user-info {
+            flex: 1;
+        }
+
+        .user-name {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .user-code {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 25px 0;
+            color: var(--text-secondary);
+        }
+
+        .empty-state i {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            color: var(--primary-color);
+            opacity: 0.7;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--card-bg);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -3px 15px rgba(0, 0, 0, 0.08);
+            z-index: 100;
+            max-width: 480px;
+            margin: 0 auto;
+            border-top: 1px solid var(--border-color);
+            border-top-left-radius: var(--border-radius);
+            border-top-right-radius: var(--border-radius);
+        }
+        body.dark-mode .bottom-nav {
+             box-shadow: 0 -3px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.7rem;
+            font-weight: 500;
+            flex: 1;
+            transition: var(--transition);
+        }
+
+        .nav-item i {
+            font-size: 1.3rem;
+            margin-bottom: 3px;
+            transition: var(--transition);
+        }
+
+        .nav-item.active {
+            color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .nav-item.active i {
+            color: var(--primary-color);
+            transform: scale(1.08);
+        }
+
+        /* Ad Modal */
+        .ad-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .ad-modal-overlay.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .ad-modal {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 380px;
+            padding: 25px;
+            text-align: center;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .ad-modal-overlay.show .ad-modal {
+            transform: scale(1);
+        }
+
+        .ad-modal-title {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .spinner {
+            width: 45px;
+            height: 45px;
+            border: 3px solid var(--border-color);
+            border-top-color: var(--primary-color);
+            border-radius: 50%;
+            margin: 15px auto;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .ad-status {
+            margin: 12px 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Developer Footer */
+        .developer-footer {
+            text-align: center;
+            padding: 12px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 20px;
+        }
+
+        .developer-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            opacity: 0;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+        }
+
+        .toast.show {
+            opacity: 1;
+            bottom: 90px;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 480px) {
+            .profile-card {
+                padding: 70px 15px 15px;
+            }
+            .content-section {
+                padding: 15px;
+            }
+            .task-card {
+                padding: 15px;
+            }
+            .header-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+<link rel="me" href="https://www.blogger.com/profile/00275839818633085595" />
+<meta name='google-adsense-platform-account' content='ca-host-pub-1556223355139109'/>
+<meta name='google-adsense-platform-domain' content='blogspot.com'/>
+
+<script type="text/javascript" language="javascript">
+  // Supply ads personalization default for EEA readers
+  // See https://www.blogger.com/go/adspersonalization
+  adsbygoogle = window.adsbygoogle || [];
+  if (typeof adsbygoogle.requestNonPersonalizedAds === 'undefined') {
+    adsbygoogle.requestNonPersonalizedAds = 1;
+  }
+</script>
+
+</head>
+<body>
+    <div class="app-container">
+        <div class="header">
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-sun"></i>
+            </button>
+            <h1 class="header-title">𝗔𝗗𝗦 𝗧𝗢 𝗘𝗔𝗥𝗡𝗜𝗡𝗚 𝗠𝗢𝗡𝗘𝗬</h1>
+        </div>
+
+        <div class="profile-section">
+            <div class="profile-card">
+                <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="Profile" class="profile-pic" id="profilePic">
+                <h1 class="profile-name" id="profileNameDisplay">
+                    Loading...
+                    <i class="fas fa-check-circle verified-badge"></i>
+                    <button class="edit-name-btn" id="editNameBtn">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                </h1>
+                <div class="points-display" id="userPointsDisplay">
+                    <i class="fas fa-coins"></i> 0 Points 
+                </div>
+                <div class="stats-display">
+                    <div class="stat-item">
+                        <div class="stat-value" id="adsWatchedToday">0</div>
+                        <div class="stat-label">Today</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="adsLeftToday">0</div>
+                        <div class="stat-label">Left</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalAdsWatched">0</div>
+                        <div class="stat-label">Total</div>
+                    </div>
+                </div> 
+            </div>
+        </div>
+
+        <div class="content-section" id="mainContent">
+            </div>
+
+        <div class="bottom-nav">
+            <a href="#" class="nav-item active" data-page="home">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="#" class="nav-item" data-page="tasks">
+                <i class="fas fa-tasks"></i>
+                <span>Tasks</span>
+            </a>
+            <a href="#" class="nav-item" data-page="bonus">
+                <i class="fas fa-gift"></i>
+                <span>Bonus</span>
+            </a>
+            <a href="#" class="nav-item" data-page="withdraw">
+                <i class="fas fa-wallet"></i>
+                <span>Withdraw</span>
+            </a>
+            <a href="#" class="nav-item" data-page="referral">
+                <i class="fas fa-share-alt"></i>
+                <span>Referral</span>
+            </a>
+        </div>
+
+        <div class="ad-modal-overlay" id="adModal">
+            <div class="ad-modal">
+                <h3 class="ad-modal-title" id="adModalTitle">Loading Ad...</h3>
+                <div class="spinner" id="adSpinner"></div>
+                <p class="ad-status" id="adStatusMessage">Please wait while we load the ad</p>
+                <button class="btn btn-primary" id="adCloseBtn" style="display: none;">Close & Claim Reward</button>
+            </div>
+        </div>
+
+        <div class="toast" id="toast"></div>
+    </div>
+
+    <script>
+        // Configuration (Keep these the same or update as needed)
+        const APP_NAME = "𝗞𝗮𝘀𝗵 𝗘𝗮𝗿𝗻"; // Changed app name for the new design
+        const ADS_PER_DAY_LIMIT = 10;
+        const POINTS_PER_AD = 10;
+        const MIN_WITHDRAW_POINTS = 500;
+        const REFERRAL_BONUS_REFERRER = 10;
+        const REFERRAL_BONUS_REFEREE = 5;
+        const MONETAG_AD_FUNCTION_NAME = 'show_9757947'; // Ensure this is correct
+        const TELEGRAM_BOT_TOKEN = "8180566117:AAGaJU3_Bs8jXfymSuA7mJ2ERI7zjNThEvs"; // Ensure this is your correct bot token
+        const TELEGRAM_CHAT_ID = "7358825471"; // Ensure this is your correct chat ID and your bot is admin
+        const DEVELOPER_TELEGRAM_PROFILE_LINK = "https://t.me/SAIDULEP";
+        const DEVELOPER_WEBSITE_LINK = "https://t.me/SAIDULEP";
+        const OFFICIAL_CHANNEL_LINK = "https://t.me/Life_Work_BD"; // Placeholder, UPDATE THIS
+        const SUPPORT_GROUP_LINK = "https://t.me/Expert_Marketing0"; // Placeholder, UPDATE THIS
+        const REFERRAL_BOT_LINK = "https://t.me/Kash_Earnbot"; // Placeholder, UPDATE THIS
+        const BONUS_CHANNELS = [
+            { id: 'tg_official_channel', name: 'Official Channel', link: OFFICIAL_CHANNEL_LINK, reward: 5, icon: 'fab fa-telegram-plane' },
+            { id: 'tg_support_group', name: 'Support Group', link: SUPPORT_GROUP_LINK, reward: 5, icon: 'fas fa-headset' },
+            { id: 'tg_community', name: 'Telegram Community', link: "https://t.me/SAIDULEXPERT", reward: 5, icon: 'fab fa-telegram' },
+            { id: 'wa_community', name: 'Youtube Community', link: "https://youtube.com/@saidulexpert?si=IMhpyB88mCRYIrYr", reward: 10, icon: 'fab fa-youtube' }
+        ];
+
+        // DOM Elements
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const profileNameDisplay = document.getElementById('profileNameDisplay');
+        const profilePic = document.getElementById('profilePic');
+        const editNameBtn = document.getElementById('editNameBtn');
+        const userPointsDisplay = document.getElementById('userPointsDisplay');
+        const adsWatchedTodayEl = document.getElementById('adsWatchedToday');
+        const adsLeftTodayEl = document.getElementById('adsLeftToday');
+        const totalAdsWatchedEl = document.getElementById('totalAdsWatched');
+        const mainContent = document.getElementById('mainContent');
+        const bottomNavItems = document.querySelectorAll('.bottom-nav .nav-item');
+        const adModal = document.getElementById('adModal');
+        const adModalTitle = document.getElementById('adModalTitle');
+        const adSpinner = document.getElementById('adSpinner');
+        const adStatusMessage = document.getElementById('adStatusMessage');
+        const adCloseBtn = document.getElementById('adCloseBtn');
+        const toast = document.getElementById('toast');
+
+        // Current user state
+        let currentUser = {
+            name: 'Loading...',
+            telegramId: null,
+            photoUrl: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
+            points: 0,
+            adsWatchedToday: 0,
+            totalAdsWatchedLifetime: 0,
+            lastAdWatchDate: null,
+            claimedBonuses: [],
+            referralCode: '',
+            referredBy: null,
+            referredUsers: []
+        };
+
+        // Show toast notification
+        function showToast(message, duration = 3000) {
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, duration);
+        }
+
+        // Generate a unique device ID for each user
+        function generateDeviceId() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+
+        // Generate a referral code
+        function generateReferralCode() {
+            return Math.random().toString(36).substring(2, 10).toUpperCase();
+        }
+
+        // Load user state from localStorage or Telegram WebApp
+        function loadUserState() {
+            let deviceId = localStorage.getItem('galaxyEarnDeviceId');
+            if (!deviceId) {
+                deviceId = generateDeviceId();
+                localStorage.setItem('galaxyEarnDeviceId', deviceId);
+            }
+
+            let allUsersData = JSON.parse(localStorage.getItem('galaxyEarnAllUsers')) || {};
+
+            if (window.Telegram && Telegram.WebApp && Telegram.WebApp.initDataUnsafe.user) {
+                const tgUser = Telegram.WebApp.initDataUnsafe.user;
+                const existingUser = Object.values(allUsersData).find(user => user.telegramId === tgUser.id);
+
+                if (existingUser) {
+                    currentUser = existingUser;
+                    const existingDeviceIdForTgUser = Object.keys(allUsersData).find(id => allUsersData[id].telegramId === tgUser.id);
+                    if (existingDeviceIdForTgUser && existingDeviceIdForTgUser !== deviceId) {
+                         localStorage.setItem('galaxyEarnDeviceId', existingDeviceIdForTgUser);
+                         deviceId = existingDeviceIdForTgUser;
+                         currentUser = allUsersData[deviceId];
+                    } else {
+                        Object.assign(currentUser, {
+                            name: `${tgUser.first_name || ''} ${tgUser.last_name || ''}`.trim() || currentUser.name,
+                            photoUrl: tgUser.photo_url || currentUser.photoUrl,
+                            telegramId: tgUser.id
+                        });
+                        allUsersData[deviceId] = currentUser;
+                        localStorage.setItem('galaxyEarnAllUsers', JSON.stringify(allUsersData));
+                    }
+                } else {
+                    currentUser = {
+                        name: `${tgUser.first_name || ''} ${tgUser.last_name || ''}`.trim() || `User${tgUser.id}`,
+                        telegramId: tgUser.id,
+                        photoUrl: tgUser.photo_url || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
+                        points: 0,
+                        adsWatchedToday: 0,
+                        totalAdsWatchedLifetime: 0,
+                        lastAdWatchDate: null,
+                        claimedBonuses: [],
+                        referralCode: generateReferralCode(),
+                        referredBy: null,
+                        referredUsers: []
+                    };
+                    allUsersData[deviceId] = currentUser;
+                    localStorage.setItem('galaxyEarnAllUsers', JSON.stringify(allUsersData));
+                }
+            } else {
+                if (!allUsersData[deviceId]) {
+                    allUsersData[deviceId] = {
+                        name: 'Guest User',
+                        telegramId: null,
+                        photoUrl: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
+                        points: 0,
+                        adsWatchedToday: 0,
+                        totalAdsWatchedLifetime: 0,
+                        lastAdWatchDate: null,
+                        claimedBonuses: [],
+                        referralCode: generateReferralCode(),
+                        referredBy: null,
+                        referredUsers: []
+                    };
+                    localStorage.setItem('galaxyEarnAllUsers', JSON.stringify(allUsersData));
+                }
+                currentUser = allUsersData[deviceId];
+            }
+
+            if (currentUser.photoUrl) {
+                profilePic.src = currentUser.photoUrl;
+            }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const refCodeFromUrl = urlParams.get('start') || urlParams.get('ref');
+
+            if (refCodeFromUrl && !currentUser.referredBy && refCodeFromUrl !== currentUser.referralCode) {
+                const referrerExists = Object.values(allUsersData).some(user => user.referralCode === refCodeFromUrl);
+                if (referrerExists) {
+                    applyReferral(refCodeFromUrl);
+                } else {
+                    console.warn(`Referral code '${refCodeFromUrl}' from URL is not valid.`);
+                }
+            }
+
+            updateUI();
+        }
+
+        // Apply referral code
+        function applyReferral(referrerCode) {
+            if (referrerCode === currentUser.referralCode || currentUser.referredBy) {
+                return;
+            }
+
+            let allUsersData = JSON.parse(localStorage.getItem('galaxyEarnAllUsers')) || {};
+            const referrerUser = Object.values(allUsersData).find(user => user.referralCode === referrerCode);
+
+            if (referrerUser) {
+                currentUser.points += REFERRAL_BONUS_REFEREE;
+                currentUser.referredBy = referrerCode;
+
+                referrerUser.points += REFERRAL_BONUS_REFERRER;
+                if (referrerUser.referredUsers) {
+                    referrerUser.referredUsers.push(currentUser.referralCode);
+                } else {
+                    referrerUser.referredUsers = [currentUser.referralCode];
+                }
+
+                const referrerDeviceId = Object.keys(allUsersData).find(id => allUsersData[id].referralCode === referrerCode);
+                if (referrerDeviceId) {
+                    allUsersData[referrerDeviceId] = referrerUser;
+                }
+
+                localStorage.setItem('galaxyEarnAllUsers', JSON.stringify(allUsersData));
+                showToast(`+${REFERRAL_BONUS_REFEREE} bonus points for joining via referral!`);
+                sendTelegramReferralNotification(
+                    currentUser.name,
+                    currentUser.referralCode,
+                    referrerUser.name,
+                    referrerCode
+                );
+                updateUI();
+            } else {
+                console.warn(`Referrer with code ${referrerCode} not found.`);
+                showToast("Invalid referral code.");
+            }
+        }
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.Telegram && Telegram.WebApp) {
+                Telegram.WebApp.expand();
+                Telegram.WebApp.enableClosingConfirmation();
+            }
+            loadUserState();
+            applyTheme(localStorage.getItem('galaxyEarnTheme') || 'light'); // Default to light mode for "normal"
+
+            navigateTo('home');
+
+            themeToggleBtn.addEventListener('click', toggleTheme);
+            document.getElementById('editNameBtn').addEventListener('click', promptForNewName);
+            bottomNavItems.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const page = item.dataset.page;
+                    navigateTo(page);
+                });
+            });
+            adCloseBtn.addEventListener('click', closeAdModalAndReward);
+        });
+
+        // Theme management
+        function applyTheme(theme) {
+            document.body.classList.toggle('dark-mode', theme === 'dark');
+            themeToggleBtn.innerHTML = theme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+            localStorage.setItem('galaxyEarnTheme', theme);
+        }
+
+        function toggleTheme() {
+            applyTheme(document.body.classList.contains('dark-mode') ? 'light' : 'dark');
+        }
+
+        // Update UI elements
+        function updateUI() {
+            profileNameDisplay.innerHTML = `
+                ${currentUser.name}
+                <i class="fas fa-check-circle verified-badge"></i>
+                <button class="edit-name-btn" id="editNameBtn">
+                    <i class="fas fa-pencil-alt"></i>
+                </button>
+            `;
+            document.getElementById('editNameBtn').addEventListener('click', promptForNewName);
+
+            userPointsDisplay.innerHTML = `<i class="fas fa-coins"></i> ${currentUser.points} Points`;
+            adsWatchedTodayEl.textContent = currentUser.adsWatchedToday;
+            adsLeftTodayEl.textContent = ADS_PER_DAY_LIMIT - currentUser.adsWatchedToday;
+            totalAdsWatchedEl.textContent = currentUser.totalAdsWatchedLifetime;
+
+            if (currentUser.photoUrl) {
+                profilePic.src = currentUser.photoUrl;
+            }
+
+            const watchBtn = document.getElementById('watchDailyAdBtn');
+            if (watchBtn) {
+                watchBtn.disabled = (ADS_PER_DAY_LIMIT - currentUser.adsWatchedToday <= 0);
+            }
+        }
+
+        function promptForNewName() {
+            const newName = prompt("Enter your new name:", currentUser.name);
+            if (newName && newName.trim()) {
+                currentUser.name = newName.trim();
+                updateUI();
+                saveUserState();
+                showToast("Name updated successfully!");
+            }
+        }
+
+        // Navigation function
+        function navigateTo(page) {
+            const currentActiveNavItem = document.querySelector('.bottom-nav .nav-item.active');
+            if (currentActiveNavItem) {
+                currentActiveNavItem.classList.remove('active');
+            }
+            const activeNavItem = document.querySelector(`.nav-item[data-page="${page}"]`);
+            if (activeNavItem) activeNavItem.classList.add('active');
+
+            const pageRenderers = {
+                'home': renderHomePage,
+                'tasks': renderTasksPage,
+                'bonus': renderBonusPage,
+                'withdraw': renderWithdrawPage,
+                'referral': renderReferralPage
+            };
+
+            if (pageRenderers[page]) pageRenderers[page]();
+            updateUI();
+        }
+
+        // Page renderers
+        function renderHomePage() {
+            mainContent.innerHTML = `
+                <div class="task-card">
+                    <h2 class="section-title">
+                        <i class="fas fa-home"></i> Welcome
+                    </h2>
+                    <p class="task-description">
+                        Welcome to ${APP_NAME}, ${currentUser.name.split(' ')[0]}! Start earning points by completing tasks, watching ads, and inviting friends.
+                    </p>
+                    <div class="stats-display" style="justify-content: space-between; margin-top: 20px; gap: 8px;">
+                        <div class="stat-item" style="flex: 1; margin: 0 4px;">
+                            <div class="stat-value">${ADS_PER_DAY_LIMIT - currentUser.adsWatchedToday}</div>
+                            <div class="stat-label">Ads Left</div>
+                        </div>
+                        <div class="stat-item" style="flex: 1; margin: 0 4px;">
+                            <div class="stat-value">${currentUser.points}</div>
+                            <div class="stat-label">Points</div>
+                        </div>
+                        <div class="stat-item" style="flex: 1; margin: 0 4px;">
+                            <div class="stat-value">${currentUser.referredUsers ? currentUser.referredUsers.length : 0}</div>
+                            <div class="stat-label">Referrals</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top: 15px; text-align: center;">
+                    <a href="${OFFICIAL_CHANNEL_LINK}" target="_blank" class="btn btn-secondary">
+                        <i class="fab fa-telegram-plane"></i> Join Our Channel
+                    </a>
+                </div>
+                <div class="developer-footer">
+                    Developed by <a href="${DEVELOPER_TELEGRAM_PROFILE_LINK}" target="_blank" class="developer-link">SAIDUL</a>
+                </div>`;
+        }
+
+        function renderTasksPage() {
+            const adsLeft = ADS_PER_DAY_LIMIT - currentUser.adsWatchedToday;
+            const progressPercent = (currentUser.adsWatchedToday / ADS_PER_DAY_LIMIT) * 100;
+            mainContent.innerHTML = `
+                <div class="task-card">
+                    <div class="task-header">
+                        <div class="task-icon">
+                            <i class="fas fa-ad"></i>
+                        </div>
+                        <div class="task-title">Watch Ads</div>
+                        <div class="reward-badge">+${POINTS_PER_AD}</div>
+                    </div>
+                    <p class="task-description">
+                        Watch short video ads to earn points. You can watch up to ${ADS_PER_DAY_LIMIT} ads per day.
+                    </p>
+                    <div class="progress-container">
+                        <div class="progress-text">
+                            <span>${currentUser.adsWatchedToday}/${ADS_PER_DAY_LIMIT} watched</span>
+                            <span>${adsLeft} left</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: ${progressPercent}%"></div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" id="watchDailyAdBtn" ${adsLeft <= 0 ? 'disabled' : ''}>
+                        <i class="fas fa-play"></i> Watch Ad & Earn ${POINTS_PER_AD} Points
+                    </button>
+                </div>
+                <div class="developer-footer">
+                    Developed by <a href="${DEVELOPER_TELEGRAM_PROFILE_LINK}" target="_blank" class="developer-link">SAIDUL</a>
+                </div>`;
+            if (adsLeft > 0) {
+                document.getElementById('watchDailyAdBtn').addEventListener('click', handleWatchDailyAd);
+            }
+        }
+
+        function renderBonusPage() {
+            let channelsHtml = BONUS_CHANNELS.map(channel => {
+                const isClaimed = currentUser.claimedBonuses.includes(channel.id);
+                const linkIsValid = channel.link && !channel.link.toLowerCase().includes("your_");
+                return `
+                    <li class="channel-item">
+                        <div class="channel-info">
+                            <div class="channel-icon">
+                                <i class="${channel.icon}"></i>
+                            </div>
+                            <div>
+                                <div class="channel-name">${channel.name}</div>
+                                <div class="channel-reward">+${channel.reward} Points</div>
+                            </div>
+                        </div>
+                        ${ linkIsValid ?
+                            `<a href="${channel.link}" target="_blank" class="join-btn ${isClaimed ? 'claimed' : ''}" data-channel-id="${channel.id}" data-reward="${channel.reward}" onclick="handleBonusLinkClick(event, this)">
+                                ${isClaimed ? 'Claimed' : 'Join'}
+                            </a>` :
+                            `<span style="font-size:0.75rem; color: var(--text-secondary);">Coming Soon</span>`
+                        }
+                    </li>`;
+            }).join('');
+
+            mainContent.innerHTML = `
+                <div class="task-card">
+                    <h2 class="section-title">
+                        <i class="fas fa-gift"></i> Bonus Rewards
+                    </h2>
+                    <p class="task-description">
+                        Join our community channels to earn bonus points. Visit the channel and return to claim your reward.
+                    </p>
+                    <ul class="channel-list">${channelsHtml}</ul>
+                </div>
+                <div class="developer-footer">
+                    Developed by <a href="${DEVELOPER_TELEGRAM_PROFILE_LINK}" target="_blank" class="developer-link">SAIDUL</a>
+                </div>`;
+        }
+
+        function renderWithdrawPage() {
+            mainContent.innerHTML = `
+                <div class="task-card">
+                    <h2 class="section-title">
+                        <i class="fas fa-wallet"></i> Withdraw
+                    </h2>
+                    <p class="task-description">
+                        <b>Convert your points to real money                  
+ 
+    
+ Minimum withdrawal is ${MIN_WITHDRAW_POINTS} points.</b>
+                    </p>
+                    <div class="input-group">
+                        <label class="input-label">Amount (Points)</label>
+                        <input type="number" id="withdrawAmountInput" class="input-field" placeholder="Enter amount">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Payment Method</label>
+                        <select id="withdrawMethodSelect" class="select-field">
+                            <option value="">Select method</option>
+                            <option>Telegram Mini bot code 400 Points</option>
+                            <option>Telegram Mini Bot Code 800 Poins</option>
+                            
+  <option>Telegram Mini Bot Code 1500 Poin </option>                          
+    <option>Telegram Mini Bot Code 2200 Points ( VIP) </option>              
+                                    </select>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Enter your Telegram Username </label>
+                        <input type="text" id="withdrawAccountInput" class="input-field" placeholder="Enter your account details">
+                    </div>
+                    <button class="btn btn-primary" id="submitWithdrawBtn">
+                        <i class="fas fa-paper-plane"></i> Submit Request
+                    </button>
+                    <p class="status-message" id="withdrawStatusMsg"></p>
+                </div>
+                <div class="developer-footer">
+                    Developed by <a href="${DEVELOPER_TELEGRAM_PROFILE_LINK}" target="_blank" class="developer-link">SAIDUL</a>
+                </div>`;
+            document.getElementById('submitWithdrawBtn').addEventListener('click', handleSubmitWithdrawal);
+        }
+
+        function renderReferralPage() {
+            const referralLink = `${REFERRAL_BOT_LINK}?start=${TELEGRAM_CHAT_ID}`;
+            const referredUsersCount = currentUser.referredUsers ? currentUser.referredUsers.length : 0;
+
+            let referredUsersListHtml = '';
+            if (referredUsersCount > 0) {
+                referredUsersListHtml = `
+                    <h3 style="margin: 20px 0 10px; font-size: 1rem; color: var(--text-secondary);">Your Referrals (${referredUsersCount})</h3>
+                    <div class="referred-users">`;
+                const allUsersData = JSON.parse(localStorage.getItem('galaxyEarnAllUsers')) || {};
+                currentUser.referredUsers.forEach(refCode => {
+                    const referredUser = Object.values(allUsersData).find(user => user.referralCode === refCode);
+                    const name = referredUser ? referredUser.name : `User ${refCode}`;
+                    referredUsersListHtml += `
+                        <div class="user-item">
+                            <div class="user-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="user-info">
+                                <div class="user-name">${name}</div>
+                                <div class="user-code">${refCode}</div>
+                            </div>
+                        </div>`;
+                });
+                referredUsersListHtml += `</div>`;
+            } else {
+                referredUsersListHtml = `
+                    <div class="empty-state">
+                        <i class="fas fa-users"></i>
+                        <p>No referrals yet</p>
+                        <p style="font-size: 0.85rem; margin-top: 5px;">Share your link to earn more</p>
+                    </div>`;
+            }
+
+            mainContent.innerHTML = `
+                <div class="task-card">
+                    <h2 class="section-title">
+                        <i class="fas fa-share-alt"></i> Refer & Earn
+                    </h6>
+                    <p class="task-description">
+                        Invite friends and earn ${REFERRAL_BONUS_REFERRER} points for each successful referral. They'll get ${REFERRAL_BONUS_REFEREE} points too!
+                    </p>
+                    <div class="referral-container">
+                        <label class="input-label">Your Referral Code</label>
+                        <div class="referral-input-group">
+                            <input type="text" id="referralCodeDisplay" class="referral-input" value="${TELEGRAM_CHAT_ID}" readonly>
+                            <button class="copy-btn" id="copyReferralCodeBtn">Copy</button>
+                        </div>
+                        <label class="input-label">Your Referral Link</label>
+                        <div class="referral-input-group">
+                            <input type="text" id="referralLinkDisplay" class="referral-input" value="${referralLink}" readonly>
+                            <button class="copy-btn" id="copyReferralLinkBtn">Copy</button>
+                        </div>
+                        <button class="btn btn-secondary" id="shareReferralLinkBtn" style="margin-top: 15px; width: 100%;">
+                            <i class="fas fa-share-alt"></i> Share Link
+                        </button>
+                    </div>
+                    <div class="referral-stats">
+                        <div class="stat-card">
+                            <div class="stat-number">${REFERRAL_BONUS_REFERRER}</div>
+                            <div class="stat-title">Per Referral</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">${referredUsersCount}</div>
+                            <div class="stat-title">Total</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">${referredUsersCount * REFERRAL_BONUS_REFERRER}</div>
+                            <div class="stat-title">Earned</div>
+                        </div>
+                    </div>
+                    ${referredUsersListHtml}
+                </div>
+                <div class="developer-footer">
+                    Developed by <a href="${DEVELOPER_TELEGRAM_PROFILE_LINK}" target="_blank" class="developer-link">SAIDUL</a>
+                </div>`;
+
+            document.getElementById('copyReferralCodeBtn').addEventListener('click', () => {
+                const referralCodeInput = document.getElementById('referralCodeDisplay');
+                referralCodeInput.select();
+                document.execCommand('copy');
+                showToast('Referral code copied!');
+            });
+            document.getElementById('copyReferralLinkBtn').addEventListener('click', () => {
+                const referralLinkInput = document.getElementById('referralLinkDisplay');
+                referralLinkInput.select();
+                document.execCommand('copy');
+                showToast('Referral link copied!');
+            });
+            document.getElementById('shareReferralLinkBtn').addEventListener('click', () => {
+                if (navigator.share) {
+                    navigator.share({
+                        title: `${APP_NAME} - Earn Points!`,
+                        text: `Join ${APP_NAME} using my referral code ${currentUser.referralCode} and we both get bonus points!`,
+                        url: referralLink,
+                    }).catch((error) => console.log('Error sharing', error));
+                } else {
+                    const referralLinkInput = document.getElementById('referralLinkDisplay');
+                    referralLinkInput.select();
+                    document.execCommand('copy');
+                    showToast('Link copied! Share it manually.');
+                }
+            });
+        }
+
+        // Ad handling
+        let adWatchedSuccessfully = false;
+        let adRewardPending = false;
+
+        function handleWatchDailyAd() {
+            const today = new Date().toLocaleDateString();
+            if (currentUser.lastAdWatchDate !== today) {
+                currentUser.adsWatchedToday = 0;
+                currentUser.lastAdWatchDate = today;
+                saveUserState();
+            }
+
+            if (currentUser.adsWatchedToday >= ADS_PER_DAY_LIMIT) {
+                showToast("Daily ad limit reached!");
+                updateUI();
+                return;
+            }
+
+            adWatchedSuccessfully = false;
+            adRewardPending = true;
+            openAdModal("Launching Ad...");
+            adSpinner.style.display = 'block';
+            adCloseBtn.style.display = 'none';
+            adStatusMessage.textContent = "Please wait while we load the ad";
+
+            if (MONETAG_AD_FUNCTION_NAME && typeof window[MONETAG_AD_FUNCTION_NAME] === 'function') {
+                try {
+                    const adPromise = window[MONETAG_AD_FUNCTION_NAME]();
+                    if (adPromise && typeof adPromise.then === 'function') {
+                        adModalTitle.textContent = "Ad Playing";
+                        adStatusMessage.textContent = "Please watch the full ad to claim your reward";
+                        adPromise.then(() => {
+                            adWatchedSuccessfully = true;
+                            if (adRewardPending) {
+                                adSpinner.style.display = 'none';
+                                adStatusMessage.textContent = "Ad completed! Close to claim your reward";
+                                adCloseBtn.style.display = 'block';
+                            }
+                        }).catch(error => {
+                            handleAdError("Ad closed too soon or error occurred. No points awarded.");
+                            console.error("Monetag ad error:", error);
+                        });
+                    } else {
+                        setTimeout(() => {
+                            if (adRewardPending) {
+                                adSpinner.style.display = 'none';
+                                adStatusMessage.textContent = "Ad completed! Close to claim your reward";
+                                adCloseBtn.style.display = 'block';
+                                adWatchedSuccessfully = true;
+                            }
+                        }, 7000);
+                    }
+                } catch (error) {
+                    handleAdError("Error loading ad. Please try again.");
+                    console.error("Monetag ad execution error:", error);
+                }
+            } else {
+                showToast("Ad service not fully integrated. Simulating ad watch...");
+                adModalTitle.textContent = "Simulating Ad...";
+                adStatusMessage.textContent = "Ad will finish in 5 seconds (simulation).";
+                setTimeout(() => {
+                    if (adRewardPending) {
+                        adSpinner.style.display = 'none';
+                        adStatusMessage.textContent = "Simulated ad completed! Close to claim your reward";
+                        adCloseBtn.style.display = 'block';
+                        adWatchedSuccessfully = true;
+                    }
+                }, 5000);
+            }
+        }
+
+        function handleAdError(errorMessage) {
+            if (adRewardPending) {
+                adSpinner.style.display = 'none';
+                adStatusMessage.textContent = errorMessage;
+                adModalTitle.textContent = "Ad Error";
+                adCloseBtn.textContent = "Close";
+                adCloseBtn.style.display = 'block';
+                adWatchedSuccessfully = false;
+                adRewardPending = false;
+            }
+        }
+
+        function openAdModal(title) {
+            adModalTitle.textContent = title;
+            adCloseBtn.textContent = "Close & Claim Reward";
+            adModal.classList.add('show');
+        }
+
+        function closeAdModalAndReward() {
+            adModal.classList.remove('show');
+            if (adWatchedSuccessfully && adRewardPending) {
+                currentUser.points += POINTS_PER_AD;
+                currentUser.adsWatchedToday++;
+                currentUser.totalAdsWatchedLifetime++;
+                currentUser.lastAdWatchDate = new Date().toLocaleDateString();
+                updateUI();
+                saveUserState();
+                showToast(`+${POINTS_PER_AD} points earned!`);
+            } else if (adRewardPending && !adWatchedSuccessfully) {
+                showToast("Ad not completed. No points awarded.");
+            }
+            adRewardPending = false;
+            adWatchedSuccessfully = false;
+        }
+
+        // Bonus channel handling
+        function handleBonusLinkClick(event, buttonElement) {
+            const channelId = buttonElement.dataset.channelId;
+            const reward = parseInt(buttonElement.dataset.reward);
+
+            if (currentUser.claimedBonuses.includes(channelId)) {
+                showToast("Bonus already claimed!");
+                return;
+            }
+
+            event.preventDefault();
+            const newWindow = window.open(buttonElement.href, '_blank');
+
+            buttonElement.textContent = 'Verifying...';
+            buttonElement.style.pointerEvents = 'none';
+
+            setTimeout(() => {
+                if (!currentUser.claimedBonuses.includes(channelId)) {
+                    currentUser.points += reward;
+                    currentUser.claimedBonuses.push(channelId);
+                    updateUI();
+                    saveUserState();
+                    buttonElement.textContent = 'Claimed';
+                    buttonElement.classList.add('claimed');
+                    showToast(`+${reward} bonus points claimed!`);
+                } else {
+                     buttonElement.textContent = 'Claimed';
+                     buttonElement.classList.add('claimed');
+                }
+                buttonElement.style.pointerEvents = 'auto';
+            }, 7000);
+        }
+
+        // Withdrawal handling
+        function handleSubmitWithdrawal() {
+            const amount = parseInt(document.getElementById('withdrawAmountInput').value);
+            const method = document.getElementById('withdrawMethodSelect').value;
+            const account = document.getElementById('withdrawAccountInput').value.trim();
+            const statusMsg = document.getElementById('withdrawStatusMsg');
+
+            statusMsg.className = 'status-message';
+            statusMsg.textContent = '';
+
+            if (isNaN(amount) || amount <= 0) {
+                statusMsg.textContent = "Please enter a valid amount.";
+                statusMsg.classList.add('error-message');
+                return;
+            }
+            if (amount < MIN_WITHDRAW_POINTS) {
+                statusMsg.textContent = `Minimum withdrawal is ${MIN_WITHDRAW_POINTS} points.`;
+                statusMsg.classList.add('error-message');
+                return;
+            }
+            if (amount > currentUser.points) {
+                statusMsg.textContent = "You don't have enough points.";
+                statusMsg.classList.add('error-message');
+                return;
+            }
+            if (!method) {
+                statusMsg.textContent = "Please select a payment method.";
+                statusMsg.classList.add('error-message');
+                return;
+            }
+            if (!account) {
+                statusMsg.textContent = "Please enter your account details.";
+                statusMsg.classList.add('error-message');
+                return;
+            }
+
+            const escapeMarkdown = (text) => {
+                return text.replace(/([_*\[\]()~`>#+\-=|{}.!])/g, '\\$1');
+            };
+
+            const withdrawalDetails = `
+🔔 *𝗡𝗲𝘄 𝗪𝗶𝘁𝗵𝗱𝗿𝗮𝘄𝗮𝗹 𝗥𝗲𝗾𝘂𝗲𝘀𝘁 * 🔔
+------------------------------------
+🕵️ *𝗔𝗽𝗽 𝗡𝗮𝗺𝗲 :* \`${escapeMarkdown(APP_NAME)}\`
+👤 *𝗨𝘀𝗲𝗿 𝗡𝗮𝗺𝗲 :* \`${escapeMarkdown(currentUser.name)}\`
+💰 *𝗣𝗼𝗶𝗻𝘁𝘀 :* ${amount}
+💳 *𝗠𝗲𝘁𝗵𝗼𝗱 :* ${escapeMarkdown(method)}
+🏦 *𝗪𝗮𝗹𝗹𝗲𝘁 :* \`${escapeMarkdown(account)}\`
+------------------------------------
+♎ 𝗠𝗮𝗶𝗻 𝗕𝗮𝗹𝗮𝗻𝗰𝗲 : ${currentUser.points - amount}
+👀 𝗧𝗼𝘁𝗮𝗹 𝗔𝗱𝘀 𝗪𝗮𝘁𝗰𝗵𝗲𝗱 : ${currentUser.totalAdsWatchedLifetime}
+------------------------------------
+⏰ *𝗪𝗶𝘁𝗵𝗱𝗿𝗮𝘄𝗮𝗹 𝗧𝗶𝗺𝗲 :* ${new Date().toLocaleString('en-GB', { timeZone: 'Asia/Dhaka' })}
+            `;
+
+            sendToTelegram(withdrawalDetails);
+
+            currentUser.points -= amount;
+            updateUI();
+            saveUserState();
+
+            statusMsg.textContent = "Withdrawal request submitted successfully!";
+            statusMsg.classList.add('success-message');
+            document.getElementById('withdrawAmountInput').value = "";
+            document.getElementById('withdrawMethodSelect').value = "";
+            document.getElementById('withdrawAccountInput').value = "";
+        }
+
+        // Telegram integration
+        function sendToTelegram(message) {
+            if (!TELEGRAM_BOT_TOKEN || TELEGRAM_BOT_TOKEN.includes("8180566117:AAGaJU3_Bs8jXfymSuA7mJ2ERI7zjNThEvs") || !TELEGRAM_CHAT_ID) {
+                console.warn("Telegram Bot not configured. Message not sent.");
+                return;
+            }
+
+            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    chat_id: TELEGRAM_CHAT_ID,
+                    text: message,
+                    parse_mode: 'MarkdownV2'
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (!data.ok) {
+                    console.warn('Telegram API error:', data.description);
+                    fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            chat_id: TELEGRAM_CHAT_ID,
+                            text: message.replace(/[*_`\[\]()~>#+\-=|{}.!]/g, '')
+                        })
+                    }).then(res => res.json()).then(plainData => {
+                        if (!plainData.ok) {
+                            console.error('Plain text Telegram message failed:', plainData.description);
+                        }
+                    });
+                }
+            })
+            .catch(error => console.error('Error sending Telegram message:', error));
+        }
+
+        function sendTelegramReferralNotification(refereeName, refereeCode, referrerName, referrerCode) {
+            if (!TELEGRAM_BOT_TOKEN || TELEGRAM_BOT_TOKEN.includes("8180566117:AAGaJU3_Bs8jXfymSuA7mJ2ERI7zjNThEvs") || !TELEGRAM_CHAT_ID) {
+                console.warn("Telegram Bot for referral notification not configured. Notification not sent.");
+                return;
+            }
+
+            const escapeMarkdown = (text) => {
+                return text.replace(/([_*\[\]()~`>#+\-=|{}.!])/g, '\\$1');
+            };
+
+            const message = `
+🎉 *New Referral Bonus!* 🎉
+------------------------------------
+👥 *New User:* \`${escapeMarkdown(refereeName)}\` (Code: \`${escapeMarkdown(refereeCode)}\`)
+🌟 *Received:* ${REFERRAL_BONUS_REFEREE} points
+Referral From:
+👤 *Referrer:* \`${escapeMarkdown(referrerName)}\` (Code: \`${escapeMarkdown(referrerCode)}\`)
+🌟 *Received:* ${REFERRAL_BONUS_REFERRER} points
+------------------------------------
+⏰ *Timestamp:* ${new Date().toLocaleString('en-GB', { timeZone: 'Asia/Dhaka' })}
+            `;
+
+            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    chat_id: TELEGRAM_CHAT_ID,
+                    text: message,
+                    parse_mode: 'MarkdownV2'
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (!data.ok) {
+                    console.warn('Telegram API error for referral notification:', data.description);
+                    fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            chat_id: TELEGRAM_CHAT_ID,
+                            text: message.replace(/[*_`\[\]()~>#+\-=|{}.!]/g, '')
+                        })
+                    });
+                }
+            })
+            .catch(error => console.error('Error sending referral Telegram message:', error));
+        }
+
+        // Save user state to localStorage
+        function saveUserState() {
+            const deviceId = localStorage.getItem('galaxyEarnDeviceId');
+            let allUsersData = JSON.parse(localStorage.getItem('galaxyEarnAllUsers')) || {};
+            allUsersData[deviceId] = currentUser;
+            localStorage.setItem('galaxyEarnAllUsers', JSON.stringify(allUsersData));
+        }
+    </script>
+
+    <!-- নিচের দুর্বোধ্য জাভাস্ক্রিপ্ট ব্লকটি সরানো হয়েছে -->
+
+<!-- 'Det är ditt ansvar att meddela besökare om cookies som används och data som samlas in på bloggen. Blogger har en standardavisering som du kan använda på din blogg och som du kan anpassa eller byta ut till en egen avisering. Mer information finns på http://www.blogger.com/go/cookiechoices.' -->
+<script src="/js/cookienotice.js" defer></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function(event) {
+    window.cookieChoices && cookieChoices.showCookieConsentBar && cookieChoices.showCookieConsentBar(
+        (window.cookieOptions && cookieOptions.msg) || 'Den här webbplatsen använder cookies från Google för att tillhandahålla tjänster och analysera trafik. Din IP-adress och användaragent delas med Google tillsammans med information om prestanda och säkerhet för att garantera tjänstens kvalitet, generera användningsstatistik samt upptäcka och förhindra otillåten användning.',
+        (window.cookieOptions && cookieOptions.close) || 'OK',
+        (window.cookieOptions && cookieOptions.learn) || 'Läs mer',
+        (window.cookieOptions && cookieOptions.link) || 'https://www.blogger.com/go/blogspot-cookies');
+  });
+</script>
+
 </body>
 </html>

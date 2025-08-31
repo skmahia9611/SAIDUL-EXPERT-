@@ -6,9 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>𝗗𝗮𝗶𝗹𝘆 𝗣𝗮𝘆𝗕𝗼𝘁 🩳</title>
     
-    <!-- Aapka Naya Ad Code -->
-<script src='//libtl.com/sdk.js' data-zone='9797094' data-sdk='show_9797094'></script>    
-
+    <script src='//libtl.com/sdk.js' data-zone='9797094' data-sdk='show_9797094'></script>    
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -25,6 +24,7 @@
         .btn-accent:hover { background-color: #e67e00; }
         .btn-outline-accent { border: 1px solid #ff8c00; color: #ff8c00; }
         .btn-outline-accent:hover { background-color: #ff8c00; color: #121212; }
+        .btn-accent:disabled { background-color: #555; color: #999; cursor: not-allowed; }
         .input-field { background-color: #2c2c2c; border: 1px solid #444; }
         .main-page { display: none; }
         .main-page.active { display: flex; animation: fadeIn 0.5s ease-in-out; }
@@ -40,21 +40,19 @@
 </head>
 <body class="max-w-md mx-auto">
 
-    <!-- App Loader -->
     <div id="loader" class="hidden fixed inset-0 dark-bg bg-opacity-75 flex items-center justify-center z-50">
         <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-accent"></div>
     </div>
 
-    <!-- Authentication Section -->
     <div id="auth-section" class="min-h-screen p-6 flex-col justify-center main-page">
-        <h1 class="text-4xl font-bold text-center mb-2 text-accent">CashReward</h1>
-        <p class="text-center text-gray-400 mb-8">Jaari rakhne ke liye Login ya Signup karein</p>
+        <h1 class="text-4xl font-bold text-center mb-2 text-accent">Daily PayBot</h1>
+        <p class="text-center text-gray-400 mb-8">এটি চালিয়ে যেতে অনুগ্রহ করে লগইন করুন অথবা সাইন আপ করুন</p>
         <div id="auth-container">
             <div id="login-view">
                 <input id="login-email" type="email" placeholder="Email" class="w-full p-3 rounded-lg input-field mb-4">
                 <input id="login-password" type="password" placeholder="Password" class="w-full p-3 rounded-lg input-field mb-4">
                 <button id="login-btn" class="w-full p-3 rounded-lg btn-accent mb-4">Login</button>
-                <p class="text-center text-gray-400">Account nahi hai? <a href="#" id="show-signup" class="font-semibold text-accent">Sign Up</a></p>
+                <p class="text-center text-gray-400">Your ID password is incorrect.<a href="#" id="show-signup" class="font-semibold text-accent">Sign Up</a></p>
             </div>
             <div id="signup-view" class="hidden">
                  <input id="signup-name" type="text" placeholder="Poora Naam" class="w-full p-3 rounded-lg input-field mb-4">
@@ -66,22 +64,18 @@
         </div>
     </div>
 
-    <!-- Main App Container -->
     <div id="app-container" class="min-h-screen flex-col main-page">
         <header class="flex items-center justify-between p-4 sticky top-0 bg-opacity-80 backdrop-blur-md z-10 dark-bg">
-            <h1 class="text-xl font-bold">CashReward</h1>
+            <h1 class="text-xl font-bold">Daily PayBot</h1>
             <div class="flex items-center space-x-4">
                 <div id="notification-bell" class="relative cursor-pointer">
                     <i data-lucide="bell" class="w-6 h-6"></i>
                     <div id="notification-dot" class="notification-dot"></div>
                 </div>
-                <i data-lucide="user" class="w-6 h-6 cursor-pointer" onclick="navigateTo('profile-page')"></i>
             </div>
         </header>
 
-        <main class="flex-grow">
-            <!-- Home Page -->
-            <div id="home-page" class="p-4 space-y-6 sub-page">
+        <main class="flex-grow pb-16"> <div id="home-page" class="p-4 space-y-6 sub-page">
                 <div class="card-bg p-4 rounded-lg flex items-center justify-between">
                     <div>
                         <p class="text-gray-400 text-sm">Your Balance</p>
@@ -117,8 +111,13 @@
                     </div>
                 </section>
             </div>
+            
+            <div id="tasks-page" class="p-4 space-y-6 sub-page">
+                <h2 class="text-xl font-bold text-center">🎯 Complete Tasks & Earn</h2>
+                <p class="text-gray-400 text-center mb-4">ভিডিও দেখে কোড দিন, রিওয়ার্ড পান।</p>
+                <div id="task-list" class="space-y-4"></div>
+            </div>
 
-            <!-- Wallet Page -->
             <div id="wallet-page" class="p-4 space-y-6 sub-page">
                 <h2 class="text-xl font-bold text-center">Mera Wallet</h2>
                 <div class="card-bg p-4 rounded-lg">
@@ -137,7 +136,6 @@
                 </div>
             </div>
 
-            <!-- Refer Page -->
             <div id="refer-page" class="p-4 space-y-6 sub-page">
                  <h2 class="text-xl font-bold text-center">Refer & Earn</h2>
                  <div class="card-bg p-6 rounded-lg text-center">
@@ -148,36 +146,54 @@
                      </div>
                      <p class="text-sm text-gray-300">Apne dosto ke saath code share karein.</p>
                  </div>
-                 <button id="share-btn" class="w-full p-3 rounded-lg btn-accent">Apna Code Share Karein</button>
-                 <div class="card-bg p-4 rounded-lg mt-6">
+                 <button id="share-btn" class="w-full p-3 rounded-lg btn-accent">রেফার লিংক শেয়ার করুন</button>
+                 <div id="apply-referral-container" class="card-bg p-4 rounded-lg mt-6">
                     <h3 class="font-semibold mb-3 text-center">Kisi ka Referral Code Hai?</h3>
                     <input id="enter-referral-code" type="text" placeholder="Yahan code daalein" class="w-full p-3 rounded-lg input-field mb-3">
                     <button id="apply-referral-btn" class="w-full p-3 rounded-lg btn-outline-accent">Code Apply Karein</button>
                  </div>
             </div>
-
-            <!-- Profile Page -->
-            <div id="profile-page" class="p-4 space-y-6 sub-page">
-                <h2 class="text-xl font-bold text-center mb-4">Profile</h2>
-                <div class="flex flex-col items-center">
-                    <img src="https://placehold.co/100x100/1e1e1e/ff8c00?text=U" class="rounded-full mb-2">
-                    <h2 id="profile-name" class="text-xl font-bold">User Name</h2>
-                    <p id="profile-email" class="text-gray-400">user@email.com</p>
-                </div>
-                <button id="logout-btn" class="w-full mt-6 p-3 rounded-lg bg-red-600 text-white font-bold">Logout</button>
-            </div>
             
-            <!-- Notifications Page -->
             <div id="notifications-page" class="p-4 space-y-4 sub-page">
                 <h2 class="text-xl font-bold text-center">Notifications</h2>
                 <div id="notifications-list" class="space-y-3"></div>
             </div>
+
+            <div id="profile-page" class="p-4 space-y-6 sub-page">
+                <h2 class="text-xl font-bold text-center">My Profile</h2>
+                
+                <div class="flex flex-col items-center">
+                    <div class="w-24 h-24 rounded-full bg-gray-700 flex items-center justify-center mb-4">
+                        <i data-lucide="user" class="w-12 h-12 text-gray-400"></i>
+                    </div>
+                </div>
+
+                <div id="telegram-info-container" class="card-bg p-4 rounded-lg hidden">
+                    <h3 class="font-bold text-lg mb-2 text-accent">Telegram Info</h3>
+                    <div class="space-y-1 text-sm">
+                        <p><strong>Name:</strong> <span id="telegram-name">Loading...</span></p>
+                        <p><strong>ID:</strong> <span id="telegram-id">Loading...</span></p>
+                    </div>
+                </div>
+
+                <div class="card-bg p-4 rounded-lg">
+                    <button id="toggle-personal-info-btn" class="w-full text-left font-bold text-lg text-accent">Personal Info</button>
+                    <div id="personal-info-details" class="hidden mt-3 pt-3 border-t border-gray-700">
+                        <div class="space-y-2 text-sm">
+                            <p><strong>Email:</strong> <span id="user-email">Loading...</span></p>
+                            <p><strong>Password:</strong> <span id="user-password">********</span> <span class="text-xs text-gray-500">(Hidden for security)</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </main>
 
-        <nav class="bottom-nav sticky bottom-0 grid grid-cols-4 items-center text-center py-2 card-bg">
+        <nav class="bottom-nav sticky bottom-0 grid grid-cols-5 items-center text-center py-2 card-bg">
             <a href="#" class="nav-link" data-page="home-page"><i data-lucide="home" class="mx-auto w-6 h-6"></i><span class="text-xs">Home</span></a>
+            <a href="#" class="nav-link" data-page="refer-page"><i data-lucide="users" class="mx-auto w-6 h-6"></i><span class="text-xs">Refer</span></a>
+            <a href="#" class="nav-link" data-page="tasks-page"><i data-lucide="list-checks" class="mx-auto w-6 h-6"></i><span class="text-xs">Tasks</span></a>
             <a href="#" class="nav-link" data-page="wallet-page"><i data-lucide="wallet" class="mx-auto w-6 h-6"></i><span class="text-xs">Wallet</span></a>
-            <a href="#" class="nav-link" data-page="refer-page"><i data-lucide="users" class="mx-auto w-6 h-6"></i><span class="text-xs">Refer & Earn</span></a>
             <a href="#" class="nav-link" data-page="profile-page"><i data-lucide="user" class="mx-auto w-6 h-6"></i><span class="text-xs">Profile</span></a>
         </nav>
     </div>
@@ -214,8 +230,6 @@
         const loader = document.getElementById('loader');
         const coinBalanceEl = document.getElementById('coin-balance');
         const walletCoinBalanceEl = document.getElementById('wallet-coin-balance');
-        const profileNameEl = document.getElementById('profile-name');
-        const profileEmailEl = document.getElementById('profile-email');
         const referralCodeEl = document.getElementById('referral-code');
         const minWithdrawalInfoEl = document.getElementById('min-withdrawal-info');
         const coinValueInfoEl = document.getElementById('coin-value-info');
@@ -223,6 +237,15 @@
         const notificationDot = document.getElementById('notification-dot');
         const adsLeftCountEl = document.getElementById('ads-left-count');
         const paymentDetailsContainer = document.getElementById('payment-details-container');
+        
+        // ADDED: Initialize Telegram Web App
+        try {
+            if (window.Telegram && window.Telegram.WebApp) {
+                window.Telegram.WebApp.ready();
+            }
+        } catch (e) {
+            console.error("Telegram Web App script not loaded or failed:", e);
+        }
 
         window.onload = () => {
             lucide.createIcons();
@@ -266,11 +289,12 @@
                 } else {
                     const ownReferralCode = Math.random().toString(36).substring(2, 8).toUpperCase();
                     const defaultUserData = {
-                        uid: currentUser.uid, name: currentUser.email.split('@')[0], email: currentUser.email,
+                        uid: currentUser.uid, name: currentUser.displayName || currentUser.email.split('@')[0], email: currentUser.email,
                         balance: 50, referralCode: ownReferralCode, referredBy: null,
                         lastNotificationCheck: new Date(),
                         createdAt: serverTimestamp(),
-                        dailyAdCount: 0, lastAdWatchDate: new Date().toISOString().split('T')[0], isBlocked: false
+                        dailyAdCount: 0, lastAdWatchDate: new Date().toISOString().split('T')[0], isBlocked: false,
+                        completedTasks: []
                     };
                     await setDoc(userRef, defaultUserData);
                     userData = defaultUserData;
@@ -296,8 +320,6 @@
             const balance = userData.balance || 0;
             coinBalanceEl.textContent = balance;
             walletCoinBalanceEl.textContent = balance;
-            profileNameEl.textContent = userData.name || 'No Name';
-            profileEmailEl.textContent = userData.email || 'No Email';
             referralCodeEl.textContent = userData.referralCode || '...';
             minWithdrawalInfoEl.textContent = `${appConfig.minWithdrawal || 5000} Coins`;
             coinValueInfoEl.textContent = `${appConfig.coinValueCoins || 1000} Coins = ৳${appConfig.coinValueInr || 10}`;
@@ -310,6 +332,13 @@
             });
             updateDynamicPaymentFields();
             updateAdsLeftCount();
+
+            const applyReferralContainer = document.getElementById('apply-referral-container');
+            if (userData.referredBy) {
+                applyReferralContainer.style.display = 'none';
+            } else {
+                applyReferralContainer.style.display = 'block';
+            }
         }
 
         function updateAdsLeftCount() {
@@ -323,9 +352,9 @@
 
         function updateDynamicPaymentFields() {
             const selectedMethod = withdrawMethodSelect.value.toLowerCase();
-            let placeholder = "Enter your paymant number";
-            if (selectedMethod.includes('BKASH')) placeholder = "Enter your bKash number.";
-            if (selectedMethod.includes('NAGAD')) placeholder = "Enter your nagad number.";
+            let placeholder = "Enter your payment number";
+            if (selectedMethod.includes('bkash')) placeholder = "Enter your bKash number.";
+            if (selectedMethod.includes('nagad')) placeholder = "Enter your nagad number.";
             paymentDetailsContainer.innerHTML = `<input id="payment-detail-input" type="text" placeholder="${placeholder}" class="w-full p-3 rounded-lg input-field">`;
         }
 
@@ -349,22 +378,31 @@
             document.getElementById('show-login').addEventListener('click', (e) => { e.preventDefault(); document.getElementById('signup-view').classList.add('hidden'); document.getElementById('login-view').classList.remove('hidden'); });
             document.getElementById('signup-btn').addEventListener('click', handleSignup);
             document.getElementById('login-btn').addEventListener('click', handleLogin);
-            document.getElementById('logout-btn').addEventListener('click', handleLogout);
+            
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
                     const pageId = link.dataset.page;
                     if (pageId === 'wallet-page') loadWithdrawalHistory();
+                    if (pageId === 'tasks-page') loadTasks();
+                    // ADDED: Load profile info when navigating to profile page
+                    if (pageId === 'profile-page') loadProfileInfo();
                     navigateTo(pageId);
                 });
             });
+            
             document.getElementById('notification-bell').addEventListener('click', () => { navigateTo('notifications-page'); loadNotifications(); });
             document.getElementById('copy-code-btn').addEventListener('click', copyReferralCode);
             document.getElementById('share-btn').addEventListener('click', shareReferralCode);
             document.getElementById('withdraw-btn').addEventListener('click', handleWithdrawal);
-            document.getElementById('home-withdraw-btn').addEventListener('click', () => navigateTo('wallet-page'));
+            document.getElementById('home-withdraw-btn').addEventListener('click', () => { navigateTo('wallet-page'); loadWithdrawalHistory(); });
             document.getElementById('apply-referral-btn').addEventListener('click', handleApplyReferralCode);
             withdrawMethodSelect.addEventListener('change', updateDynamicPaymentFields);
+
+            // ADDED: Event listener for Personal Info toggle button
+            document.getElementById('toggle-personal-info-btn').addEventListener('click', () => {
+                document.getElementById('personal-info-details').classList.toggle('hidden');
+            });
         }
 
         async function handleSignup() {
@@ -374,9 +412,23 @@
             if (!name || !email || !password) return showAlert("Kripya sabhi fields bharein.");
             loader.style.display = 'flex';
             try {
-                await createUserWithEmailAndPassword(auth, email, password);
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+                const userRef = doc(db, "users", user.uid);
+                const ownReferralCode = Math.random().toString(36).substring(2, 8).toUpperCase();
+                const newUserData = {
+                    uid: user.uid, name: name, email: user.email,
+                    balance: 50, referralCode: ownReferralCode, referredBy: null,
+                    lastNotificationCheck: serverTimestamp(),
+                    createdAt: serverTimestamp(),
+                    dailyAdCount: 0, lastAdWatchDate: new Date().toISOString().split('T')[0], isBlocked: false,
+                    completedTasks: []
+                };
+                await setDoc(userRef, newUserData);
+                userData = newUserData;
             } catch (error) {
                 showAlert(error.message);
+            } finally {
                 loader.style.display = 'none';
             }
         }
@@ -390,12 +442,39 @@
                 await signInWithEmailAndPassword(auth, email, password);
             } catch (error) {
                 showAlert(error.message);
+            } finally {
                 loader.style.display = 'none';
             }
         }
 
-        async function handleLogout() { await signOut(auth); }
-        
+        // ADDED: Function to load user's profile information
+        function loadProfileInfo() {
+            // Part 1: Load Telegram Info
+            const tgNameEl = document.getElementById('telegram-name');
+            const tgIdEl = document.getElementById('telegram-id');
+            const tgInfoContainer = document.getElementById('telegram-info-container');
+            
+            if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.user) {
+                const tgUser = window.Telegram.WebApp.initDataUnsafe.user;
+                const fullName = `${tgUser.first_name || ''} ${tgUser.last_name || ''}`.trim();
+                tgNameEl.textContent = fullName || 'Not provided';
+                tgIdEl.textContent = tgUser.id || 'Not found';
+                tgInfoContainer.classList.remove('hidden');
+            } else {
+                tgInfoContainer.innerHTML = `<p class="text-center text-sm text-yellow-400">Telegram details available only when opened inside Telegram.</p>`;
+                tgInfoContainer.classList.remove('hidden');
+            }
+
+            // Part 2: Load Personal Info from Firebase
+            const userEmailEl = document.getElementById('user-email');
+            if (userData && userData.email) {
+                userEmailEl.textContent = userData.email;
+            } else {
+                userEmailEl.textContent = 'Email not available.';
+            }
+        }
+        window.loadProfileInfo = loadProfileInfo;
+
         async function checkNewNotifications() {
             const lastCheck = userData.lastNotificationCheck;
             if (!lastCheck || typeof lastCheck.seconds === 'undefined') {
@@ -419,8 +498,8 @@
                     return;
                 }
                 listEl.innerHTML = '';
-                querySnapshot.forEach(doc => {
-                    const msg = doc.data();
+                querySnapshot.forEach(docSnap => {
+                    const msg = docSnap.data();
                     const date = msg.createdAt ? msg.createdAt.toDate().toLocaleDateString() : 'N/A';
                     listEl.innerHTML += `<div class="card-bg p-4 rounded-lg"><div class="flex justify-between items-center mb-1"><h3 class="font-bold">${msg.title}</h3><p class="text-xs text-gray-400">${date}</p></div><p class="text-sm text-gray-300">${msg.message}</p></div>`;
                 });
@@ -434,18 +513,16 @@
         async function loadWithdrawalHistory() {
             const historyList = document.getElementById('withdrawal-history-list');
             historyList.innerHTML = '<p class="text-gray-400">History load ho rahi hai...</p>';
-            const q = query(collection(db, "withdrawals"), where("userId", "==", currentUser.uid));
+            const q = query(collection(db, "withdrawals"), where("userId", "==", currentUser.uid), orderBy("requestedAt", "desc"));
             try {
                 const querySnapshot = await getDocs(q);
                 if (querySnapshot.empty) {
-                    historyList.innerHTML = '<p class="text-gray-400">কোনো রেকর্ড পাওয়া যায়নি।</p>';
+                    historyList.innerHTML = '<p class="text-gray-400 text-center">কোনো রেকর্ড পাওয়া যায়নি।</p>';
                     return;
                 }
-                const withdrawals = [];
-                querySnapshot.forEach(doc => withdrawals.push(doc.data()));
-                withdrawals.sort((a, b) => (b.requestedAt?.seconds || 0) - (a.requestedAt?.seconds || 0));
                 historyList.innerHTML = '';
-                withdrawals.forEach(request => {
+                querySnapshot.forEach(docSnap => {
+                    const request = docSnap.data();
                     const status = request.status;
                     let statusColor = 'text-yellow-400';
                     if (status === 'approved') statusColor = 'text-green-400';
@@ -455,12 +532,12 @@
                 });
             } catch (error) {
                 console.error("Error fetching withdrawal history: ", error);
-                historyList.innerHTML = '<p class="text-red-400">History load karne mein error aayi.</p>';
+                historyList.innerHTML = '<p class="text-red-400">History load karne mein error aayi. Please check console for details.</p>';
             }
         }
         
         async function handleApplyReferralCode() {
-            if (userData.referredBy) return showAlert("Aap pehle hi ek referral code istemal kar chuke hain.");
+            if (userData.referredBy) return showAlert("আপনি একবার রেফার কোড বসিয়েছেন এবং বোনাস পেয়েছেন ");
             const codeInput = document.getElementById('enter-referral-code');
             const code = codeInput.value.trim().toUpperCase();
             if (!code) return showAlert("Kripya ek code daalein.");
@@ -511,11 +588,12 @@
             const paymentDetail = paymentDetailInput ? paymentDetailInput.value.trim() : '';
             const minWithdrawal = appConfig.minWithdrawal || 5000;
 
-            if (!amount || amount <= 0) return showAlert("Kripya valid amount daalein.");
-            if (amount < minWithdrawal) return showAlert(`Minimum withdrawal ${minWithdrawal} coins hai.`);
+            if (!amount || amount <= 0) return showAlert("সঠিক তথ্য পূরণ করুন");
+            if (amount < minWithdrawal) return showAlert(`Minimum withdrawal ${minWithdrawal} coins.`);
             if (amount > userData.balance) return showAlert("Insufficient balance.");
-            if (!paymentDetail) return showAlert("Kripya payment detail daalein (Enter your bKash number. ).");
+            if (!paymentDetail) return showAlert("Kripya payment detail daalein.");
 
+            loader.style.display = 'flex';
             try {
                 await updateBalance(-amount);
                 await addDoc(collection(db, "withdrawals"), {
@@ -524,39 +602,181 @@
                 });
                 showAlert("Withdrawal request safaltapoorvak submit ho gayi hai!");
                 document.getElementById('withdraw-amount').value = '';
-                paymentDetailInput.value = '';
+                if(paymentDetailInput) paymentDetailInput.value = '';
+                loadWithdrawalHistory();
             } catch (error) {
                 showAlert("Request submit karne mein error: " + error.message);
-                await updateBalance(amount);
+                await updateBalance(amount); // Rollback balance on failure
+            } finally {
+                loader.style.display = 'none';
             }
         }
 
         function copyReferralCode() {
             const textToCopy = referralCodeEl.textContent;
-            const textArea = document.createElement("textarea");
-            textArea.style.position = 'fixed'; textArea.style.top = '-100px';
-            textArea.value = textToCopy;
-            document.body.appendChild(textArea);
-            textArea.focus(); textArea.select();
-            try {
-                document.execCommand('copy');
+            navigator.clipboard.writeText(textToCopy).then(() => {
                 showAlert("Referral code copy ho gaya!");
-            } catch (err) {
+            }).catch(err => {
                 showAlert("Code copy karne mein विफल.");
-            }
-            document.body.removeChild(textArea);
+            });
         }
         
         function shareReferralCode() {
-            const text = `CashReward join karein aur paise kamayein! Bonus paane ke liye mera referral code use karein: ${userData.referralCode}`;
+            const shareUrl = `http://t.me/Daily_PayBot/OPEN?start=${userData.referralCode}`;
+            const text = `𝗗𝗮𝗶𝗹𝘆 𝗣𝗮𝘆𝗕𝗼𝘁 join karein aur paise kamayein! Bonus paane ke liye mera referral code use karein: ${userData.referralCode}\n\nJoin here: ${shareUrl}`;
+
             if (navigator.share) {
-                navigator.share({ title: 'CashReward Join Karein!', text: text, url: window.location.href })
-                    .catch((error) => console.error("Share failed:", error));
+                navigator.share({ 
+                    title: 'Daily PayBot Join Karein!', 
+                    text: text, 
+                    url: shareUrl 
+                })
+                .catch((error) => console.error("Share failed:", error));
             } else {
-                copyReferralCode();
-                showAlert("Share feature available nahi hai. Iske bajaye referral code copy kar diya gaya hai!");
+                navigator.clipboard.writeText(text).then(() => {
+                    showAlert("রেফার লিংক সফলভাবে কপি হয়ছে ! এখন আপনার বন্ধুদের পাঠান আর রেফার বোনাস পান।");
+                }).catch(err => {
+                    showAlert("Message copy karne mein विफल.");
+                });
             }
         }
+        
+        async function loadTasks() {
+            const taskList = document.getElementById("task-list");
+            taskList.innerHTML = '<p class="text-gray-400 text-center">Loading tasks...</p>';
+            try {
+                const tasksRef = collection(db, "tasks");
+                const q = query(tasksRef, orderBy("title"));
+                const querySnapshot = await getDocs(q);
+
+                if (querySnapshot.empty) {
+                    taskList.innerHTML = '<p class="text-gray-400 text-center">নতুন টাস্ক শীঘ্রই আসছে।</p>';
+                    return;
+                }
+                
+                let tasksAvailable = 0; 
+                taskList.innerHTML = ''; 
+
+                const completedTasks = userData.completedTasks || []; 
+
+                querySnapshot.forEach((docSnap) => {
+                    const taskId = docSnap.id;
+
+                    if (!completedTasks.includes(taskId)) {
+                        tasksAvailable++; 
+                        const task = docSnap.data();
+                        const taskDiv = document.createElement("div");
+                        taskDiv.className = "card-bg p-4 rounded-lg space-y-3";
+                        taskDiv.id = `task-${taskId}`;
+                        
+                        taskDiv.innerHTML = `
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h3 class="text-lg font-bold text-white">${task.title}</h3>
+                                    <p class="text-sm text-gray-400">পুরস্কার: <span class="font-semibold text-accent">${task.reward} Coins</span></p>
+                                </div>
+                                <a href="${task.videoUrl}" target="_blank" class="text-xs bg-gray-700 hover:bg-gray-600 text-white px-2 py-1 rounded">Watch Video</a>
+                            </div>
+                            <div id="task-input-area-${taskId}" class="hidden space-y-2">
+                                <input type="text" id="code-${taskId}" placeholder="এখানে ভিডিও কোডটি দিন" class="w-full p-2 rounded-lg input-field"/>
+                                <button class="w-full p-2 rounded-lg btn-outline-accent" onclick="submitTask('${taskId}', '${task.code}', ${task.reward}, '${task.videoUrl}')">
+                                    Submit Code
+                                </button>
+                            </div>
+                            <button id="start-btn-${taskId}" class="w-full p-2 rounded-lg btn-accent" onclick="startTaskTimer('${taskId}', '${task.videoUrl}', ${task.duration || 100})">
+                                Start Task
+                            </button>
+                        `;
+                        taskList.appendChild(taskDiv);
+                    }
+                });
+
+                if (tasksAvailable === 0) {
+                    taskList.innerHTML = '<p class="text-gray-400 text-center">আপনি সমস্ত টাস্ক সম্পন্ন করেছেন। নতুন টাস্ক শীঘ্রই আসছে।</p>';
+                }
+
+            } catch (error) {
+                console.error("Error loading tasks: ", error);
+                taskList.innerHTML = '<p class="text-red-400 text-center">Could not load tasks.</p>';
+            }
+        }
+        window.loadTasks = loadTasks;
+
+        async function submitTask(taskId, correctCode, reward, videoUrl) {
+            const inputCodeEl = document.getElementById(`code-${taskId}`);
+            const inputCode = inputCodeEl.value.trim();
+
+            if (!inputCode) {
+                return showAlert("❌ অনুগ্রহ করে কোডটি লিখুন।");
+            }
+
+            if (inputCode.toUpperCase() === correctCode.toUpperCase()) {
+                loader.style.display = 'flex';
+                try {
+                    const userRef = doc(db, "users", currentUser.uid);
+                    const completed = userData.completedTasks || [];
+                    completed.push(taskId);
+
+                    const newBalance = (userData.balance || 0) + reward;
+
+                    await updateDoc(userRef, {
+                        balance: newBalance,
+                        completedTasks: completed
+                    });
+
+                    userData.balance = newBalance;
+                    userData.completedTasks = completed;
+                    updateUI();
+
+                    showAlert(`✅ সঠিক কোড! আপনি ${reward} Coins পেয়েছেন।`);
+                    
+                    const taskDiv = document.getElementById(`task-${taskId}`);
+                    if (taskDiv) {
+                        taskDiv.innerHTML = `<div class="text-center p-4"><p class="font-bold text-green-400">🎉 টাস্ক সম্পন্ন!</p></div>`;
+                        setTimeout(() => { taskDiv.style.display = 'none'; }, 2000);
+                    }
+
+                } catch (error) {
+                    console.error("Error submitting task:", error);
+                    showAlert("একটি সমস্যা হয়েছে। আবার চেষ্টা করুন।");
+                } finally {
+                    loader.style.display = 'none';
+                }
+            } else {
+                showAlert("❌ ভুল কোড! টাস্কটি আবার শুরু হবে।");
+                const taskInputArea = document.getElementById(`task-input-area-${taskId}`);
+                const startBtn = document.getElementById(`start-btn-${taskId}`);
+                
+                taskInputArea.classList.add('hidden');
+                startBtn.classList.remove('hidden');
+                startBtn.disabled = false;
+                startBtn.textContent = 'Start Task';
+                inputCodeEl.value = '';
+
+                window.open(videoUrl, '_blank');
+            }
+        }
+        window.submitTask = submitTask;
+
+        function startTaskTimer(taskId, videoUrl, duration) {
+            window.open(videoUrl, '_blank'); 
+
+            const startBtn = document.getElementById(`start-btn-${taskId}`);
+            startBtn.disabled = true;
+            let timeLeft = duration;
+
+            const timerInterval = setInterval(() => {
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    startBtn.classList.add('hidden'); 
+                    document.getElementById(`task-input-area-${taskId}`).classList.remove('hidden'); 
+                } else {
+                    startBtn.textContent = `অনুগ্রহ করে ${timeLeft} সেকেন্ড অপেক্ষা করুন...`;
+                    timeLeft--;
+                }
+            }, 1000);
+        }
+        window.startTaskTimer = startTaskTimer;
 
         window.claimReward = async function(taskType) {
             const today = new Date().toISOString().split('T')[0];
@@ -578,20 +798,11 @@
             
             let adPromise;
             switch(taskType) {
-                case 'interstitial':
-                    adPromise = window.show_9797094();
-                    break;
-                case 'popup':
-                    adPromise = window.show_9797094('pop');
-                    break;
-                case 'inApp':
-                    adPromise = window.show_9797094({ type: 'inApp', inAppSettings: { frequency: 2, capping: 0.1, interval: 30, timeout: 5, everyPage: false } });
-                    break;
-                case 'miniApp':
-                    adPromise = window.show_9797094();
-                    break;
-                default:
-                    return;
+                case 'interstitial': adPromise = window.show_9797094(); break;
+                case 'popup': adPromise = window.show_9797094('pop'); break;
+                case 'inApp': adPromise = window.show_9797094({ type: 'inApp', inAppSettings: { frequency: 2, capping: 0.1, interval: 30, timeout: 5, everyPage: false } }); break;
+                case 'miniApp': adPromise = window.show_9797094(); break;
+                default: return;
             }
 
             adPromise.then(async () => {
@@ -601,27 +812,27 @@
                 
                 let rewardAmount = 0;
                 if (taskType === 'miniApp') {
-                    rewardAmount = 50; // Mini App ka zyada reward
+                    rewardAmount = 50;
                 } else if (taskType !== 'inApp') {
                     rewardAmount = 25;
                 }
 
                 if (rewardAmount > 0) {
-                    updateBalance(rewardAmount);
+                    await updateBalance(rewardAmount);
                     showAlert(`Badhai ho! Aapne ${rewardAmount} coins jeete hain.`);
                 }
                 updateAdsLeftCount();
             }).catch(e => {
                 console.error("Ad error:", e);
-                showAlert('Ad nahi dikhaya ja saka. Kripya baad mein prayas karein.');
             });
         }
 
         function showAlert(message) {
+            const alertBox = document.getElementById('custom-alert');
             document.getElementById('alert-message').textContent = message;
-            document.getElementById('custom-alert').classList.remove('hidden');
+            alertBox.classList.remove('hidden');
             document.getElementById('alert-ok-btn').onclick = () => {
-                document.getElementById('custom-alert').classList.add('hidden');
+                alertBox.classList.add('hidden');
             };
         }
         window.showAlert = showAlert;

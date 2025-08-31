@@ -163,13 +163,13 @@
                 <h2 class="text-xl font-bold text-center">My Profile</h2>
                 
                 <div class="flex flex-col items-center">
-                    <div class="w-24 h-24 rounded-full bg-gray-700 flex items-center justify-center mb-4">
+                    <div id="profile-picture-container" class="w-24 h-24 rounded-full bg-gray-700 flex items-center justify-center mb-4 overflow-hidden">
                         <i data-lucide="user" class="w-12 h-12 text-gray-400"></i>
                     </div>
                 </div>
 
                 <div id="telegram-info-container" class="card-bg p-4 rounded-lg hidden">
-                    <h3 class="font-bold text-lg mb-2 text-accent">Telegram Info</h3>
+                    <h3 class="font-bold text-lg mb-2 text-accent">Profile Info</h3>
                     <div class="space-y-1 text-sm">
                         <p><strong>Name:</strong> <span id="telegram-name">Loading...</span></p>
                         <p><strong>ID:</strong> <span id="telegram-id">Loading...</span></p>
@@ -238,7 +238,6 @@
         const adsLeftCountEl = document.getElementById('ads-left-count');
         const paymentDetailsContainer = document.getElementById('payment-details-container');
         
-        // ADDED: Initialize Telegram Web App
         try {
             if (window.Telegram && window.Telegram.WebApp) {
                 window.Telegram.WebApp.ready();
@@ -385,7 +384,6 @@
                     const pageId = link.dataset.page;
                     if (pageId === 'wallet-page') loadWithdrawalHistory();
                     if (pageId === 'tasks-page') loadTasks();
-                    // ADDED: Load profile info when navigating to profile page
                     if (pageId === 'profile-page') loadProfileInfo();
                     navigateTo(pageId);
                 });
@@ -399,7 +397,6 @@
             document.getElementById('apply-referral-btn').addEventListener('click', handleApplyReferralCode);
             withdrawMethodSelect.addEventListener('change', updateDynamicPaymentFields);
 
-            // ADDED: Event listener for Personal Info toggle button
             document.getElementById('toggle-personal-info-btn').addEventListener('click', () => {
                 document.getElementById('personal-info-details').classList.toggle('hidden');
             });
@@ -436,7 +433,7 @@
         async function handleLogin() {
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
-            if (!email || !password) return showAlert("Kripya email aur password daalein.");
+            if (!email || !password) return showAlert("আপনার ইমেইল এবং পাসওয়ার্ড লিখুন.");
             loader.style.display = 'flex';
             try {
                 await signInWithEmailAndPassword(auth, email, password);
@@ -447,19 +444,30 @@
             }
         }
 
-        // ADDED: Function to load user's profile information
+        // এই ফাংশনটি পরিবর্তন করা হয়েছে
         function loadProfileInfo() {
             // Part 1: Load Telegram Info
             const tgNameEl = document.getElementById('telegram-name');
             const tgIdEl = document.getElementById('telegram-id');
             const tgInfoContainer = document.getElementById('telegram-info-container');
-            
+            const profilePicContainer = document.getElementById('profile-picture-container');
+
             if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.user) {
                 const tgUser = window.Telegram.WebApp.initDataUnsafe.user;
                 const fullName = `${tgUser.first_name || ''} ${tgUser.last_name || ''}`.trim();
                 tgNameEl.textContent = fullName || 'Not provided';
                 tgIdEl.textContent = tgUser.id || 'Not found';
                 tgInfoContainer.classList.remove('hidden');
+                
+                if (tgUser.photo_url) {
+                    const img = document.createElement('img');
+                    img.src = tgUser.photo_url;
+                    img.className = 'w-full h-full object-cover';
+                    
+                    profilePicContainer.innerHTML = ''; 
+                    profilePicContainer.appendChild(img);
+                }
+
             } else {
                 tgInfoContainer.innerHTML = `<p class="text-center text-sm text-yellow-400">Telegram details available only when opened inside Telegram.</p>`;
                 tgInfoContainer.classList.remove('hidden');
@@ -606,7 +614,7 @@
                 loadWithdrawalHistory();
             } catch (error) {
                 showAlert("Request submit karne mein error: " + error.message);
-                await updateBalance(amount); // Rollback balance on failure
+                await updateBalance(amount);
             } finally {
                 loader.style.display = 'none';
             }
@@ -840,3 +848,4 @@
     </script>
 </body>
 </html>
+    

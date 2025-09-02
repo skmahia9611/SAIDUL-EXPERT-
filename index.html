@@ -24,7 +24,7 @@
         .btn-accent:hover { background-color: #e67e00; }
         .btn-outline-accent { border: 1px solid #ff8c00; color: #ff8c00; }
         .btn-outline-accent:hover { background-color: #ff8c00; color: #121212; }
-        .btn-accent:disabled { background-color: #555; color: #999; cursor: not-allowed; }
+        .btn-accent:disabled, .btn-disabled { background-color: #555; color: #999; cursor: not-allowed; }
         .input-field { background-color: #2c2c2c; border: 1px solid #444; }
         .main-page { display: none; }
         .main-page.active { display: flex; animation: fadeIn 0.5s ease-in-out; }
@@ -34,6 +34,22 @@
         .notification-dot {
             position: absolute; top: -2px; right: -2px; width: 10px; height: 10px;
             background-color: #ef4444; border-radius: 50%; border: 2px solid #121212; display: none;
+        }
+        .youtube-btn {
+            background-color: #ff0000;
+            color: white;
+            padding: 6px 10px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .youtube-btn:hover {
+            background-color: #cc0000;
+        }
+        .youtube-btn i {
+            margin-right: 4px;
         }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
@@ -58,6 +74,7 @@
                  <input id="signup-name" type="text" placeholder="Poora Naam" class="w-full p-3 rounded-lg input-field mb-4">
                 <input id="signup-email" type="email" placeholder="Email" class="w-full p-3 rounded-lg input-field mb-4">
                 <input id="signup-password" type="password" placeholder="Password" class="w-full p-3 rounded-lg input-field mb-4">
+                <input id="signup-referral-code" type="text" placeholder="Referral Code (Optional)" class="w-full p-3 rounded-lg input-field mb-4">
                 <button id="signup-btn" class="w-full p-3 rounded-lg btn-accent mb-4">Sign Up</button>
                 <p class="text-center text-gray-400">Pehle se account hai? <a href="#" id="show-login" class="font-semibold text-accent">Login</a></p>
             </div>
@@ -75,7 +92,8 @@
             </div>
         </header>
 
-        <main class="flex-grow pb-16"> <div id="home-page" class="p-4 space-y-6 sub-page">
+        <main class="flex-grow pb-16">
+            <div id="home-page" class="p-4 space-y-6 sub-page">
                 <div class="card-bg p-4 rounded-lg flex items-center justify-between">
                     <div>
                         <p class="text-gray-400 text-sm">Your Balance</p>
@@ -100,18 +118,56 @@
                             <div class="flex items-center space-x-3"><span class="text-3xl">😎</span><div><h3 class="font-semibold">Click for Reward</h3><p class="text-xs text-gray-400">Rewarded Popup</p></div></div>
                             <button class="bg-white text-black font-bold px-6 py-2 rounded-lg text-sm btn" onclick="claimReward('popup')">Claim</button>
                         </div>
-                         <div class="card-bg p-3 rounded-lg flex items-center justify-between">
-                            <div class="flex items-center space-x-3"><span class="text-3xl">👀</span><div><h3 class="font-semibold">Watch a Video</h3><p class="text-xs text-gray-400">In-App Interstitial</p></div></div>
-                            <button class="bg-gray-700 text-white font-bold px-6 py-2 rounded-lg text-sm btn" onclick="claimReward('inApp')">Start</button>
-                        </div>
+                        
                         <div class="card-bg p-3 rounded-lg flex items-center justify-between">
-                            <div class="flex items-center space-x-3"><span class="text-3xl">🎮</span><div><h3 class="font-semibold">Play Mini App</h3><p class="text-xs text-gray-400">Get a big reward!</p></div></div>
-                            <button class="bg-blue-500 text-white font-bold px-6 py-2 rounded-lg text-sm btn" onclick="claimReward('miniApp')">Play</button>
+                            <div class="flex items-center space-x-3">
+                                <span class="text-3xl">
+                                    <svg class="w-8 h-8 text-red-500" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.615 3.184c-3.604-.234-6.402-1.745-7.615-3.184C10.793 1.439 8.006 2.95 4.39 3.184A12.001 12.001 0 000 12c0 2.21 1.79 4 4 4h16c2.21 0 4-1.79 4-4a12.001 12.001 0 00-4.385-8.816zM9.99 15.006L15 12l-5.01-3.006V15.01z"></path></svg>
+                                </span>
+                                <div>
+                                    <h3 class="font-semibold">YouTube Subscribe</h3>
+                                    <p class="text-xs text-gray-400">Join and get coins</p>
+                                </div>
+                            </div>
+                            <a href="https://youtube.com/@saidulexpert?si=yo0EstZc-Hjq4rxU" target="_blank" class="bg-red-600 text-white font-bold px-6 py-2 rounded-lg text-sm btn">Follow</a>
                         </div>
+                        
+                        <div class="card-bg p-3 rounded-lg flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-3xl">
+                                    <svg class="w-8 h-8 text-blue-400" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M21.996 5.869c.813-.48 1.487-1.127 1.487-2.31 0-1.183-.674-1.83-1.487-2.31a.99.99 0 00-1.114-.144L.404 10.158c-1.354.793-1.354 2.112 0 2.905l20.478 8.743c.813.48 1.487 1.127 1.487 2.31 0 1.183-.674 1.83-1.487 2.31a.99.99 0 00-1.114-.144L.404 15.842c-1.354-.793-1.354-2.112 0-2.905l20.478-8.743c.813-.48 1.487-1.127 1.487-2.31zM11.996 12L7 14.28 2 12 11.996 12z"></path></svg>
+                                </span>
+                                <div>
+                                    <h3 class="font-semibold">Telegram Channel</h3>
+                                    <p class="text-xs text-gray-400">Join and get coins</p>
+                                </div>
+                            </div>
+                            <a href="https://t.me/Daily_Cash_Pay" target="_blank" class="bg-blue-600 text-white font-bold px-6 py-2 rounded-lg text-sm btn">Follow</a>
+                        </div>
+                        
+                        <div class="card-bg p-3 rounded-lg flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-3xl">
+                                    <svg class="w-8 h-8 text-purple-400" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-9h4a1 1 0 000-2h-4a1 1 0 000 2z"></path></svg>
+                                </span>
+                                <div>
+                                    <h3 class="font-semibold">Follow The Owner</h3>
+                                    <p class="text-xs text-gray-400">Follow the owner on Telegram</p>
+                                </div>
+                            </div>
+                            <a href="https://t.me/Daily_Pay_ADMIN" target="_blank" class="bg-purple-600 text-white font-bold px-6 py-2 rounded-lg text-sm btn">Follow</a>
+                        </div>
+                        
                     </div>
                 </section>
             </div>
             
+            <div id="offers-page" class="p-4 space-y-6 sub-page">
+                <h2 class="text-xl font-bold text-center">🏆 Special Offers</h2>
+                <p class="text-gray-400 text-center mb-4">Click "Start" to begin an offer, or watch the video for instructions!</p>
+                <div id="offers-list" class="space-y-4"></div>
+            </div>
+
             <div id="tasks-page" class="p-4 space-y-6 sub-page">
                 <h2 class="text-xl font-bold text-center">🎯 Complete Tasks & Earn</h2>
                 <p class="text-gray-400 text-center mb-4">ভিডিও দেখে কোড দিন, রিওয়ার্ড পান।</p>
@@ -119,9 +175,9 @@
             </div>
 
             <div id="wallet-page" class="p-4 space-y-6 sub-page">
-                <h2 class="text-xl font-bold text-center">Mera Wallet</h2>
+                <h2 class="text-xl font-bold text-center">MY Wallet</h2>
                 <div class="card-bg p-4 rounded-lg">
-                    <h3 class="font-semibold mb-3">Earnings Withdraw Karein</h3>
+                    <h3 class="font-semibold mb-3">Earnings Withdraw Koran</h3>
                     <p class="text-sm text-gray-400 mb-1">Current Balance: <span class="font-bold text-accent"><span id="wallet-coin-balance">0</span> Coins</span></p>
                     <p class="text-sm text-gray-400 mb-2">Minimum Withdrawal: <span id="min-withdrawal-info">...</span> Coins</p>
                     <p class="text-sm text-gray-400 mb-4 font-semibold" id="coin-value-info">...</p>
@@ -139,12 +195,12 @@
             <div id="refer-page" class="p-4 space-y-6 sub-page">
                  <h2 class="text-xl font-bold text-center">Refer & Earn</h2>
                  <div class="card-bg p-6 rounded-lg text-center">
-                     <p class="text-gray-400 mb-2">Aapka Referral Code</p>
+                     <p class="text-gray-400 mb-2">Referral Code</p>
                      <div class="bg-gray-800 p-3 rounded-lg flex items-center justify-center mb-4">
                          <span id="referral-code" class="text-2xl font-bold tracking-widest">LOADING...</span>
                          <button id="copy-code-btn" class="ml-4"><i data-lucide="copy" class="w-6 h-6 text-gray-400"></i></button>
                      </div>
-                     <p class="text-sm text-gray-300">Apne dosto ke saath code share karein.</p>
+                     <p class="text-sm text-gray-300">রেফার লিংক শেয়ার করুন</p>
                  </div>
                  <button id="share-btn" class="w-full p-3 rounded-lg btn-accent">রেফার লিংক শেয়ার করুন</button>
                  <div id="apply-referral-container" class="card-bg p-4 rounded-lg mt-6">
@@ -175,6 +231,29 @@
                         <p><strong>ID:</strong> <span id="telegram-id">Loading...</span></p>
                     </div>
                 </div>
+                
+                <div class="max-w-sm mx-auto p-4 rounded-xl bg-white/10 backdrop-blur-md shadow-lg border border-white/20 text-sm">
+  <h3 class="text-lg font-bold text-center mb-3 text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">
+    Developer Info
+  </h3>
+                    
+  <a href="https://t.me/SAIDULEP" target="_blank"
+     class="flex items-center justify-center gap-2 py-2 rounded-lg font-medium text-white bg-gradient-to-r from-cyan-500 to-blue-500 shadow-md hover:shadow-lg hover:scale-105 transition duration-300">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 24c6.627 0 12-5.373 12-12S18.627 0 12 
+               0 0 5.373 0 12s5.373 12 12 12zm4.398-17.76c.451-.212.793-.11.97.234.177.345.163.633.045 
+               1.096-.118.463-.378 1.543-.548 2.502-.17.96-.341 1.918-.543 
+               2.871-.202.953-.433 1.905-.694 2.846-.26.942-.562 
+               1.868-.905 2.766-.343.899-.747 1.765-1.215 
+               2.593-.468.828-1.004 1.579-1.606 2.253-1.84 
+               2.05-3.35 1.705-4.53-.404-.79-1.424-1.256-3.218-1.748-4.789-.492-1.571-1.02-3.136-1.583-4.707-.563-1.571-1.164-3.131-1.796-4.707-.633-1.571-1.306-3.131-2.022-4.707-.715-1.571-1.472-3.131-2.269-4.707C.91 
+               3.551 1.348 2 2.38 2.006c.725.004 1.442.222 
+               2.148.653 1.042.646 2.094 1.282 3.161 
+               1.918 1.067.636 2.15 1.272 3.248 1.908.204.12.399.24.588.36.19.12.37.24.54.36z"/>
+    </svg>
+    <span>@SAIDULEP</span>
+  </a>
+</div>
 
                 <div class="card-bg p-4 rounded-lg">
                     <button id="toggle-personal-info-btn" class="w-full text-left font-bold text-lg text-accent">Personal Info</button>
@@ -189,8 +268,9 @@
 
         </main>
 
-        <nav class="bottom-nav sticky bottom-0 grid grid-cols-5 items-center text-center py-2 card-bg">
+        <nav class="bottom-nav sticky bottom-0 grid grid-cols-6 items-center text-center py-2 card-bg">
             <a href="#" class="nav-link" data-page="home-page"><i data-lucide="home" class="mx-auto w-6 h-6"></i><span class="text-xs">Home</span></a>
+            <a href="#" class="nav-link" data-page="offers-page"><i data-lucide="badge-check" class="mx-auto w-6 h-6"></i><span class="text-xs">Offers</span></a>
             <a href="#" class="nav-link" data-page="refer-page"><i data-lucide="users" class="mx-auto w-6 h-6"></i><span class="text-xs">Refer</span></a>
             <a href="#" class="nav-link" data-page="tasks-page"><i data-lucide="list-checks" class="mx-auto w-6 h-6"></i><span class="text-xs">Tasks</span></a>
             <a href="#" class="nav-link" data-page="wallet-page"><i data-lucide="wallet" class="mx-auto w-6 h-6"></i><span class="text-xs">Wallet</span></a>
@@ -202,6 +282,19 @@
         <div class="bg-gray-800 rounded-lg p-6 w-full max-w-sm text-center">
             <p id="alert-message" class="mb-4"></p>
             <button id="alert-ok-btn" class="btn-accent px-6 py-2 rounded-lg">OK</button>
+        </div>
+    </div>
+    
+    <div id="offer-instructions-modal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
+        <div class="card-bg rounded-lg p-6 w-full max-w-sm">
+            <h3 class="text-xl font-bold mb-4 text-center">অফার শুরু করার নির্দেশাবলী</h3>
+            <div class="space-y-3 text-sm text-gray-300">
+                <p>1. অফারের লিঙ্কে ক্লিক করুন।</p>
+                <p>2. অফারটি ভালোভাবে সম্পন্ন করুন।</p>
+                <p>3. অফারটি শেষ হওয়ার পর এই অ্যাপে ফিরে আসুন।</p>
+                <p>4. নিচে থাকা ফরম পূরণ করে জমা দিন।</p>
+            </div>
+            <button id="close-instructions-btn" class="w-full p-3 rounded-lg btn-accent mt-6">ঠিক আছে, চালিয়ে যান</button>
         </div>
     </div>
 
@@ -237,7 +330,10 @@
         const notificationDot = document.getElementById('notification-dot');
         const adsLeftCountEl = document.getElementById('ads-left-count');
         const paymentDetailsContainer = document.getElementById('payment-details-container');
-        
+        const instructionsModal = document.getElementById('offer-instructions-modal');
+        const closeInstructionsBtn = document.getElementById('close-instructions-btn');
+        let currentOfferUrl = '';
+
         try {
             if (window.Telegram && window.Telegram.WebApp) {
                 window.Telegram.WebApp.ready();
@@ -252,6 +348,16 @@
             showMainPage('auth-section');
             loader.style.display = 'none';
             onAuthStateChanged(auth, handleAuthStateChange);
+            
+            // Handle URL referral code
+            const urlParams = new URLSearchParams(window.location.search);
+            const refCode = urlParams.get('start');
+            if (refCode) {
+                const signupReferralInput = document.getElementById('signup-referral-code');
+                signupReferralInput.value = refCode.toUpperCase();
+                document.getElementById('login-view').classList.add('hidden');
+                document.getElementById('signup-view').classList.remove('hidden');
+            }
         };
 
         async function handleAuthStateChange(user) {
@@ -385,6 +491,7 @@
                     if (pageId === 'wallet-page') loadWithdrawalHistory();
                     if (pageId === 'tasks-page') loadTasks();
                     if (pageId === 'profile-page') loadProfileInfo();
+                    if (pageId === 'offers-page') loadOffers();
                     navigateTo(pageId);
                 });
             });
@@ -400,12 +507,22 @@
             document.getElementById('toggle-personal-info-btn').addEventListener('click', () => {
                 document.getElementById('personal-info-details').classList.toggle('hidden');
             });
+            closeInstructionsBtn.addEventListener('click', () => {
+                instructionsModal.classList.add('hidden');
+                if (currentOfferUrl) {
+                    window.open(currentOfferUrl, '_blank');
+                    currentOfferUrl = '';
+                }
+            });
         }
 
         async function handleSignup() {
             const name = document.getElementById('signup-name').value;
             const email = document.getElementById('signup-email').value;
             const password = document.getElementById('signup-password').value;
+            const referralCodeInput = document.getElementById('signup-referral-code');
+            const referralCode = referralCodeInput.value.trim().toUpperCase() || null;
+            
             if (!name || !email || !password) return showAlert("Kripya sabhi fields bharein.");
             loader.style.display = 'flex';
             try {
@@ -415,7 +532,7 @@
                 const ownReferralCode = Math.random().toString(36).substring(2, 8).toUpperCase();
                 const newUserData = {
                     uid: user.uid, name: name, email: user.email,
-                    balance: 50, referralCode: ownReferralCode, referredBy: null,
+                    balance: 50, referralCode: ownReferralCode, referredBy: referralCode,
                     lastNotificationCheck: serverTimestamp(),
                     createdAt: serverTimestamp(),
                     dailyAdCount: 0, lastAdWatchDate: new Date().toISOString().split('T')[0], isBlocked: false,
@@ -423,6 +540,11 @@
                 };
                 await setDoc(userRef, newUserData);
                 userData = newUserData;
+                
+                if (referralCode) {
+                    await applyReferralBonus(referralCode, false);
+                }
+                
             } catch (error) {
                 showAlert(error.message);
             } finally {
@@ -444,9 +566,7 @@
             }
         }
 
-        // এই ফাংশনটি পরিবর্তন করা হয়েছে
         function loadProfileInfo() {
-            // Part 1: Load Telegram Info
             const tgNameEl = document.getElementById('telegram-name');
             const tgIdEl = document.getElementById('telegram-id');
             const tgInfoContainer = document.getElementById('telegram-info-container');
@@ -473,7 +593,6 @@
                 tgInfoContainer.classList.remove('hidden');
             }
 
-            // Part 2: Load Personal Info from Firebase
             const userEmailEl = document.getElementById('user-email');
             if (userData && userData.email) {
                 userEmailEl.textContent = userData.email;
@@ -496,7 +615,7 @@
 
         async function loadNotifications() {
             const listEl = document.getElementById('notifications-list');
-            listEl.innerHTML = '<p class="text-gray-400">Loading...</p>';
+            listEl.innerHTML = '<p class="text-gray-400">History loadig...</p>';
             notificationDot.style.display = 'none';
             const q = query(collection(db, "notifications"), orderBy("createdAt", "desc"));
             try {
@@ -514,13 +633,13 @@
                 await updateDoc(doc(db, "users", currentUser.uid), { lastNotificationCheck: serverTimestamp() });
             } catch (error) {
                 console.error("Error loading notifications:", error);
-                listEl.innerHTML = '<p class="text-red-400">Notifications load karne mein error aayi.</p>';
+                listEl.innerHTML = '<p class="text-red-400">Notifications loadig...</p>';
             }
         }
 
         async function loadWithdrawalHistory() {
             const historyList = document.getElementById('withdrawal-history-list');
-            historyList.innerHTML = '<p class="text-gray-400">History load ho rahi hai...</p>';
+            historyList.innerHTML = '<p class="text-gray-400">History loadig...</p>';
             const q = query(collection(db, "withdrawals"), where("userId", "==", currentUser.uid), orderBy("requestedAt", "desc"));
             try {
                 const querySnapshot = await getDocs(q);
@@ -570,7 +689,7 @@
                     await updateDoc(newUserRef, { balance: (userData.balance || 0) + 100, referredBy: referrerCode });
                     userData.balance += 100; userData.referredBy = referrerCode;
                     updateUI();
-                    if(isManualApply) showAlert("Code safaltapoorvak apply ho gaya! Aapko 100 coins mile hain.");
+                    if(isManualApply) showAlert("Code safaltapoorvak apply ho gaya! Aapko 100 coins jeete hain.");
                 } else {
                     if(isManualApply) showAlert("Galat referral code.");
                 }
@@ -631,7 +750,8 @@
         
         function shareReferralCode() {
             const shareUrl = `http://t.me/Daily_PayBot/OPEN?start=${userData.referralCode}`;
-            const text = `𝗗𝗮𝗶𝗹𝘆 𝗣𝗮𝘆𝗕𝗼𝘁 join karein aur paise kamayein! Bonus paane ke liye mera referral code use karein: ${userData.referralCode}\n\nJoin here: ${shareUrl}`;
+            const text = `✨ Daily PayBot এ যোগ দিন আর উপার্জন করুন!
+🎁 বোনাস পেতে এখনই আমার রেফারেল কোড ব্যবহার করুন: ${userData.referralCode}\n\nJoin here: ${shareUrl}`;
 
             if (navigator.share) {
                 navigator.share({ 
@@ -653,31 +773,64 @@
             const taskList = document.getElementById("task-list");
             taskList.innerHTML = '<p class="text-gray-400 text-center">Loading tasks...</p>';
             try {
+                const submissionsQuery = query(collection(db, "taskSubmissions"), where("userId", "==", currentUser.uid));
+                const submissionsSnapshot = await getDocs(submissionsQuery);
+                const userSubmissions = {}; 
+                submissionsSnapshot.forEach(doc => {
+                    const submission = doc.data();
+                    userSubmissions[submission.taskId] = submission;
+                });
+
                 const tasksRef = collection(db, "tasks");
-                const q = query(tasksRef, orderBy("title"));
-                const querySnapshot = await getDocs(q);
+                const tasksQuery = query(tasksRef, orderBy("title"));
+                const tasksSnapshot = await getDocs(tasksQuery);
 
-                if (querySnapshot.empty) {
-                    taskList.innerHTML = '<p class="text-gray-400 text-center">নতুন টাস্ক শীঘ্রই আসছে।</p>';
-                    return;
-                }
+                let tasksAvailable = 0;
+                taskList.innerHTML = '';
                 
-                let tasksAvailable = 0; 
-                taskList.innerHTML = ''; 
-
-                const completedTasks = userData.completedTasks || []; 
-
-                querySnapshot.forEach((docSnap) => {
+                tasksSnapshot.forEach((docSnap) => {
+                    tasksAvailable++;
                     const taskId = docSnap.id;
+                    const task = docSnap.data();
+                    const submission = userSubmissions[taskId]; 
 
-                    if (!completedTasks.includes(taskId)) {
-                        tasksAvailable++; 
-                        const task = docSnap.data();
-                        const taskDiv = document.createElement("div");
-                        taskDiv.className = "card-bg p-4 rounded-lg space-y-3";
-                        taskDiv.id = `task-${taskId}`;
-                        
-                        taskDiv.innerHTML = `
+                    const taskDiv = document.createElement("div");
+                    taskDiv.className = "card-bg p-4 rounded-lg space-y-3";
+                    
+                    let taskBodyHtml = '';
+
+                    if (submission) {
+                        if (submission.status === 'approved') {
+                            taskBodyHtml = `
+                                <div>
+                                    <h3 class="text-lg font-bold text-white">${task.title}</h3>
+                                    <p class="text-sm text-gray-400">পুরস্কার: <span class="font-semibold text-accent">${task.reward} Coins</span></p>
+                                </div>
+                                <div class="text-center p-2 rounded-lg bg-green-500 bg-opacity-20">
+                                    <p class="font-bold text-green-400">Completed</p>
+                                </div>`;
+                        } else if (submission.status === 'pending') {
+                            taskBodyHtml = `
+                                <div>
+                                    <h3 class="text-lg font-bold text-white">${task.title}</h3>
+                                    <p class="text-sm text-gray-400">পুরস্কার: <span class="font-semibold text-accent">${task.reward} Coins</span></p>
+                                </div>
+                                <div class="text-center p-2 rounded-lg bg-yellow-500 bg-opacity-20">
+                                    <p class="font-bold text-yellow-400">⏳ আপনার জমা দেওয়া টাস্কটি পর্যালোচনার জন্য অপেক্ষমাণ।</p>
+                                </div>`;
+                        } else if (submission.status === 'rejected') {
+                             taskBodyHtml = `
+                                <div>
+                                    <h3 class="text-lg font-bold text-white">${task.title}</h3>
+                                    <p class="text-sm text-gray-400">পুরস্কার: <span class="font-semibold text-accent">${task.reward} Coins</span></p>
+                                </div>
+                                <div class="text-center p-2 rounded-lg bg-red-500 bg-opacity-20">
+                                    <p class="font-bold text-red-400">❌ আপনার টাস্কটি বাতিল করা হয়েছে।</p>
+                                    <p class="text-xs text-gray-400">${submission.rejectReason || 'অনুগ্রহ করে আবার চেষ্টা করুন।'}</p>
+                                </div>`;
+                        }
+                    } else {
+                        taskBodyHtml = `
                             <div class="flex justify-between items-start">
                                 <div>
                                     <h3 class="text-lg font-bold text-white">${task.title}</h3>
@@ -687,16 +840,16 @@
                             </div>
                             <div id="task-input-area-${taskId}" class="hidden space-y-2">
                                 <input type="text" id="code-${taskId}" placeholder="এখানে ভিডিও কোডটি দিন" class="w-full p-2 rounded-lg input-field"/>
-                                <button class="w-full p-2 rounded-lg btn-outline-accent" onclick="submitTask('${taskId}', '${task.code}', ${task.reward}, '${task.videoUrl}')">
+                                <button class="w-full p-2 rounded-lg btn-outline-accent" onclick="submitTask('${taskId}', '${task.code}', ${task.reward})">
                                     Submit Code
                                 </button>
                             </div>
-                            <button id="start-btn-${taskId}" class="w-full p-2 rounded-lg btn-accent" onclick="startTaskTimer('${taskId}', '${task.videoUrl}', ${task.duration || 100})">
-                                Start Task
-                            </button>
+                            <button id="start-btn-${taskId}" class="w-full p-2 rounded-lg btn-accent" onclick="startTaskTimer('${taskId}', '${task.videoUrl}', ${task.duration || 100}, null)">Start Task</button>
                         `;
-                        taskList.appendChild(taskDiv);
                     }
+                    
+                    taskDiv.innerHTML = taskBodyHtml;
+                    taskList.appendChild(taskDiv);
                 });
 
                 if (tasksAvailable === 0) {
@@ -710,65 +863,54 @@
         }
         window.loadTasks = loadTasks;
 
-        async function submitTask(taskId, correctCode, reward, videoUrl) {
+        async function submitTask(taskId, correctCode, reward) {
             const inputCodeEl = document.getElementById(`code-${taskId}`);
             const inputCode = inputCodeEl.value.trim();
 
             if (!inputCode) {
                 return showAlert("❌ অনুগ্রহ করে কোডটি লিখুন।");
             }
-
-            if (inputCode.toUpperCase() === correctCode.toUpperCase()) {
-                loader.style.display = 'flex';
-                try {
-                    const userRef = doc(db, "users", currentUser.uid);
-                    const completed = userData.completedTasks || [];
-                    completed.push(taskId);
-
-                    const newBalance = (userData.balance || 0) + reward;
-
-                    await updateDoc(userRef, {
-                        balance: newBalance,
-                        completedTasks: completed
-                    });
-
-                    userData.balance = newBalance;
-                    userData.completedTasks = completed;
-                    updateUI();
-
-                    showAlert(`✅ সঠিক কোড! আপনি ${reward} Coins পেয়েছেন।`);
-                    
-                    const taskDiv = document.getElementById(`task-${taskId}`);
-                    if (taskDiv) {
-                        taskDiv.innerHTML = `<div class="text-center p-4"><p class="font-bold text-green-400">🎉 টাস্ক সম্পন্ন!</p></div>`;
-                        setTimeout(() => { taskDiv.style.display = 'none'; }, 2000);
-                    }
-
-                } catch (error) {
-                    console.error("Error submitting task:", error);
-                    showAlert("একটি সমস্যা হয়েছে। আবার চেষ্টা করুন।");
-                } finally {
-                    loader.style.display = 'none';
-                }
-            } else {
-                showAlert("❌ ভুল কোড! টাস্কটি আবার শুরু হবে।");
+            
+            if (inputCode.toUpperCase() !== correctCode.toUpperCase()) {
+                showAlert("❌ ভুল কোড! আপনি আবার চেষ্টা করতে পারেন।");
                 const taskInputArea = document.getElementById(`task-input-area-${taskId}`);
                 const startBtn = document.getElementById(`start-btn-${taskId}`);
-                
                 taskInputArea.classList.add('hidden');
                 startBtn.classList.remove('hidden');
                 startBtn.disabled = false;
                 startBtn.textContent = 'Start Task';
                 inputCodeEl.value = '';
+                return;
+            }
 
-                window.open(videoUrl, '_blank');
+            loader.style.display = 'flex';
+            try {
+                await addDoc(collection(db, "taskSubmissions"), {
+                    userId: currentUser.uid,
+                    userName: userData.name,
+                    taskId: taskId,
+                    taskTitle: document.getElementById(`task-input-area-${taskId}`).closest('.card-bg').querySelector('h3').textContent,
+                    reward: parseInt(reward),
+                    submittedCode: inputCode,
+                    status: "pending", 
+                    submittedAt: serverTimestamp()
+                });
+                
+                showAlert("✅ টাস্ক জমা দেওয়া হয়েছে। এডমিন যাচাই করার পর আপনার একাউন্টে ব্যালেন্স যুক্ত হবে।");
+                
+                loadTasks(); 
+
+            } catch (error) {
+                console.error("Error submitting task:", error);
+                showAlert("একটি সমস্যা হয়েছে। আবার চেষ্টা করুন।");
+            } finally {
+                loader.style.display = 'none';
             }
         }
         window.submitTask = submitTask;
 
-        function startTaskTimer(taskId, videoUrl, duration) {
+        function startTaskTimer(taskId, videoUrl, duration, submissionId) {
             window.open(videoUrl, '_blank'); 
-
             const startBtn = document.getElementById(`start-btn-${taskId}`);
             startBtn.disabled = true;
             let timeLeft = duration;
@@ -786,6 +928,160 @@
         }
         window.startTaskTimer = startTaskTimer;
 
+        async function loadOffers() {
+            const offersList = document.getElementById("offers-list");
+            offersList.innerHTML = '<p class="text-gray-400 text-center">Loading offers...</p>';
+            
+            try {
+                const submissionsQuery = query(collection(db, "offerSubmissions"), where("userId", "==", currentUser.uid));
+                const submissionsSnapshot = await getDocs(submissionsQuery);
+                const userSubmissions = {}; 
+                submissionsSnapshot.forEach(doc => {
+                    const submission = doc.data();
+                    userSubmissions[submission.offerId] = submission;
+                });
+
+                const offersRef = collection(db, "offers");
+                const q = query(offersRef, orderBy("reward", "desc"));
+                const querySnapshot = await getDocs(q);
+
+                if (querySnapshot.empty) {
+                    offersList.innerHTML = '<p class="text-gray-400 text-center">No new offers available right now.</p>';
+                    return;
+                }
+
+                offersList.innerHTML = ''; 
+                querySnapshot.forEach((docSnap) => {
+                    const offerId = docSnap.id;
+                    const offer = docSnap.data();
+                    const submission = userSubmissions[offerId]; 
+
+                    const offerDiv = document.createElement("div");
+                    offerDiv.className = "card-bg p-4 rounded-lg space-y-3";
+                    
+                    let offerBodyHtml = '';
+                    
+                    const headerHtml = `
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-lg font-bold text-white">${offer.title}</h3>
+                            <div class="text-sm">
+                                <span class="text-gray-400">পুরস্কার:</span>
+                                <span class="font-bold text-accent">${offer.reward} Coins</span>
+                            </div>
+                        </div>`;
+
+                    if (submission) {
+                        if (submission.status === 'approved') {
+                            offerBodyHtml = headerHtml + `
+                                <div class="text-center p-2 rounded-lg bg-green-500 bg-opacity-20">
+                                    <p class="font-bold text-green-400">Completed</p>
+                                </div>`;
+                        } else if (submission.status === 'pending') {
+                            offerBodyHtml = headerHtml + `
+                                <div class="text-center p-2 rounded-lg bg-yellow-500 bg-opacity-20">
+                                    <p class="font-bold text-yellow-400">Penning</p>
+                                </div>`;
+                        } else if (submission.status === 'rejected') {
+                             offerBodyHtml = headerHtml + `
+                                <div class="text-center p-2 rounded-lg bg-red-500 bg-opacity-20">
+                                    <p class="font-bold text-red-400">Reject</p>
+                                </div>`;
+                        }
+                    } else {
+                        let questionsHtml = (offer.questions || []).map(q => `
+                            <input type="text" id="answer-${offerId}-${q.id}" placeholder="${q.placeholder}" class="w-full p-2 rounded-lg input-field"/>
+                        `).join('');
+
+                        offerBodyHtml = headerHtml + `
+                            <div class="flex justify-center items-center space-x-4 mb-4">
+                                ${offer.videoUrl ? `<a href="#" class="youtube-btn" onclick="openVideo('${offer.videoUrl}')">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 15.2 0 2 2 0 0 1 1.4 1.4 24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-15.2 0 2 2 0 0 1-1.4-1.4z"/><path d="m10 15 5-3-5-3z"/></svg>
+                                    <span>ভিডিও</span>
+                                </a>` : ''}
+                                <button id="start-offer-btn-${offerId}" class="p-2 rounded-lg btn-outline-accent" onclick="startOffer('${offer.url}', '${offerId}')">
+                                    START
+                                </button>
+                            </div>
+                            <div id="offer-input-area-${offerId}" class="space-y-2 hidden">
+                                <p class="text-sm font-semibold">অফারটি সম্পন্ন করার পর নিচের ফরমটি পূরণ করুন</p>
+                                ${questionsHtml}
+                                <button class="w-full p-2 rounded-lg btn-accent" onclick="submitOffer('${offerId}', ${offer.reward})">
+                                    Submit
+                                </button>
+                            </div>
+                        `;
+                    }
+                    
+                    offerDiv.innerHTML = offerBodyHtml;
+                    offersList.appendChild(offerDiv);
+                });
+                lucide.createIcons();
+            } catch (error)
+                {
+                console.error("Error loading offers:", error);
+                offersList.innerHTML = `<p class="text-red-400 text-center">অফার লোড করতে সমস্যা হয়েছে।</p>`;
+            }
+        }
+        window.loadOffers = loadOffers;
+        
+        function openVideo(url) {
+            window.open(url, '_blank');
+        }
+        window.openVideo = openVideo;
+
+        function startOffer(url, offerId) {
+            instructionsModal.classList.remove('hidden');
+            currentOfferUrl = url;
+            document.getElementById(`offer-input-area-${offerId}`).classList.remove('hidden');
+            document.getElementById(`start-offer-btn-${offerId}`).classList.add('hidden');
+        }
+        window.startOffer = startOffer;
+
+        async function submitOffer(offerId, reward) {
+            const offerData = await getDoc(doc(db, "offers", offerId)).then(doc => doc.data());
+            const questions = offerData.questions || [];
+            let answers = {};
+            let allAnswersProvided = true;
+
+            for (const q of questions) {
+                const answerInput = document.getElementById(`answer-${offerId}-${q.id}`);
+                const answer = answerInput.value.trim();
+                if (!answer) {
+                    allAnswersProvided = false;
+                    break;
+                }
+                answers[q.id] = answer;
+            }
+
+            if (!allAnswersProvided) {
+                return showAlert("❌ অনুগ্রহ করে সব প্রশ্নের উত্তর দিন।");
+            }
+            
+            loader.style.display = 'flex';
+            try {
+                await addDoc(collection(db, "offerSubmissions"), {
+                    userId: currentUser.uid,
+                    userName: userData.name,
+                    offerId: offerId,
+                    reward: parseInt(reward),
+                    answers: answers,
+                    status: "pending", 
+                    submittedAt: serverTimestamp()
+                });
+
+                showAlert("✅ অফার জমা দেওয়া হয়েছে। এডমিন যাচাই করার পর আপনার একাউন্টে ব্যালেন্স যুক্ত হবে।");
+                
+                loadOffers(); 
+
+            } catch (error) {
+                console.error("Error submitting offer:", error);
+                showAlert("একটি সমস্যা হয়েছে। আবার চেষ্টা করুন।");
+            } finally {
+                loader.style.display = 'none';
+            }
+        }
+        window.submitOffer = submitOffer;
+
         window.claimReward = async function(taskType) {
             const today = new Date().toISOString().split('T')[0];
             const userRef = doc(db, "users", currentUser.uid);
@@ -801,15 +1097,13 @@
             }
             
             if (typeof window.show_9797094 !== 'function') {
-                return showAlert("Ad service abhi uplabdh nahi hai. Kripya baad mein prayas karein.");
+                return showAlert("দুঃখিত! বিজ্ঞাপন সেবা এখন চালু নেই। কিছুক্ষণ পর আবার চেষ্টা করুন");
             }
             
             let adPromise;
             switch(taskType) {
                 case 'interstitial': adPromise = window.show_9797094(); break;
                 case 'popup': adPromise = window.show_9797094('pop'); break;
-                case 'inApp': adPromise = window.show_9797094({ type: 'inApp', inAppSettings: { frequency: 2, capping: 0.1, interval: 30, timeout: 5, everyPage: false } }); break;
-                case 'miniApp': adPromise = window.show_9797094(); break;
                 default: return;
             }
 
@@ -819,9 +1113,9 @@
                 userData.dailyAdCount = newCount;
                 
                 let rewardAmount = 0;
-                if (taskType === 'miniApp') {
-                    rewardAmount = 50;
-                } else if (taskType !== 'inApp') {
+                if (taskType === 'interstitial') {
+                    rewardAmount = 25;
+                } else if (taskType === 'popup') {
                     rewardAmount = 25;
                 }
 
@@ -844,8 +1138,6 @@
             };
         }
         window.showAlert = showAlert;
-
     </script>
 </body>
 </html>
-    

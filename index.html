@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GMAIL SHOP 🩳</title>
-    
+
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
+
     <style>
         body { 
             font-family: 'Inter', sans-serif; 
@@ -17,7 +18,6 @@
             background-image: radial-gradient(circle at top left, rgba(255, 140, 0, 0.08), transparent 40%);
             background-attachment: fixed;
         }
-        .dark-bg { background-color: #121212; }
         .card-bg { 
             background-color: rgba(30, 30, 30, 0.7); 
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -30,12 +30,12 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .btn, .btn-gradient, .btn-outline-accent { 
+        .btn, .btn-gradient { 
             transition: all 0.2s ease-in-out; 
             transform: scale(1); 
             border: none;
         }
-        .btn:active, .btn-gradient:active, .btn-outline-accent:active { transform: scale(0.96); }
+        .btn:active, .btn-gradient:active { transform: scale(0.96); }
         .btn-gradient { 
             background-image: linear-gradient(to right, #ff8c00, #ffae42);
             color: #121212; 
@@ -43,34 +43,8 @@
             box-shadow: 0 4px 15px rgba(255, 140, 0, 0.2);
         }
         .btn-gradient:hover { box-shadow: 0 6px 20px rgba(255, 140, 0, 0.3); }
-        .btn-outline-accent { 
-            background-color: transparent;
-            border: 1px solid #ff8c00; 
-            color: #ff8c00; 
-        }
-        .btn-outline-accent:hover { 
-            background-color: #ff8c00; 
-            color: #121212; 
-        }
-        .btn-gradient:disabled, .btn-disabled { 
-            background-image: none;
-            background-color: #444; 
-            color: #888; 
-            cursor: not-allowed; 
-            box-shadow: none;
-        }
-        .input-field { 
-            background-color: #2c2c2c; 
-            border: 1px solid #444; 
-            transition: all 0.2s ease;
-        }
-        .input-field:focus {
-            border-color: #ff8c00;
-            box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.3);
-            outline: none;
-        }
-        .main-page { display: none; }
-        .main-page.active { display: flex; animation: fadeIn 0.5s ease-in-out; }
+        .app-container { display: none; }
+        .app-container.active { display: flex; animation: fadeIn 0.5s ease-in-out; }
         .sub-page { display: none; }
         .sub-page.active { display: block; animation: fadeIn 0.3s ease-in-out; }
         .bottom-nav a { color: #9ca3af; }
@@ -80,7 +54,7 @@
         }
         .header {
              border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-             background-color: rgba(18, 18, 18, 0.7);
+             background-color: rgba(18, 18, 18, 0.8);
              backdrop-filter: blur(10px);
              -webkit-backdrop-filter: blur(10px);
         }
@@ -89,205 +63,97 @@
 </head>
 <body class="max-w-md mx-auto">
 
-    <div id="loader" class="hidden fixed inset-0 dark-bg bg-opacity-75 flex items-center justify-center z-50">
+    <div id="loader" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
         <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-[#ff8c00]"></div>
     </div>
 
-    <div id="auth-section" class="min-h-screen p-4 flex-col justify-center items-center main-page">
-        <div class="w-full max-w-sm card-bg p-8 rounded-2xl">
-            <div class="text-center mb-6">
-                <i data-lucide="mail-check" class="w-16 h-16 text-[#ff8c00] mx-auto"></i>
-                <h1 class="text-3xl font-extrabold text-accent-gradient mt-4">GMAIL SHOP</h1>
-                <p class="text-gray-400 mt-1">Welcome! Please log in or sign up.</p>
-            </div>
-            <div id="auth-container">
-                <div id="login-view">
-                    <input id="login-email" type="email" placeholder="Email" class="w-full p-3 rounded-lg input-field mb-4">
-                    <input id="login-password" type="password" placeholder="Password" class="w-full p-3 rounded-lg input-field mb-4">
-                    <button id="login-btn" class="w-full p-3 rounded-lg btn-gradient mb-4">Login</button>
-                    <p class="text-center text-gray-400">No account? <a href="#" id="show-signup" class="font-semibold text-[#ff8c00]">Sign Up</a></p>
-                </div>
-                <div id="signup-view" class="hidden">
-                     <input id="signup-name" type="text" placeholder="Full Name" class="w-full p-3 rounded-lg input-field mb-4">
-                    <input id="signup-email" type="email" placeholder="Email" class="w-full p-3 rounded-lg input-field mb-4">
-                    <input id="signup-password" type="password" placeholder="Password" class="w-full p-3 rounded-lg input-field mb-4">
-                    <button id="signup-btn" class="w-full p-3 rounded-lg btn-gradient mb-4">Sign Up</button>
-                    <p class="text-center text-gray-400">Already have an account? <a href="#" id="show-login" class="font-semibold text-[#ff8c00]">Login</a></p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="app-container" class="min-h-screen flex-col main-page">
+    <div id="app-container" class="app-container min-h-screen flex-col">
         <header class="header flex items-center justify-between p-4 sticky top-0 z-10">
             <h1 class="text-xl font-bold text-accent-gradient">GMAIL SHOP</h1>
-            <div id="header-balance-display" class="font-bold text-[#ff8c00]">৳0.00</div>
         </header>
 
         <main class="flex-grow pb-20">
-            <div id="home-page" class="p-4 space-y-6 sub-page">
-                <div class="card-bg p-5 rounded-xl">
-                    <p class="text-gray-400 text-sm mb-1">Your Balance</p>
-                    <div class="flex items-center justify-between">
-                        <p id="balance-display" class="text-4xl font-bold">৳0.00</p>
-                        <button id="home-deposit-btn" class="btn-gradient px-6 py-2 rounded-lg">Deposit</button>
+            <div id="home-page" class="p-4 sub-page">
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <h2 class="text-3xl font-bold text-white">Welcome!</h2>
+                        <p class="text-gray-400 mt-1">Select an ad network to start earning.</p>
+                    </div>
+                    <div class="flex space-x-2">
+                        <a href="YOUR_TUTORIAL_LINK_HERE" target="_blank" class="card-bg p-2 rounded-full hover:bg-gray-700 transition-colors">
+                            <i data-lucide="youtube" class="w-5 h-5 text-gray-300"></i>
+                        </a>
+                        <a href="YOUR_TELEGRAM_LINK_HERE" target="_blank" class="card-bg p-2 rounded-full hover:bg-gray-700 transition-colors">
+                            <i data-lucide="send" class="w-5 h-5 text-gray-300"></i>
+                        </a>
                     </div>
                 </div>
-                <section>
-                    <h2 class="text-lg font-semibold px-2 mb-3">Menu</h2>
-                    <div class="space-y-3">
-                         <div class="card-bg p-4 rounded-lg flex items-center justify-between">
-                            <div class="flex items-center space-x-4"><i data-lucide="youtube" class="w-8 h-8 text-red-500"></i><div><h3 class="font-semibold">Tutorial</h3><p class="text-xs text-gray-400">কিভাবে কাজ করবেন দেখুন</p></div></div>
-                            <a href="https://youtube.com/@saidulexpert?si=vJ2vgcmp5AmwJ7fW" target="_blank" class="bg-red-600 text-white font-bold px-4 py-2 rounded-lg text-sm btn">Watch</a>
+                
+                <div class="space-y-4">
+                    <div id="home-monetag-card" class="card-bg p-4 rounded-lg flex items-center space-x-4 cursor-pointer hover:border-blue-400 border border-transparent transition-all">
+                        <div class="bg-blue-500/20 p-3 rounded-lg"><i data-lucide="gem" class="w-8 h-8 text-blue-400"></i></div>
+                        <div class="flex-grow">
+                            <h3 class="font-bold text-lg">MONETAG</h3>
+                            <p class="text-sm text-gray-400">Progress: <span id="home-monetag-count" class="font-semibold">0</span>/10</p>
                         </div>
-                        <div class="card-bg p-4 rounded-lg flex items-center justify-between">
-                            <div class="flex items-center space-x-4"><i data-lucide="send" class="w-8 h-8 text-sky-500"></i><div><h3 class="font-semibold">Join Telegram</h3><p class="text-xs text-gray-400">Join and get updates</p></div></div>
-                            <a href="https://t.me/Daily_Cash_Pay" target="_blank" class="bg-blue-600 text-white font-bold px-4 py-2 rounded-lg text-sm btn">JOIN F</a>
-                        </div>
-                        <div class="card-bg p-4 rounded-lg flex items-center justify-between">
-                            <div class="flex items-center space-x-4"><i data-lucide="headset" class="w-8 h-8 text-green-400"></i><div><h3 class="font-semibold">Support Team</h3><p class="text-xs text-gray-400">Get help from our support</p></div></div>
-                            <a href="http://t.me/GMAIL_SHOP_bot/CHAT" target="_blank" class="bg-green-600 text-white font-bold px-4 py-2 rounded-lg text-sm btn">FCHAT</a>
-                        </div>
-                        <div class="card-bg p-4 rounded-lg flex items-center justify-between">
-                            <div class="flex items-center space-x-4"><span class="text-3xl">🤩</span><div><h3 class="font-semibold">Go to Tasks</h3><p class="text-xs text-gray-400">Complete tasks for rewards</p></div></div>
-                            <button class="bg-gray-200 text-black font-bold px-4 py-2 rounded-lg text-sm btn" onclick="navigateTo('tasks-page')">TASKS</button>
-                        </div>
+                        <i data-lucide="chevron-right" class="w-6 h-6 text-gray-500"></i>
                     </div>
-                </section>
+                    <div id="home-giga-card" class="card-bg p-4 rounded-lg flex items-center space-x-4 cursor-pointer hover:border-purple-400 border border-transparent transition-all">
+                        <div class="bg-purple-500/20 p-3 rounded-lg"><i data-lucide="database" class="w-8 h-8 text-purple-400"></i></div>
+                        <div class="flex-grow">
+                            <h3 class="font-bold text-lg">GIGA</h3>
+                            <p class="text-sm text-gray-400">Progress: <span id="home-giga-count" class="font-semibold">0</span>/10</p>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-6 h-6 text-gray-500"></i>
+                    </div>
+                    <div id="home-adexium-card" class="card-bg p-4 rounded-lg flex items-center space-x-4 cursor-pointer hover:border-teal-400 border border-transparent transition-all">
+                         <div class="bg-teal-500/20 p-3 rounded-lg"><i data-lucide="box" class="w-8 h-8 text-teal-400"></i></div>
+                        <div class="flex-grow">
+                            <h3 class="font-bold text-lg">ADEXIUM</h3>
+                            <p class="text-sm text-gray-400">Progress: <span id="home-adexium-count" class="font-semibold">0</span>/10</p>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-6 h-6 text-gray-500"></i>
+                    </div>
+                </div>
             </div>
             
-            <div id="tasks-page" class="p-4 space-y-6 sub-page">
-                 <div id="tasks-locked-view" class="hidden text-center card-bg p-8 rounded-2xl max-w-sm mx-auto mt-10">
-                    <i data-lucide="lock" class="w-16 h-16 text-yellow-400 mx-auto"></i>
-                    <h2 class="text-2xl font-bold mt-4">Tasks Locked 🔒</h2>
-                    <p class="text-gray-400 mt-2 mb-6">
-                        সকল টাস্ক আনলক করতে এবং আয় শুরু করতে আপনাকে একবারের জন্য ৳30 ফি প্রদান করতে হবে।
-                    </p>
-                    <button id="unlock-tasks-btn" class="w-full max-w-xs mx-auto p-3 rounded-lg btn-gradient">
-                        Unlock Now for ৳30
-                    </button>
-                </div>
-                <div id="tasks-unlocked-view" class="hidden">
-                    <h2 class="text-xl font-bold text-center">🎯 Complete Tasks & Earn</h2>
-                    <p class="text-gray-400 text-center mb-4">ভিডিও দেখে কোড দিন, রিওয়ার্ড পান।</p>
-                    <div id="task-list" class="space-y-4"></div>
+            <div id="monetag-page" class="p-4 space-y-6 sub-page">
+                <div class="card-bg p-6 rounded-xl text-center">
+                    <i data-lucide="gem" class="w-12 h-12 text-blue-400 mx-auto mb-3"></i>
+                    <h2 class="text-2xl font-bold">MONETAG</h2>
+                    <p class="text-gray-400 mt-2">Watch 10 ads to generate a new key.</p>
+                    <p class="text-3xl font-bold my-4"><span id="monetag-count">0</span> / 10</p>
+                    <button id="monetag-watch-btn" class="w-full p-3 rounded-lg btn-gradient">Watch Ad</button>
+                    <button id="monetag-claim-btn" class="w-full p-3 rounded-lg btn-gradient hidden">Claim Key</button>
                 </div>
             </div>
-
-            <div id="pay-page" class="p-4 space-y-6 sub-page">
-                <h2 class="text-xl font-bold text-center">Pay Center</h2>
-                <div class="card-bg p-5 rounded-xl space-y-4">
-                    <div>
-                        <h3 class="font-semibold mb-4 text-lg">Make a Deposit</h3>
-                        <p class="text-sm text-gray-400 mb-3">নিচের নম্বরে টাকা পাঠান:</p>
-                        <div class="space-y-3 mb-4">
-                            <div class="bg-gray-800 p-3 rounded-lg flex items-center justify-between"><div class="flex items-center space-x-3"><i data-lucide="smartphone" class="w-8 h-8 text-orange-400"></i><div><p class="font-bold text-md">নগদ</p><p class="text-gray-300 font-mono tracking-widest text-sm">01864260513</p></div></div><button onclick="copyToClipboard('01864260513')" class="p-2 bg-gray-700 rounded-full hover:bg-gray-600 transition-colors"><i data-lucide="copy" class="w-4 h-4"></i></button></div>
-                            <div class="bg-gray-800 p-3 rounded-lg flex items-center justify-between"><div class="flex items-center space-x-3"><i data-lucide="smartphone" class="w-8 h-8 text-pink-500"></i><div><p class="font-bold text-md">বিকাশ</p><p class="text-gray-300 font-mono tracking-widest text-sm">01827750260</p></div></div><button onclick="copyToClipboard('01827750260')" class="p-2 bg-gray-700 rounded-full hover:bg-gray-600 transition-colors"><i data-lucide="copy" class="w-4 h-4"></i></button></div>
-                            <div class="bg-gray-800 p-3 rounded-lg flex items-center justify-between"><div class="flex items-center space-x-3"><i data-lucide="rocket" class="w-8 h-8 text-purple-400"></i><div><p class="font-bold text-md">রকেট</p><p class="text-gray-300 font-mono tracking-widest text-sm">018277502604</p></div></div><button onclick="copyToClipboard('018277502604')" class="p-2 bg-gray-700 rounded-full hover:bg-gray-600 transition-colors"><i data-lucide="copy" class="w-4 h-4"></i></button></div>
-                            <div class="bg-gray-800 p-3 rounded-lg flex items-center justify-between"><div class="flex items-center space-x-3"><i data-lucide="dollar-sign" class="w-8 h-8 text-yellow-400"></i><div><p class="font-bold text-md">Binance Pay ID</p><p class="text-gray-300 font-mono tracking-widest text-sm">1085460262</p></div></div><button onclick="copyToClipboard('1085460262')" class="p-2 bg-gray-700 rounded-full hover:bg-gray-600 transition-colors"><i data-lucide="copy" class="w-4 h-4"></i></button></div>
-                        </div>
-                        <p class="text-sm text-gray-400 mb-3">টাকা পাঠানোর পর নিচের ফর্মটি পূরণ করুন:</p>
-                        <div class="space-y-3">
-                            <select id="deposit-method" class="w-full p-3 rounded-lg input-field"><option value="">কোন মাধ্যমে টাকা পাঠিয়েছেন?</option><option value="Nagad">নগদ</option><option value="bKash">বিকাশ</option><option value="Rocket">রকেট</option><option value="Binance">Binance</option></select>
-                            <input id="deposit-amount" type="number" placeholder="টাকার পরিমাণ (BDT)" class="w-full p-3 rounded-lg input-field">
-                            <input id="sender-number" type="text" placeholder="আপনার যে নম্বর থেকে টাকা পাঠিয়েছেন" class="w-full p-3 rounded-lg input-field">
-                            <input id="deposit-txid" type="text" placeholder="Transaction ID" class="w-full p-3 rounded-lg input-field">
-                            <button id="deposit-btn" class="w-full p-3 rounded-lg btn-gradient">Submit Deposit</button>
-                        </div>
-                    </div>
-                </div>
-                 <div>
-                    <h3 class="text-lg font-semibold mb-3">Payment History</h3>
-                    <div id="payment-history-list" class="space-y-3"></div>
+            <div id="giga-page" class="p-4 space-y-6 sub-page">
+                <div class="card-bg p-6 rounded-xl text-center">
+                    <i data-lucide="database" class="w-12 h-12 text-purple-400 mx-auto mb-3"></i>
+                    <h2 class="text-2xl font-bold">GIGA</h2>
+                    <p class="text-gray-400 mt-2">Watch 10 ads to generate a new key.</p>
+                    <p class="text-3xl font-bold my-4"><span id="giga-count">0</span> / 10</p>
+                    <button id="giga-watch-btn" class="w-full p-3 rounded-lg btn-gradient">Watch Ad</button>
+                    <button id="giga-claim-btn" class="w-full p-3 rounded-lg btn-gradient hidden">Claim Key</button>
                 </div>
             </div>
-
-            <div id="mail-page" class="p-4 space-y-6 sub-page">
-                <h2 class="text-xl font-bold text-center">GMAIL SHOP</h2>
-                <p class="text-gray-400 text-center mb-4">কম দামে এবং সহজে মেইল কিনুন</p>
-                <div id="mail-list" class="space-y-4"></div>
-                 <div>
-                    <h3 class="text-lg font-semibold mb-3 mt-6">Purchase History</h3>
-                    <div id="mail-purchase-history" class="space-y-3"></div>
+            <div id="adexium-page" class="p-4 space-y-6 sub-page">
+                <div class="card-bg p-6 rounded-xl text-center">
+                    <i data-lucide="box" class="w-12 h-12 text-teal-400 mx-auto mb-3"></i>
+                    <h2 class="text-2xl font-bold">ADEXIUM</h2>
+                    <p class="text-gray-400 mt-2">Watch 10 ads to generate a new key.</p>
+                    <p class="text-3xl font-bold my-4"><span id="adexium-count">0</span> / 10</p>
+                    <button id="adexium-watch-btn" class="w-full p-3 rounded-lg btn-gradient">Watch Ad</button>
+                    <button id="adexium-claim-btn" class="w-full p-3 rounded-lg btn-gradient hidden">Claim Key</button>
                 </div>
             </div>
-
-            <div id="profile-page" class="p-4 space-y-6 sub-page">
-                <h2 class="text-xl font-bold text-center">Your Profile</h2>
-                
-                <div class="card-bg p-6 rounded-2xl flex flex-col items-center text-center">
-                    <div class="relative mb-4">
-                        <img id="profile-pic" class="w-24 h-24 rounded-full border-2 border-[#ff8c00] object-cover hidden" src="" alt="Profile Picture">
-                        <div id="profile-initials-avatar" class="w-24 h-24 rounded-full bg-gray-700 flex items-center justify-center border-2 border-[#ff8c00]">
-                            <span id="profile-initials" class="text-3xl font-bold text-gray-300"></span>
-                        </div>
-                    </div>
-                    <h3 id="profile-name" class="text-2xl font-bold">Loading...</h3>
-                    <p id="profile-username" class="text-gray-400">@username</p>
-                    <p id="profile-id" class="text-sm text-gray-500 mt-2">ID: 123456</p>
-                </div>
-
-                <div class="space-y-2">
-                    <button id="toggle-personal-info-btn" class="w-full card-bg p-4 rounded-2xl flex justify-between items-center text-left">
-                        <div class="flex items-center space-x-3">
-                            <i data-lucide="info" class="w-5 h-5 text-gray-300"></i>
-                            <span class="font-bold text-lg text-gray-100">Personal Info</span>
-                        </div>
-                        <i id="personal-info-chevron" data-lucide="chevron-down" class="w-6 h-6 text-gray-400 transition-transform duration-300"></i>
-                    </button>
-
-                    <div id="personal-info-content" class="hidden card-bg p-6 rounded-2xl space-y-4">
-                        <div class="flex items-center space-x-3">
-                            <i data-lucide="mail" class="w-5 h-5 text-gray-400"></i>
-                            <div>
-                                <p class="text-xs text-gray-400">Email Address</p>
-                                <p id="profile-email" class="font-semibold text-gray-200">loading...</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center space-x-3">
-                            <i data-lucide="key-round" class="w-5 h-5 text-gray-400"></i>
-                            <div>
-                                <p class="text-xs text-gray-400">Password</p>
-                                <p class="font-semibold text-gray-200">••••••••••</p>
-                            </div>
-                        </div>
-                        <button id="change-password-btn" class="w-full p-2 mt-4 rounded-lg btn-outline-accent">
-                            Change Password
-                        </button>
-                    </div>
-                </div>
-
-                <p class="text-center text-gray-500 text-sm mt-8">
-                    Developed by <a href="https://t.me/SAIDULEP" target="_blank" class="font-semibold text-[#ff8c00] hover:underline">SAIDUL</a>
-                </p>
-            </div>
-
-            <div id="admin-page" class="p-4 space-y-6 sub-page">
-                <h2 class="text-xl font-bold text-center">Admin Panel</h2>
-                <div class="card-bg p-5 rounded-xl space-y-4">
-                    <h3 class="font-semibold text-lg">Add New Mails</h3>
-                    <p class="text-sm text-gray-400">ফরম্যাট: <code class="bg-gray-800 p-1 rounded">email|password|refresh_token|client_id</code></p>
-                    <div>
-                        <label for="mail-type-select" class="block text-sm font-medium text-gray-300 mb-1">Mail Type</label>
-                        <select id="mail-type-select" class="w-full p-3 rounded-lg input-field"></select>
-                    </div>
-                    <div>
-                        <label for="mail-data-textarea" class="block text-sm font-medium text-gray-300 mb-1">Mail Data (one per line)</label>
-                        <textarea id="mail-data-textarea" rows="10" placeholder="KneppThorley314@hotmail.com|Y2y6W4jko77Y|refresh_token_here|client_id_here" class="w-full p-3 rounded-lg input-field font-mono text-xs"></textarea>
-                    </div>
-                    <button id="add-mails-btn" class="w-full p-3 rounded-lg btn-gradient">Add Mails to Stock</button>
-                </div>
-            </div>
-
         </main>
 
-        <nav class="bottom-nav sticky bottom-0 grid grid-cols-5 items-center text-center py-2 card-bg">
-            <a href="#" class="nav-link" data-page="home-page"><i data-lucide="home" class="mx-auto w-6 h-6"></i><span class="text-xs">Home</span></a>
-            <a href="#" class="nav-link" data-page="tasks-page"><i data-lucide="list-checks" class="mx-auto w-6 h-6"></i><span class="text-xs">Tasks</span></a>
-            <a href="#" class="nav-link" data-page="pay-page"><i data-lucide="banknote" class="mx-auto w-6 h-6"></i><span class="text-xs">Pay</span></a>
-            <a href="#" class="nav-link" data-page="mail-page"><i data-lucide="mail" class="mx-auto w-6 h-6"></i><span class="text-xs">Mail</span></a>
-            <a href="#" class="nav-link" data-page="profile-page"><i data-lucide="user" class="mx-auto w-6 h-6"></i><span class="text-xs">Profile</span></a>
-            <a href="#" id="admin-nav-link" class="nav-link hidden" data-page="admin-page"><i data-lucide="shield" class="mx-auto w-6 h-6"></i><span class="text-xs">Admin</span></a>
+        <nav class="bottom-nav sticky bottom-0 grid grid-cols-4 items-center text-center py-2 card-bg">
+            <a href="#" class="nav-link active" data-page="home-page"><i data-lucide="home" class="mx-auto w-6 h-6"></i><span class="text-xs">Home</span></a>
+            <a href="#" class="nav-link" data-page="monetag-page"><i data-lucide="gem" class="mx-auto w-6 h-6"></i><span class="text-xs">MONETAG</span></a>
+            <a href="#" class="nav-link" data-page="giga-page"><i data-lucide="database" class="mx-auto w-6 h-6"></i><span class="text-xs">GIGA</span></a>
+            <a href="#" class="nav-link" data-page="adexium-page"><i data-lucide="box" class="mx-auto w-6 h-6"></i><span class="text-xs">ADEXIUM</span></a>
         </nav>
     </div>
     
@@ -297,642 +163,244 @@
             <button id="alert-ok-btn" class="btn-gradient px-8 py-2 rounded-lg">OK</button>
         </div>
     </div>
+    
+    <script src="https://ad.gigapub.tech/script?id=2200" defer></script>
+    <script src="https://cdn.tgads.space/assets/js/adexium-widget.min.js" defer></script>
 
-    <script type="module">
-        // =================================================================================
-        // !! গুরুত্বপূর্ণ !! আপনার অ্যাডমিন User ID এখানে বসান
-        // !! IMPORTANT !! Set your Admin User ID here
-        const ADMIN_UID = "YOUR_FIREBASE_ADMIN_UID"; // <-- Replace with your Firebase Auth User ID
-        // =================================================================================
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyBP3OLSykSzQFEEQLDkDO7_rVg-PkY81C0",
-            authDomain: "mail-shop-e2256.firebaseapp.com",
-            projectId: "mail-shop-e2256",
-            storageBucket: "mail-shop-e2256.firebasestorage.app",
-            messagingSenderId: "985793375010",
-            appId: "1:985793375010:web:2a9afc1aeec74168d2137b"
-        };
-        
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, collection, addDoc, serverTimestamp, query, where, getDocs, orderBy, limit, runTransaction, getCountFromServer, writeBatch } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-
-        let currentUser = null;
-        let userData = null;
-        let appConfig = {};
-
+    <script>
+        let appData = {};
         const loader = document.getElementById('loader');
         
+        function loadDataFromLocalStorage() {
+            const savedData = localStorage.getItem('gmailShopData');
+            if (savedData) {
+                appData = JSON.parse(savedData);
+                if (!appData.adminKeys) {
+                    appData.adminKeys = { monetag: [], giga: [], adexium: [] };
+                }
+            } else {
+                appData = {
+                    adCounts: { monetag: 0, giga: 0, adexium: 0 },
+                    adminKeys: { monetag: [], giga: [], adexium: [] }
+                };
+            }
+        }
+
+        function saveDataToLocalStorage() {
+            localStorage.setItem('gmailShopData', JSON.stringify(appData));
+        }
+
         window.onload = () => {
             try {
                 window.Telegram.WebApp.ready();
                 window.Telegram.WebApp.expand();
             } catch (e) {
-                console.warn("Telegram WebApp script not found or failed to initialize.");
+                console.warn("Telegram WebApp script not found.");
             }
             lucide.createIcons();
             setupEventListeners();
-            showMainPage('auth-section');
-            loader.style.display = 'none';
-            onAuthStateChanged(auth, handleAuthStateChange);
+            
+            loadDataFromLocalStorage();
+            updateUI();
+            
+            document.getElementById('app-container').classList.add('active');
+            navigateTo('home-page');
         };
-
-        async function handleAuthStateChange(user) {
-            if (user) {
-                loader.style.display = 'flex';
-                currentUser = user;
-                await fetchUserData();
-                if (userData.isBlocked) {
-                    showAlert("আপনার অ্যাকাউন্ট ব্লক করা হয়েছে।");
-                    await signOut(auth);
-                    loader.style.display = 'none';
-                    return;
-                }
-                await fetchAppConfig();
-                
-                if (currentUser.uid === ADMIN_UID) {
-                    document.getElementById('admin-nav-link').classList.remove('hidden');
-                    const nav = document.querySelector('.bottom-nav');
-                    nav.classList.remove('grid-cols-5');
-                    nav.classList.add('grid-cols-6');
-                    nav.querySelector('a[data-page="profile-page"]').classList.add('hidden');
-                }
-
-                updateUI();
-                showMainPage('app-container');
-                navigateTo('home-page');
-                loader.style.display = 'none';
-            } else {
-                currentUser = null;
-                userData = null;
-                showMainPage('auth-section');
-            }
-        }
-
-        async function fetchUserData() {
-            if (!currentUser) return;
-            const userRef = doc(db, "users", currentUser.uid);
-            try {
-                const userSnap = await getDoc(userRef);
-                if (userSnap.exists()) {
-                    userData = userSnap.data();
-                } else {
-                    const defaultUserData = {
-                        uid: currentUser.uid, name: currentUser.displayName || currentUser.email.split('@')[0], email: currentUser.email,
-                        balance: 0,
-                        tasksUnlocked: false,
-                        createdAt: serverTimestamp(), isBlocked: false
-                    };
-                    await setDoc(userRef, defaultUserData);
-                    userData = defaultUserData;
-                }
-            } catch (error) {
-                console.error("Error fetching user data:", error);
-                showAlert("ব্যবহারকারীর ডেটা লোড করতে সমস্যা হয়েছে।");
-            }
-        }
-
-        async function fetchAppConfig() {
-            const configRef = doc(db, "config", "main");
-            try {
-                const configSnap = await getDoc(configRef);
-                appConfig = configSnap.exists() ? configSnap.data() : { 
-                    tasksUnlockFee: 30,
-                    mails: [
-                        { type: 'L-GMAIL', priceBdt: 4, stockKey: 'l_gmail_stock' },
-                        { type: 'O-GMAIL', priceBdt: 3, stockKey: 'o_gmail_stock' },
-                        { type: 'TXN-GMAIL', priceBdt: 4, stockKey: 'txn_gmail_stock' },
-                        { type: 'HOTMAIL', priceBdt: 1.5, stockKey: 'hotmail_stock' },
-                        { type: 'OUTLOOK', priceBdt: 1.5, stockKey: 'outlook_stock' },
-                        { type: '2h+MAIL', priceBdt: 0.5, stockKey: '2h_mail_stock' }
-                    ]
-                };
-            } catch (error) {
-                console.error("Error fetching app config:", error);
-            }
-        }
         
         function updateUI() {
-            if (!userData) return;
-            const balance = (userData.balance || 0).toFixed(2);
-            document.getElementById('balance-display').textContent = `৳${balance}`;
-            document.getElementById('header-balance-display').textContent = `৳${balance}`;
+            if (!appData || !appData.adCounts) return;
+            
+            document.getElementById('home-monetag-count').textContent = appData.adCounts.monetag || 0;
+            document.getElementById('home-giga-count').textContent = appData.adCounts.giga || 0;
+            document.getElementById('home-adexium-count').textContent = appData.adCounts.adexium || 0;
+
+            updateAdPageUI('monetag');
+            updateAdPageUI('giga');
+            updateAdPageUI('adexium');
         }
 
-        function showMainPage(pageId) {
-            document.querySelectorAll('.main-page').forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
+        function updateAdPageUI(network) {
+            if (!appData || !appData.adCounts) return;
+
+            const count = appData.adCounts[network] || 0;
+            const countSpan = document.getElementById(`${network}-count`);
+            const watchBtn = document.getElementById(`${network}-watch-btn`);
+            const claimBtn = document.getElementById(`${network}-claim-btn`);
+
+            if (countSpan) countSpan.textContent = count;
+
+            if (count >= 10) {
+                watchBtn.classList.add('hidden');
+                claimBtn.classList.remove('hidden');
+            } else {
+                watchBtn.classList.remove('hidden');
+                claimBtn.classList.add('hidden');
+            }
+            
+            const homeCountSpan = document.getElementById(`home-${network}-count`);
+            if (homeCountSpan) homeCountSpan.textContent = count;
         }
 
         function navigateTo(pageId) {
             document.querySelectorAll('.sub-page').forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
+            document.getElementById(pageId)?.classList.add('active');
+            
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.classList.remove('active');
-                if (link.dataset.page === pageId) link.classList.add('active');
-            });
-
-            if (pageId === 'tasks-page') {
-                if (userData.tasksUnlocked) {
-                    document.getElementById('tasks-locked-view').classList.add('hidden');
-                    document.getElementById('tasks-unlocked-view').classList.remove('hidden');
-                    loadTasks();
-                } else {
-                    const unlockBtn = document.getElementById('unlock-tasks-btn');
-                    const fee = appConfig.tasksUnlockFee || 30;
-                    unlockBtn.textContent = `Unlock Now for ৳${fee}`;
-                    document.getElementById('tasks-unlocked-view').classList.add('hidden');
-                    document.getElementById('tasks-locked-view').classList.remove('hidden');
+                if (link.dataset.page === pageId) {
+                    link.classList.add('active');
                 }
-            }
-            if (pageId === 'pay-page') loadPaymentHistory();
-            if (pageId === 'mail-page') loadMailStore();
-            if (pageId === 'admin-page') populateAdminMailTypes();
-            if (pageId === 'profile-page') loadProfilePage();
+            });
             lucide.createIcons();
         }
-        window.navigateTo = navigateTo;
 
         function setupEventListeners() {
-            document.getElementById('show-signup').addEventListener('click', (e) => { e.preventDefault(); document.getElementById('login-view').classList.add('hidden'); document.getElementById('signup-view').classList.remove('hidden'); });
-            document.getElementById('show-login').addEventListener('click', (e) => { e.preventDefault(); document.getElementById('signup-view').classList.add('hidden'); document.getElementById('login-view').classList.remove('hidden'); });
-            document.getElementById('signup-btn').addEventListener('click', handleSignup);
-            document.getElementById('login-btn').addEventListener('click', handleLogin);
-            
             document.querySelectorAll('.nav-link').forEach(link => {
-                link.addEventListener('click', (e) => { e.preventDefault(); navigateTo(link.dataset.page); });
+                link.addEventListener('click', (e) => { 
+                    e.preventDefault(); 
+                    navigateTo(link.dataset.page); 
+                });
             });
+
+            document.getElementById('home-monetag-card').addEventListener('click', () => navigateTo('monetag-page'));
+            document.getElementById('home-giga-card').addEventListener('click', () => navigateTo('giga-page'));
+            document.getElementById('home-adexium-card').addEventListener('click', () => navigateTo('adexium-page'));
+
+            document.getElementById('monetag-watch-btn').addEventListener('click', showMonetagAd);
+            document.getElementById('giga-watch-btn').addEventListener('click', showGigaAd);
+            document.getElementById('adexium-watch-btn').addEventListener('click', showAdexiumAd);
+
+            document.getElementById('monetag-claim-btn').addEventListener('click', () => handleClaimKey('monetag'));
+            document.getElementById('giga-claim-btn').addEventListener('click', () => handleClaimKey('giga'));
+            document.getElementById('adexium-claim-btn').addEventListener('click', () => handleClaimKey('adexium'));
+        }
+
+        function handleSuccessfulAdView(network) {
+            if (appData.adCounts[network] >= 10) return;
             
-            document.getElementById('deposit-btn').addEventListener('click', handleDepositRequest);
-            document.getElementById('home-deposit-btn').addEventListener('click', () => navigateTo('pay-page'));
-            document.getElementById('unlock-tasks-btn').addEventListener('click', handleUnlockTasks);
-            document.getElementById('add-mails-btn').addEventListener('click', handleAddMails);
-            document.getElementById('change-password-btn').addEventListener('click', handleChangePassword);
-            document.getElementById('toggle-personal-info-btn').addEventListener('click', togglePersonalInfo);
-        }
-        
-        function togglePersonalInfo() {
-            const content = document.getElementById('personal-info-content');
-            const chevron = document.getElementById('personal-info-chevron');
-            content.classList.toggle('hidden');
-            chevron.classList.toggle('rotate-180');
+            appData.adCounts[network]++;
+            saveDataToLocalStorage();
+            
+            showAlert(`Ad watched successfully!\nYour count for ${network.toUpperCase()} is now ${appData.adCounts[network]}.`);
+            updateUI();
         }
 
-        async function handleSignup() {
-            const name = document.getElementById('signup-name').value;
-            const email = document.getElementById('signup-email').value;
-            const password = document.getElementById('signup-password').value;
-            if (!name || !email || !password) return showAlert("অনুগ্রহ করে সব তথ্য পূরণ করুন।");
+        function handleClaimKey(network) {
             loader.style.display = 'flex';
-            try {
-                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                const user = userCredential.user;
-                await setDoc(doc(db, "users", user.uid), {
-                    uid: user.uid, name: name, email: user.email,
-                    balance: 0, tasksUnlocked: false, 
-                    createdAt: serverTimestamp(), isBlocked: false
-                });
-            } catch (error) {
-                showAlert(error.message);
-            } finally {
-                loader.style.display = 'none';
-            }
-        }
-
-        async function handleLogin() {
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
-            if (!email || !password) return showAlert("আপনার ইমেইল এবং পাসওয়ার্ড লিখুন।");
-            loader.style.display = 'flex';
-            try {
-                await signInWithEmailAndPassword(auth, email, password);
-            } catch (error) {
-                showAlert(error.message);
-            } finally {
-                loader.style.display = 'none';
-            }
-        }
-        
-        function loadProfilePage() {
-            const tgUser = window.Telegram?.WebApp?.initDataUnsafe?.user;
-            const profilePic = document.getElementById('profile-pic');
-            const avatarDiv = document.getElementById('profile-initials-avatar');
-
-            if (tgUser) {
-                if (tgUser.photo_url) {
-                    profilePic.src = tgUser.photo_url;
-                    profilePic.classList.remove('hidden');
-                    avatarDiv.classList.add('hidden');
+            
+            setTimeout(() => {
+                if (appData.adminKeys && appData.adminKeys[network] && appData.adminKeys[network].length > 0) {
+                    const key = appData.adminKeys[network].shift();
+                    
+                    appData.adCounts[network] = 0;
+                    saveDataToLocalStorage();
+                    
+                    showAlert(`Congratulations! Here is your key:\n\n${key}`);
+                    updateUI();
                 } else {
-                    const initials = (tgUser.first_name?.[0] || '') + (tgUser.last_name?.[0] || '');
-                    document.getElementById('profile-initials').textContent = initials.toUpperCase();
-                    profilePic.classList.add('hidden');
-                    avatarDiv.classList.remove('hidden');
+                    showAlert(`Sorry, no keys are available for ${network.toUpperCase()} at the moment.\nPlease contact support.`);
                 }
-                document.getElementById('profile-name').textContent = `${tgUser.first_name} ${tgUser.last_name || ''}`.trim();
-                document.getElementById('profile-username').textContent = tgUser.username ? `@${tgUser.username}` : 'No Telegram Username';
-                document.getElementById('profile-id').textContent = `Telegram ID: ${tgUser.id}`;
-            } else {
-                const initials = userData.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
-                document.getElementById('profile-initials').textContent = initials;
-                profilePic.classList.add('hidden');
-                avatarDiv.classList.remove('hidden');
-                document.getElementById('profile-name').textContent = userData.name;
-                document.getElementById('profile-username').textContent = "Not connected via Telegram";
-                document.getElementById('profile-id').textContent = `User UID: ${currentUser.uid.substring(0, 10)}...`;
-            }
-            document.getElementById('profile-email').textContent = userData.email;
-        }
-
-        async function handleChangePassword() {
-            if (!confirm('আপনি কি আপনার পাসওয়ার্ড পরিবর্তন করতে চান? আপনার ইমেইলে একটি রিসেট লিঙ্ক পাঠানো হবে।')) {
-                return;
-            }
-            const email = auth.currentUser.email;
-            if (!email) {
-                showAlert('Error: Could not find user email.');
-                return;
-            }
-            loader.style.display = 'flex';
-            try {
-                await sendPasswordResetEmail(auth, email);
-                showAlert(`একটি পাসওয়ার্ড রিসেট লিঙ্ক আপনার ইমেইলে (${email}) পাঠানো হয়েছে। অনুগ্রহ করে আপনার ইনবক্স চেক করুন।`);
-            } catch (error) {
-                console.error("Password reset error:", error);
-                showAlert(`Error: ${error.message}`);
-            } finally {
+                
                 loader.style.display = 'none';
-            }
-        }
-
-        async function loadPaymentHistory() {
-            const historyList = document.getElementById('payment-history-list');
-            historyList.innerHTML = '<p class="text-gray-400">হিস্টি লোড হচ্ছে...</p>';
-            try {
-                const depositQuery = query(collection(db, "deposits"), where("userId", "==", currentUser.uid), orderBy("requestedAt", "desc"));
-                const depositSnapshot = await getDocs(depositQuery);
-                let history = [];
-                depositSnapshot.forEach(doc => history.push({type: 'Deposit', ...doc.data()}));
-
-                if (history.length === 0) {
-                    historyList.innerHTML = '<p class="text-gray-400 text-center">কোনো রেকর্ড পাওয়া যায়নি।</p>'; return;
-                }
-                historyList.innerHTML = '';
-                history.forEach(item => {
-                    let statusColor = item.status === 'approved' ? 'text-green-400' : item.status === 'rejected' ? 'text-red-400' : 'text-yellow-400';
-                    const date = item.requestedAt ? item.requestedAt.toDate().toLocaleDateString() : 'N/A';
-                    const amountText = `৳${item.amount}`;
-                    historyList.innerHTML += `<div class="card-bg p-3 rounded-lg flex items-center justify-between"><div><p class="font-semibold">${item.type} - ${amountText}</p><p class="text-xs text-gray-400">${date}</p></div><p class="font-bold ${statusColor} capitalize">${item.status}</p></div>`;
-                });
-            } catch (error) {
-                console.error("Error fetching payment history:", error);
-                historyList.innerHTML = '<p class="text-red-400 text-center">হিস্টি লোড করা যায়নি।</p>';
-            }
-        }
-
-        async function handleDepositRequest() {
-            const method = document.getElementById('deposit-method').value;
-            const amount = parseInt(document.getElementById('deposit-amount').value);
-            const senderNumber = document.getElementById('sender-number').value.trim();
-            const transactionId = document.getElementById('deposit-txid').value.trim();
-            if (!method || !amount || amount <= 0 || !senderNumber || !transactionId) {
-                return showAlert("অনুগ্রহ করে সমস্ত তথ্য সঠিকভাবে পূরণ করুন।");
-            }
-            loader.style.display = 'flex';
-            try {
-                await addDoc(collection(db, "deposits"), {
-                    userId: currentUser.uid, userName: userData.name, method: method, amount: amount,
-                    senderNumber: senderNumber, transactionId: transactionId, status: "pending", requestedAt: serverTimestamp()
-                });
-                showAlert("আপনার ডিপোজিট অনুরোধ সফলভাবে জমা হয়েছে।");
-                document.getElementById('deposit-method').value = '';
-                document.getElementById('deposit-amount').value = '';
-                document.getElementById('sender-number').value = '';
-                document.getElementById('deposit-txid').value = '';
-                loadPaymentHistory();
-            } catch (error) {
-                console.error("Error submitting deposit request:", error);
-                showAlert("ডিপোজিট অনুরোধ জমা দিতে একটি সমস্যা হয়েছে।");
-            } finally {
-                loader.style.display = 'none';
-            }
+            }, 500);
         }
         
-        async function loadTasks() {
-            const taskList = document.getElementById("task-list");
-            taskList.innerHTML = '<p class="text-gray-400 text-center">টাস্ক লোড হচ্ছে...</p>';
-            try {
-                const submissionsQuery = query(collection(db, "taskSubmissions"), where("userId", "==", currentUser.uid));
-                const tasksQuery = query(collection(db, "tasks"), orderBy("title"));
-                const [submissionsSnapshot, tasksSnapshot] = await Promise.all([getDocs(submissionsQuery), getDocs(tasksQuery)]);
-                
-                const userSubmissions = {}; 
-                submissionsSnapshot.forEach(doc => userSubmissions[doc.data().taskId] = doc.data());
+        // --- CORRECTED AD FUNCTIONS ---
 
-                if (tasksSnapshot.empty) {
-                    taskList.innerHTML = '<p class="text-gray-400 text-center">নতুন টাস্ক শীঘ্রই আসছে।</p>'; return;
-                }
-                taskList.innerHTML = '';
-                tasksSnapshot.forEach((docSnap) => {
-                    const task = { id: docSnap.id, ...docSnap.data() };
-                    const submission = userSubmissions[task.id];
-                    const taskDiv = document.createElement("div");
-                    taskDiv.className = "card-bg p-4 rounded-lg space-y-3";
-                    const rewardText = `৳${task.reward || 0}`;
-                    taskDiv.innerHTML = submission ? `
-                        <div><h3 class="text-lg font-bold">${task.title}</h3><p class="text-sm text-gray-400">পুরস্কার: <span class="font-semibold text-[#ff8c00]">${rewardText}</span></p></div>
-                        <div class="text-center p-2 rounded-lg ${submission.status === 'approved' ? 'bg-green-500/20 text-green-400' : submission.status === 'rejected' ? 'bg-red-500/20 text-red-400' : 'bg-yellow-500/20 text-yellow-400'}">
-                            <p class="font-bold capitalize">${submission.status}</p>
-                        </div>` : `
-                        <div><h3 class="text-lg font-bold">${task.title}</h3><p class="text-sm text-gray-400">পুরস্কার: <span class="font-semibold text-[#ff8c00]">${rewardText}</span></p></div>
-                        <div id="task-input-area-${task.id}" class="hidden space-y-2">
-                            <input type="text" id="code-${task.id}" placeholder="এখানে ভিডিও কোডটি দিন" class="w-full p-2 rounded-lg input-field"/>
-                            <button class="w-full p-2 rounded-lg btn-outline-accent" onclick="submitTask('${task.id}', '${task.code}', ${task.reward})">কোড জমা দিন</button>
-                        </div>
-                        <button id="start-btn-${task.id}" class="w-full p-2 rounded-lg btn-gradient" onclick="startTaskTimer('${task.id}', ${task.duration || 100}, '${task.videoUrl}')">টাস্ক শুরু করুন</button>`;
-                    taskList.appendChild(taskDiv);
-                });
-            } catch (error) {
-                console.error("Error loading tasks: ", error);
-                taskList.innerHTML = '<p class="text-red-400 text-center">টাস্ক লোড করা যায়নি।</p>';
-            }
-        }
-        window.loadTasks = loadTasks;
-
-        async function handleUnlockTasks() {
-            const unlockFee = appConfig.tasksUnlockFee || 30;
-            if (userData.balance < unlockFee) {
-                return showAlert(`অপর্যাপ্ত ব্যালেন্স। টাস্ক আনলক করতে আপনার ৳${unlockFee} প্রয়োজন। অনুগ্রহ করে প্রথমে ডিপোজিট করুন।`);
-            }
-            if (!confirm(`আপনি কি ৳${unlockFee} দিয়ে টাস্ক আনলক করতে চান? এই ফি একবারই প্রযোজ্য।`)) return;
-
+        function showMonetagAd() {
             loader.style.display = 'flex';
-            const userRef = doc(db, "users", currentUser.uid);
-
-            try {
-                await runTransaction(db, async (transaction) => {
-                    const userSnap = await transaction.get(userRef);
-                    if (!userSnap.exists()) throw "User does not exist.";
-                    const currentBalance = userSnap.data().balance;
-                    if (currentBalance < unlockFee) throw "Insufficient balance.";
-
-                    const newBalance = currentBalance - unlockFee;
-                    transaction.update(userRef, {
-                        balance: newBalance,
-                        tasksUnlocked: true
-                    });
-                });
-
-                userData.balance -= unlockFee;
-                userData.tasksUnlocked = true;
-                updateUI();
-                showAlert("সফলভাবে টাস্ক আনলক করা হয়েছে!");
-                navigateTo('tasks-page');
-            } catch (error) {
-                console.error("Task unlock transaction failed: ", error);
-                showAlert(typeof error === 'string' ? error : "টাস্ক আনলক করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।");
-            } finally {
-                loader.style.display = 'none';
-            }
-        }
-
-        window.submitTask = async function(taskId, correctCode, reward) {
-            const inputCode = document.getElementById(`code-${taskId}`).value.trim();
-            if (!inputCode) return showAlert("❌ অনুগ্রহ করে কোডটি লিখুন।");
-            if (inputCode.toUpperCase() !== correctCode.toUpperCase()) return showAlert("❌ ভুল কোড! আবার চেষ্টা করুন।");
-            loader.style.display = 'flex';
-            try {
-                await addDoc(collection(db, "taskSubmissions"), {
-                    userId: currentUser.uid, userName: userData.name, taskId: taskId,
-                    reward: parseFloat(reward), submittedCode: inputCode, status: "pending", submittedAt: serverTimestamp()
-                });
-                showAlert("✅ টাস্ক জমা দেওয়া হয়েছে।");
-                loadTasks(); 
-            } catch (error) {
-                console.error("Error submitting task:", error);
-                showAlert("একটি সমস্যা হয়েছে। আবার চেষ্টা করুন।");
-            } finally {
-                loader.style.display = 'none';
-            }
-        }
-
-        window.startTaskTimer = function(taskId, duration, videoUrl) {
-            if (videoUrl && videoUrl !== 'undefined') {
-                window.open(videoUrl, '_blank');
+            const existingScript = document.querySelector("script[src*='libtl.com']");
+            if (existingScript) {
+                existingScript.remove();
             }
             
-            const startBtn = document.getElementById(`start-btn-${taskId}`);
-            startBtn.disabled = true;
-            let timeLeft = duration;
-            const timerInterval = setInterval(() => {
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    startBtn.classList.add('hidden'); 
-                    document.getElementById(`task-input-area-${taskId}`).classList.remove('hidden'); 
-                } else {
-                    startBtn.textContent = `অনুগ্রহ করে ${timeLeft--} সেকেন্ড অপেক্ষা করুন...`;
-                }
-            }, 1000);
-        }
-
-        async function getStockCount(collectionName) {
-            try {
-                const q = query(collection(db, collectionName), where("isSold", "==", false));
-                const snapshot = await getCountFromServer(q);
-                return snapshot.data().count;
-            } catch (error) {
-                console.error(`Error getting stock count for ${collectionName}:`, error);
-                return 0;
-            }
-        }
-
-        async function loadMailStore() {
-            const mailListEl = document.getElementById('mail-list');
-            const historyListEl = document.getElementById('mail-purchase-history');
-            mailListEl.innerHTML = '<p class="text-center text-gray-400">মেইল লোড হচ্ছে...</p>';
-            historyListEl.innerHTML = '<p class="text-center text-gray-400">হিস্টি লোড হচ্ছে...</p>';
+            const script = document.createElement('script');
+            script.src = '//libtl.com/sdk.js';
+            script.async = true;
+            script.dataset.zone = '9797094';
             
-            try {
-                const stockPromises = (appConfig.mails || []).map(mail => getStockCount(mail.stockKey));
-                const stockCounts = await Promise.all(stockPromises);
-                
-                mailListEl.innerHTML = '';
+            script.onload = () => {
+                console.log("Monetag script loaded. Assuming ad will be shown.");
+                setTimeout(() => {
+                    handleSuccessfulAdView('monetag');
+                    loader.style.display = 'none';
+                }, 1500); 
+            };
 
-                (appConfig.mails || []).forEach((mail, index) => {
-                    const stock = stockCounts[index];
-                    const costInBdt = mail.priceBdt;
-                    const isOutOfStock = stock === 0;
-                    const stockHtml = isOutOfStock
-                        ? `<span class="text-xs bg-red-500/20 text-red-400 font-medium px-2 py-1 rounded-full">স্টক শেষ</span>`
-                        : `<span class="text-xs bg-green-500/20 text-green-300 font-medium px-2 py-1 rounded-full">স্টকে আছে: ${stock}</span>`;
-
-                    const insufficientBalance = userData.balance < costInBdt;
-                    const buyButtonDisabled = isOutOfStock || insufficientBalance ? 'disabled' : '';
-                    const buyButtonClasses = isOutOfStock || insufficientBalance ? 'btn-disabled' : 'btn-gradient';
-
-                    mailListEl.innerHTML += `
-                        <div class="card-bg p-4 rounded-xl space-y-3">
-                            <div><h3 class="font-bold text-2xl">${mail.type}</h3><p class="text-sm text-gray-400">Get your mail delivered instantly.</p></div>
-                            <div class="flex items-center justify-between mt-2 pt-3 border-t border-gray-700/50">
-                                <p class="text-xl text-[#ff8c00] font-semibold">৳${costInBdt.toFixed(2)}</p>
-                                ${stockHtml}
-                            </div>
-                             <button class="${buyButtonClasses} w-full py-2.5 mt-2 rounded-lg" ${buyButtonDisabled} onclick="buyMail('${mail.type}', ${costInBdt}, '${mail.stockKey}')">Buy Now</button>
-                        </div>`;
-                });
-
-                const q = query(collection(db, "mail_purchases"), where("userId", "==", currentUser.uid), orderBy("purchasedAt", "desc"));
-                const querySnapshot = await getDocs(q);
-                if(querySnapshot.empty) {
-                    historyListEl.innerHTML = '<p class="text-center text-gray-400">আপনি এখনো কোনো মেইল কিনেননি।</p>';
-                    return;
-                }
-                historyListEl.innerHTML = '';
-                querySnapshot.forEach(doc => {
-                    const purchase = doc.data();
-                    const date = purchase.purchasedAt.toDate().toLocaleString();
-                    let mailDetailsHtml = `<p class="font-semibold text-gray-300" style="word-break: break-all;">${purchase.mail}</p>${purchase.password ? `<p class="font-semibold text-gray-300" style="word-break: break-all;">${purchase.password}</p>` : ''}`;
-                    historyListEl.innerHTML += `
-                        <div class="card-bg p-3 rounded-lg">
-                           <div class="flex justify-between items-center mb-2">
-                               <p class="font-bold text-lg">${purchase.mailType}</p>
-                               <button onclick="copyToClipboard('${purchase.mail} ${purchase.password || ''}')" class="p-1"><i data-lucide="copy" class="w-4 h-4 text-gray-400"></i></button>
-                           </div>
-                           <div class="bg-gray-800 p-2 rounded select-all">${mailDetailsHtml}</div>
-                           <p class="text-xs text-gray-400 mt-2 text-right">${date}</p>
-                        </div>`;
-                });
-                lucide.createIcons();
-            } catch(e) {
-                 console.error("Error loading mail store:", e);
-                 mailListEl.innerHTML = '<p class="text-center text-red-400">মেইল লোড করা যায়নি।</p>';
-                 historyListEl.innerHTML = '<p class="text-center text-red-400">হিস্টি লোড করা যায়নি।</p>';
-            }
-        }
-
-        window.buyMail = async function(mailType, cost, stockKey) {
-            if (userData.balance < cost) { return showAlert(`অপর্যাপ্ত ব্যালেন্স। আপনার প্রয়োজন ৳${cost.toFixed(2)}।`); }
-            if (!confirm(`আপনি কি ৳${cost.toFixed(2)} দিয়ে একটি ${mailType} কিনতে চান?`)) return;
-
-            loader.style.display = 'flex';
-            try {
-                const purchasedMailData = await runTransaction(db, async (transaction) => {
-                    const mailCollectionRef = collection(db, stockKey);
-                    const q = query(mailCollectionRef, where("isSold", "==", false), limit(1));
-                    const mailQuerySnapshot = await getDocs(q);
-                    if (mailQuerySnapshot.empty) throw "দুঃখিত, এই ধরনের মেইল বর্তমানে স্টক শেষ।";
-                    
-                    const mailDoc = mailQuerySnapshot.docs[0];
-                    const mailRef = mailDoc.ref;
-                    const mailData = mailDoc.data();
-                    const userRef = doc(db, "users", currentUser.uid);
-                    
-                    const userSnap = await transaction.get(userRef);
-                    if (!userSnap.exists() || userSnap.data().balance < cost) throw `অপর্যাপ্ত ব্যালেন্স।`;
-
-                    transaction.update(userRef, { balance: userSnap.data().balance - cost });
-                    transaction.update(mailRef, { isSold: true, soldTo: currentUser.uid, soldAt: serverTimestamp() });
-
-                    const purchaseLogRef = doc(collection(db, "mail_purchases"));
-                    transaction.set(purchaseLogRef, {
-                        userId: currentUser.uid, mailType: mailType, mail: mailData.email,
-                        password: mailData.password || null, cost: cost, purchasedAt: serverTimestamp()
-                    });
-                    
-                    return mailData;
-                });
-
-                userData.balance -= cost; 
-                updateUI();
-                showAlert(`সফলভাবে কেনা হয়েছে!\n\nEmail: ${purchasedMailData.email}\nPassword: ${purchasedMailData.password || 'N/A'}\n\nএই তথ্য আপনার ক্রয় হিস্টিতে সেভ করা হয়েছে।`);
-                loadMailStore(); 
-            } catch (e) {
-                console.error("Mail purchase transaction failed: ", e);
-                showAlert(typeof e === 'string' ? e : "কিনতে সমস্যা হয়েছে। আবার চেষ্টা করুন।");
-            } finally {
+            script.onerror = () => {
+                showAlert('Failed to load Monetag ad. Please check your connection or disable ad-blocker.');
                 loader.style.display = 'none';
-            }
+            };
+            
+            document.body.appendChild(script);
         }
 
-        // --- ADMIN FUNCTIONS ---
-        function populateAdminMailTypes() {
-            const selectEl = document.getElementById('mail-type-select');
-            selectEl.innerHTML = '<option value="">Select mail type...</option>';
-            (appConfig.mails || []).forEach(mail => {
-                selectEl.innerHTML += `<option value="${mail.stockKey}">${mail.type}</option>`;
-            });
-        }
-
-        async function handleAddMails() {
-            const stockKey = document.getElementById('mail-type-select').value;
-            const mailDataRaw = document.getElementById('mail-data-textarea').value;
-
-            if (!stockKey || !mailDataRaw.trim()) {
-                return showAlert("Please select a mail type and provide mail data.");
-            }
-
-            const lines = mailDataRaw.trim().split('\n').filter(line => line.trim() !== '');
-            if (lines.length === 0) {
-                return showAlert("No valid mail data found.");
-            }
-
+        function showGigaAd() {
             loader.style.display = 'flex';
-            try {
-                const batch = writeBatch(db);
-                let addedCount = 0;
+            if (typeof showGiga !== 'function') {
+                 showAlert('Giga Ads library not ready. Please try again.');
+                 loader.style.display = 'none';
+                 return;
+            }
+            showGiga()
+              .then(() => {
+                  handleSuccessfulAdView('giga');
+              })
+              .catch(e => {
+                  console.error("Giga Ad Error:", e);
+                  showAlert('Giga ad not available or was closed too early.');
+              })
+              .finally(() => {
+                  loader.style.display = 'none';
+              });
+        }
 
-                lines.forEach(line => {
-                    const parts = line.trim().split('|');
-                    if (parts.length === 4) { // email|password|refresh_token|client_id
-                        const mailDocRef = doc(collection(db, stockKey));
-                        batch.set(mailDocRef, {
-                            email: parts[0],
-                            password: parts[1],
-                            refresh_token: parts[2],
-                            client_id: parts[3],
-                            isSold: false,
-                            createdAt: serverTimestamp()
-                        });
-                        addedCount++;
+        function showAdexiumAd() {
+            loader.style.display = 'flex';
+             if (typeof AdexiumWidget !== 'function') {
+                 showAlert('Adexium Ads library not ready. Please try again.');
+                 loader.style.display = 'none';
+                 return;
+            }
+            try {
+                const adexiumWidget = new AdexiumWidget({
+                    wid: 'fee7d807-771d-430a-8091-6b0218a36ddd',
+                    adFormat: 'interstitial'
+                });
+
+                adexiumWidget.on('close', (eventData) => {
+                    console.log('Adexium ad closed:', eventData);
+                    if (eventData.isViewed) {
+                        handleSuccessfulAdView('adexium');
                     } else {
-                        console.warn("Skipping invalid line:", line);
+                        showAlert('Adexium ad was closed before completion.');
                     }
+                    loader.style.display = 'none';
                 });
 
-                if (addedCount > 0) {
-                    await batch.commit();
-                    showAlert(`Successfully added ${addedCount} new mails to the stock.`);
-                    document.getElementById('mail-data-textarea').value = '';
-                } else {
-                    showAlert("No valid mails were found to add. Ensure the format is correct.");
-                }
+                adexiumWidget.on('error', (errorData) => {
+                    console.error('Adexium ad error:', errorData);
+                    showAlert('Failed to show Adexium ad. No ads available or an error occurred.');
+                    loader.style.display = 'none';
+                });
 
-            } catch (error) {
-                console.error("Error adding mails:", error);
-                showAlert("An error occurred while adding mails.");
-            } finally {
+                adexiumWidget.autoMode();
+
+            } catch(e) {
+                console.error("Error initializing Adexium Widget:", e);
+                showAlert('Failed to initialize Adexium ad. Please try again.');
                 loader.style.display = 'none';
             }
         }
-        
-        // --- UTILITY FUNCTIONS ---
+
         function showAlert(message) {
             document.getElementById('alert-message').textContent = message;
-            document.getElementById('custom-alert').classList.remove('hidden');
+            const alertBox = document.getElementById('custom-alert');
+            alertBox.classList.remove('hidden');
             document.getElementById('alert-ok-btn').onclick = () => {
-                document.getElementById('custom-alert').classList.add('hidden');
+                alertBox.classList.add('hidden');
             };
         }
-        
-        window.copyToClipboard = function(text) {
-            navigator.clipboard.writeText(text.trim()).then(() => showAlert('কপি করা হয়েছে!'));
-        }
-
     </script>
 </body>
 </html>
